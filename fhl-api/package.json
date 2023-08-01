@@ -1,0 +1,44 @@
+{
+  "name": "fhl-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "pnpm": "8"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "sst dev",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
+    "console": "sst console",
+    "gen": "hygen",
+    "typecheck": "tsc --noEmit && tsc-alias -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/gateway": "^2.4.9",
+    "@apollo/server": "^4.7.5",
+    "@apollo/subgraph": "^2.4.9",
+    "@as-integrations/aws-lambda": "^2.0.1",
+    "graphql": "^16.7.1",
+    "graphql-tag": "^2.12.6",
+    "kysely": "^0.26.1"
+  },
+  "_moduleAliases": {
+    "@": "dist"
+  },
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.0",
+    "aws-cdk-lib": "^2.86.0",
+    "constructs": "^10.2.67",
+    "hygen": "^6.2.11",
+    "sst": "^2.18.2",
+    "tsc-alias": "^1.8.6",
+    "typescript": "^5.1.6"
+  }
+}
