@@ -10,6 +10,6 @@ export default {
     };
   },
   stacks(app) {
-    app.stack(FHLUserDB).stack(FHLApiStack);
+    app.stack(FHLApiStack);
   }
 } satisfies SSTConfig;

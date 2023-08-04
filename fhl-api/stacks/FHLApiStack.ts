@@ -1,6 +1,6 @@
 import { ServiceEndpointDefinition } from "@apollo/gateway";
 import { handler } from "@/src/gateway";
-import { Api, Stack, StackContext, use } from "sst/constructs";
+import { Api, RDS, Stack, StackContext, use } from "sst/constructs";
 import { FHLUserDB } from "../packages/subgraphs/user/db/userDb";
 
 
@@ -32,7 +32,9 @@ function createApiGateway(props: ApolloFederationGatewayProps, stack: Stack): Ap
 }
 
 export function FHLApiStack(context: StackContext) {
-    const userApi = new Api(context.stack, "FHLUserApiSubgraph", {
+    const userDb = FHLUserDB(context);
+
+    const baseApi = new Api(context.stack, "FHLBaseApiSubgraph", {
         routes: {
             $default: {
                 type: "graphql",
@@ -44,25 +46,47 @@ export function FHLApiStack(context: StackContext) {
             allowHeaders: [""],
             allowOrigins: ["*"],
         },
-        defaults: {
-            function: {
-                bind: [FHLUserDB(context)]
-            }
-        }
     });
 
+    const userApi = new Api(context.stack, "FHLUserSubgraph", {
+        routes: {
+            $default: {
+                type: "graphql",
+                function: "packages/functions/src/userSubgraph.handler"
+            }
+        },
+        cors: {
+            allowMethods: ["OPTIONS", "GET", "POST"],
+            allowHeaders: [""],
+            allowOrigins: ["*"],
+        },
+        defaults: {
+            function: {
+                bind: [userDb]
+            }
+        }
+    })
+
     const gatewayServiceList: ApolloFederationGatewayProps = {
-        serviceList: [{
-            name: "User",
-            url: `${userApi.url}/graphql`
-        }]
+        serviceList: [
+            {
+                name: "Base",
+                url: `${baseApi.url}/graphql`
+            },
+            {
+                name: "User",
+                url: `${userApi}/graphql`
+            }
+        ]
     }
 
     const gateway = createApiGateway(gatewayServiceList, context.stack);
 
     context.stack.addOutputs({
         ApiEndpont: gateway.url,
-        QueryMe: "Daddy"
+        QueryMe: "Daddy",
+        SecretArn: userDb.clusterArn,
+        ClusterIdentifier: userDb.clusterIdentifier
     });
 
     // TODO Implement Auth

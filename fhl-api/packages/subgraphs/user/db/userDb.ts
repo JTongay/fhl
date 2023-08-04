@@ -1,10 +1,9 @@
-import { RDS, Stack, StackContext } from "sst/constructs";
+import { StackContext, RDS } from "sst/constructs";
 
-export function FHLUserDB({stack}: StackContext) {
-    return new RDS(stack, "userDB", {
-        engine: "mysql5.7",
+export function FHLUserDB({ stack }: StackContext) {
+    return new RDS(stack, "Cluster", {
+        engine: "postgresql11.16",
         defaultDatabaseName: "userDB",
-        migrations: "packages/subgraphs/core/migrations",
+        migrations: "packages/subgraphs/user/db/migrations"
     });
-
 }
