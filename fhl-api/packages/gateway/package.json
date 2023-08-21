@@ -1,14 +1,14 @@
 {
-    "name": "@fhl/gateway",
-    "version": "0.0.0",
-    "type": "module",
-    "scripts": {
-      "test": "sst bind vitest",
-      "typecheck": "tsc -noEmit"
-    },
-    "devDependencies": {
-      "@types/node": "^20.3.1",
-      "vitest": "^0.32.2",
-      "sst": "^2.13.9"
-    }
+  "name": "@fhl/gateway",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "sst bind vitest",
+    "typecheck": "tsc -noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.1",
+    "vitest": "^0.32.2",
+    "sst": "2.24.2"
   }
+}

@@ -1,7 +1,8 @@
+import { logRDSConfig } from "@/db";
 import { ServiceEndpointDefinition } from "@apollo/gateway";
-import { handler } from "@/src/gateway";
-import { Api, RDS, Stack, StackContext, use } from "sst/constructs";
-import { FHLUserDB } from "../packages/subgraphs/user/db/userDb";
+// import { handler } from "@/src/gateway";
+import { Api, RDS, Stack, StackContext } from "sst/constructs";
+// import { FHLUserDB } from "../packages/subgraphs/user/db/userDb";
 
 
 interface ApolloFederationGatewayProps {
@@ -32,7 +33,11 @@ function createApiGateway(props: ApolloFederationGatewayProps, stack: Stack): Ap
 }
 
 export function FHLApiStack(context: StackContext) {
-    const userDb = FHLUserDB(context);
+    const fhlDb = new RDS(context.stack, "Cluster", {
+        engine: "postgresql11.16",
+        defaultDatabaseName: "fhlDb",
+        migrations: "packages/core/db/migrations"
+    });
 
     const baseApi = new Api(context.stack, "FHLBaseApiSubgraph", {
         routes: {
@@ -62,10 +67,48 @@ export function FHLApiStack(context: StackContext) {
         },
         defaults: {
             function: {
-                bind: [userDb]
+                bind: [fhlDb]
             }
         }
-    })
+    });
+
+    const gameApi = new Api(context.stack, "FHLGameSubgraph", {
+        routes: {
+            $default: {
+                type: "graphql",
+                function: "packages/functions/src/gameSubgraph.handler"
+            }
+        },
+        cors: {
+            allowMethods: ["OPTIONS", "GET", "POST"],
+            allowHeaders: [""],
+            allowOrigins: ["*"],
+        },
+        defaults: {
+            function: {
+                bind: [fhlDb]
+            }
+        }
+    });
+
+    const leagueApi = new Api(context.stack, "FHLLeagueSubgraph", {
+        routes: {
+            $default: {
+                type: "graphql",
+                function: "packages/functions/src/leagueSubgraph.handler"
+            }
+        },
+        cors: {
+            allowMethods: ["OPTIONS", "GET", "POST"],
+            allowHeaders: [""],
+            allowOrigins: ["*"],
+        },
+        defaults: {
+            function: {
+                bind: [fhlDb]
+            }
+        }
+    });
 
     const gatewayServiceList: ApolloFederationGatewayProps = {
         serviceList: [
@@ -75,18 +118,32 @@ export function FHLApiStack(context: StackContext) {
             },
             {
                 name: "User",
-                url: `${userApi}/graphql`
+                url: `${userApi.url}/graphql`
+            },
+            {
+                name: "Game",
+                url: `${gameApi.url}/graphql`
+            },
+            {
+                name: "League",
+                url: `${leagueApi.url}/graphql`
             }
         ]
     }
 
     const gateway = createApiGateway(gatewayServiceList, context.stack);
 
+    logRDSConfig();
+
     context.stack.addOutputs({
         ApiEndpont: gateway.url,
         QueryMe: "Daddy",
-        SecretArn: userDb.clusterArn,
-        ClusterIdentifier: userDb.clusterIdentifier
+        SecretArn: fhlDb.secretArn,
+        ClusterArn: fhlDb.clusterArn,
+        DBName: fhlDb.defaultDatabaseName,
+        DBUrlHostName: fhlDb.clusterEndpoint.hostname,
+        DBUrlHostPort: fhlDb.clusterEndpoint.port.toLocaleString(),
+        DBUrlSocketAddress: fhlDb.clusterEndpoint.socketAddress,
     });
 
     // TODO Implement Auth

@@ -5,8 +5,8 @@ import { Kysely, sql } from "kysely";
  */
 export async function up(db) {
     await db.schema
-        .createTable("user")
-        .addColumn("id", "integer", (col) => col.primaryKey().notNull())
+        .createTable("users")
+        .addColumn("id", "serial", (col) => col.primaryKey())
         .addColumn("gamertag", "varchar", (col) => col.unique().notNull())
         .addColumn("first_name", "varchar", (col) => col.notNull())
         .addColumn("last_name", "varchar", (col) => col.notNull())
@@ -24,5 +24,5 @@ export async function up(db) {
  * @param db {Kysely<any>}
  */
 export async function down(db) {
-    await db.schema.dropTable("user").execute();
+    await db.schema.dropTable("users").ifExists().execute();
 }

@@ -1,5 +1,5 @@
 ---
-to: packages/subgraphs/<%= domain %>/db/migrations/<%= Date.now() %>_<%= name.replace(/\s/g, "_") %>.mjs
+to: packages/core/db/migrations/<%= Date.now() %>_<%= name.replace(/\s/g, "_") %>.mjs
 ---
 import { Kysely } from "kysely";
 

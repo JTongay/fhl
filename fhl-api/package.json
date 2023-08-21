@@ -15,7 +15,8 @@
     "remove": "sst remove",
     "console": "sst console",
     "gen": "hygen",
-    "typecheck": "tsc --noEmit && tsc-alias -p tsconfig.json"
+    "typecheck": "tsc --noEmit && tsc-alias -p tsconfig.json",
+    "db-gen": "kysely-codegen"
   },
   "keywords": [],
   "author": "",
@@ -26,20 +27,22 @@
     "@apollo/subgraph": "^2.4.9",
     "@as-integrations/aws-lambda": "^2.0.1",
     "@aws-sdk/client-rds-data": "^3.382.0",
-    "aws-cdk-lib": "^2.86.0",
+    "aws-cdk-lib": "2.91.0",
     "graphql": "^16.7.1",
     "graphql-tag": "^2.12.6",
     "kysely": "^0.26.1",
-    "kysely-data-api": "^0.2.1"
+    "kysely-data-api": "^0.2.1",
+    "sst": "2.24.2"
   },
   "_moduleAliases": {
     "@": "dist"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",
-    "constructs": "^10.2.67",
+    "constructs": "10.2.69",
     "hygen": "^6.2.11",
-    "sst": "^2.18.2",
+    "kysely-codegen": "^0.10.1",
+    "pg": "^8.11.3",
     "tsc-alias": "^1.8.6",
     "typescript": "^5.1.6"
   }
