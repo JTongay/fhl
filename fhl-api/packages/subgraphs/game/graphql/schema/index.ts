@@ -16,6 +16,12 @@ export const GameSchema = gql`
         updatedAt: Date!
     }
 
+    type ApiError @key(fields: "code") @extends {
+        subgraph: String!
+    }
+
+    union GameResponse = Game | ApiError
+
     type Season @key(fields: "id") @extends {
         id: ID! @external
         games(limit: Int, offset: Int): [Game!]!

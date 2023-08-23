@@ -88,8 +88,9 @@ const referenceResolverMap = (
     resolverInput: ReferenceResolverInput
 ): ReferenceResolverOutput => {
     return Object.keys(resolverInput).reduce((acc, currentValue) => {
-        return acc[currentValue] = { __resolveReference: resolverInput[currentValue].resolve }
-    }, {})
+        acc[currentValue] = { __resolveReference: resolverInput[currentValue].resolve }
+        return acc;
+    }, {});
 }
 
 export { resolverMap, typeResolverMap, referenceResolverMap };

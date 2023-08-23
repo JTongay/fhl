@@ -16,13 +16,12 @@ export class PaginatedResponse<T> {
     data: T[];
 
     constructor(
-        limit: number,
-        offset: number,
+        paginationParams: Pagination,
         total: number,
         data: T[]
     ) {
-        this.limit = limit
-        this.offset = offset
+        this.limit = paginationParams.limit
+        this.offset = paginationParams.offset
         this.total = total
         this.data = data;
     }

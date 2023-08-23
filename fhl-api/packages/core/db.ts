@@ -10,7 +10,7 @@ import { GameTable } from "packages/subgraphs/game/domain/game";
 
 export interface Database {
     users: UserTable;
-    game: GameTable;
+    games: GameTable;
 }
 
 export const logRDSConfig = () => console.log(RDS, "RDS ME DADDY");

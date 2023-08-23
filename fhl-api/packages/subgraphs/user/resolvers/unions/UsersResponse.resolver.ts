@@ -1,8 +1,9 @@
 import { BaseUnionResolver } from "@/graphql/resolvers/BaseUnionResolver";
 import { Nullable } from "@/utils";
-import { UsersList, UsersResponse, ApiError } from "../../domain/user";
+import { UsersList, UsersResponse } from "../../domain/user";
 import { BaseContext } from "@/graphql/context";
 import { GraphQLResolveInfo } from "graphql/type/definition";
+import { ApiError } from "@/domain";
 
 export class UsersResponseResolver extends BaseUnionResolver {
     resolveType(

@@ -1,24 +1,23 @@
 import { BaseUnionResolver } from "@/graphql/resolvers/BaseUnionResolver";
-import { User, UserResponse } from "../../domain/user";
+import { GameApiExtension, GamesList, GamesResponse } from "../../domain/game";
 import { BaseContext } from "@/graphql/context";
 import { GraphQLResolveInfo } from "graphql/type/definition";
 import { Nullable } from "@/utils";
-import { ApiError } from "@/domain";
 
-export class UserResponseResolver extends BaseUnionResolver {
+
+export class GamesResponseResolver extends BaseUnionResolver {
     resolveType(
-        value: UserResponse,
+        type: GamesResponse,
         context: BaseContext,
         info: GraphQLResolveInfo
     ): Nullable<string> {
-        switch (value.constructor) {
-            case User:
-                return "User"
-            case ApiError:
-                return "ApiError";
+        switch (type.constructor) {
+            case GamesList:
+                return "GamesList"
+            case GameApiExtension:
+                return "ApiError"
             default:
                 return null;
         }
     }
-
 }

@@ -1,3 +1,4 @@
+import { ApiError } from "@/domain";
 import { Nullable, PaginatedResponse, Pagination } from "@/utils";
 import { ColumnType, Generated, Insertable, Selectable, Updateable } from 'kysely'
 
@@ -35,16 +36,6 @@ export class User {
     }
 }
 
-export class ApiError {
-    code: number;
-    stacktrace: Nullable<string>;
-
-    constructor(code: number, stack: Nullable<string>) {
-        this.code = code;
-        this.stacktrace = stack;
-    }
-}
-
 export type UserResponse = User | ApiError
 
 export interface CreateUserParams {
@@ -64,7 +55,7 @@ export class UsersList extends PaginatedResponse<User> {
         total: number,
         response: User[]
     ) {
-        super(paginationParams.limit, paginationParams.offset, total, response)
+        super(paginationParams, total, response)
     }
 }
 

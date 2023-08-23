@@ -9,10 +9,10 @@ export abstract class BaseReferenceResolver<
     Context = BaseContext,
     ReturnType = unknown
 > {
-    resolve(
+    public resolve = (
         reference: Ref,
         context: Context
-    ): ReturnType | Promise<ReturnType> {
+    ): ReturnType | Promise<ReturnType> => {
         return this.resolveReference(reference, context);
     }
 

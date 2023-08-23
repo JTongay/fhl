@@ -1,25 +1,21 @@
 import { ApolloServer } from "@apollo/server";
 import { buildSubgraphSchema } from "@apollo/subgraph"
-import { resolverMap, typeResolverMap } from "@/graphql/resolvers/ResolverMap";
+import { referenceResolverMap, resolverMap, typeResolverMap } from "@/graphql/resolvers/ResolverMap";
 import { LeagueSchema } from "./graphql/schema";
+import { UserExtensionResolver } from "./resolvers/reference/UserExtension.resolver";
 
 const dataResolvers = resolverMap({});
 
 const unionResolvers = typeResolverMap({});
 
+const referenceResolvers = referenceResolverMap({
+    User: new UserExtensionResolver()
+});
+
 const resolvers = {
     ...dataResolvers,
     ...unionResolvers,
-    User: {
-        __resolveReference(user, param) {
-            console.log(user, "user");
-            console.log(param, "param")
-            return {
-                id: user.id.toString(),
-                wins: 1
-            }
-        },
-    }
+    ...referenceResolvers
 }
 
 export const leagueSubgraphServer = new ApolloServer({

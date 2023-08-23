@@ -1,8 +1,9 @@
 import { BaseContext } from "@/graphql/context";
 import { BaseResolver } from "@/graphql/resolvers/BaseResolver";
 import { db } from "@/db";
-import { ApiError, User, UserResponse } from "../domain/user";
+import { User, UserResponse } from "../domain/user";
 import { NoResultError } from "kysely";
+import { ApiError } from "@/domain";
 
 export class UserResolver extends BaseResolver {
     protected async resolver(
