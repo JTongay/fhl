@@ -4,8 +4,8 @@ export const GameSchema = gql`
     scalar Date
 
     type Query @extends {
-        game(id: ID!): Game!
-        games(limit: Int, offset: Int): [Game!]!
+        game(id: ID!): GameResponse!
+        games(limit: Int, offset: Int): GamesResponse!
     }
 
     type Game @key(fields: "id") {
@@ -17,10 +17,20 @@ export const GameSchema = gql`
     }
 
     type ApiError @key(fields: "code") @extends {
+        code: Int! @external
         subgraph: String!
     }
 
     union GameResponse = Game | ApiError
+
+    type GamesList {
+        data: [Game!]!
+        total: Int!
+        limit: Int!
+        offset: Int!
+    }
+
+    union GamesResponse = GamesList | ApiError
 
     type Season @key(fields: "id") @extends {
         id: ID! @external
@@ -37,7 +47,8 @@ export const GameSchema = gql`
         consolesOwned: [Console!]!
     }
 
-    type Platform {
+    type Platform @key(fields: "id") {
+        id: ID!
         storeLink: String!
         console: Console!
     }

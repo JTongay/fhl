@@ -3,13 +3,23 @@ import { buildSubgraphSchema } from "@apollo/subgraph"
 import { referenceResolverMap, resolverMap, typeResolverMap } from "@/graphql/resolvers/ResolverMap";
 import { LeagueSchema } from "./graphql/schema";
 import { UserExtensionResolver } from "./resolvers/reference/UserExtension.resolver";
+import { LeagueApiErrorResolver } from "./resolvers/reference/LeagueApiError.resolver";
+import { LeagueResolver } from "./resolvers/League.resolver";
+import { LeagueResponseResolver } from "./resolvers/union/LeagueResponse.resolver";
 
-const dataResolvers = resolverMap({});
+const dataResolvers = resolverMap({
+    Query: {
+        league: new LeagueResolver()
+    }
+});
 
-const unionResolvers = typeResolverMap({});
+const unionResolvers = typeResolverMap({
+    LeagueResponse: new LeagueResponseResolver()
+});
 
 const referenceResolvers = referenceResolverMap({
-    User: new UserExtensionResolver()
+    User: new UserExtensionResolver(),
+    ApiError: new LeagueApiErrorResolver()
 });
 
 const resolvers = {

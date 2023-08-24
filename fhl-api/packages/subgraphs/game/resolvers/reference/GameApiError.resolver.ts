@@ -1,5 +1,5 @@
 import { BaseContext } from "@/graphql/context";
-import { BaseReferenceResolver, Reference } from "@/graphql/resolvers/BaseReferenceResolver";
+import { BaseReferenceResolver } from "@/graphql/resolvers/BaseReferenceResolver";
 import { GameApiExtension, GameApiReference } from "../../domain/game";
 
 export class GameApiErrorResolver extends BaseReferenceResolver {

@@ -36,7 +36,11 @@ export function FHLApiStack(context: StackContext) {
     const fhlDb = new RDS(context.stack, "Cluster", {
         engine: "postgresql11.16",
         defaultDatabaseName: "fhlDb",
-        migrations: "packages/core/db/migrations"
+        migrations: "packages/core/db/migrations",
+        types: {
+            path: "packages/core/db/types.ts",
+            camelCase: true
+        }
     });
 
     const baseApi = new Api(context.stack, "FHLBaseApiSubgraph", {

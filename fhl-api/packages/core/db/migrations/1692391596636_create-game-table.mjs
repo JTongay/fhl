@@ -24,6 +24,12 @@ export async function up(db) {
         .createTable("consoles")
         .addColumn("id", "serial", (col) => col.primaryKey())
         .addColumn("name", "console", (col) => col.notNull())
+        .addColumn("created_at", "timestamp", (col) =>
+            col.notNull().defaultTo(sql`now()`)
+        )
+        .addColumn("updated_at", "timestamp", (col) =>
+            col.notNull().defaultTo(sql`now()`)
+        )
         .execute();
 }
 
@@ -32,6 +38,6 @@ export async function up(db) {
  */
 export async function down(db) {
     await db.schema.dropTable("games").ifExists().execute();
-    await db.schema.dropType("console").ifExists().execute();
     await db.schema.dropTable("consoles").ifExists().execute();
+    await db.schema.dropType("console").ifExists().execute();
 }

@@ -1,16 +1,7 @@
+import { Users } from "@/db/types";
 import { ApiError } from "@/domain";
 import { Nullable, PaginatedResponse, Pagination } from "@/utils";
 import { ColumnType, Generated, Insertable, Selectable, Updateable } from 'kysely'
-
-export interface UserTable {
-    id: Generated<number>;
-    gamertag: string;
-    first_name: string;
-    last_name: string;
-    email: Nullable<string>;
-    created_at: ColumnType<Date, string | undefined, never>;
-    updated_at: ColumnType<Date, string | undefined, never>;
-}
 
 export class User {
     id: string;
@@ -21,14 +12,14 @@ export class User {
     createdAt: Date;
     updatedAt: Date;
 
-    constructor(response: Selectable<UserTable>) {
+    constructor(response: Selectable<Users>) {
         this.id = response.id.toString();
-        this.firstName = response.first_name;
-        this.lastName = response.last_name;
+        this.firstName = response.firstName;
+        this.lastName = response.lastName;
         this.gamertag = response.gamertag;
         this.email = response.email;
-        this.createdAt = response.created_at;
-        this.updatedAt = response.updated_at;
+        this.createdAt = response.createdAt;
+        this.updatedAt = response.updatedAt;
     }
 
     fullName() {
