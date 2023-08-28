@@ -1,5 +1,14 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Inter } from 'next/font/google';
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { __DEV__ } from '@apollo/client/utilities/globals';
+import { Providers } from './providers';
+import Nav from '@/components/Nav';
+
+if (__DEV__) {  // Adds messages only in a dev environment
+  loadDevMessages();
+  loadErrorMessages();
+}
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +24,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Nav />
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   )
 }

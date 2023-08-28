@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const GameSchema = gql`
-    scalar Date
+    # scalar Date
 
     type Query @extends {
         game(id: ID!): GameResponse!
@@ -12,8 +12,8 @@ export const GameSchema = gql`
         id: ID!
         availableOn: [Platform!]!
         trailer: String!
-        createdAt: Date!
-        updatedAt: Date!
+        # createdAt: Date!
+        # updatedAt: Date!
     }
 
     type ApiError @key(fields: "code") @extends {

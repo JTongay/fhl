@@ -3,10 +3,15 @@ import gql from "graphql-tag";
 export const LeagueSchema = gql`
     type Query @extends {
         league: League!
-        season(id: ID!): Season!
-        seasons(limit: Int, offset: Int): [Season!]!
+        season(id: ID!): SeasonResponse!
+        seasons(limit: Int, offset: Int): SeasonsResponse!
         event(id: ID!): Event!
         events(limit: Int, offset: Int): [Event!]!
+    }
+
+    type ApiError @key(fields: "code") @extends {
+        code: Int! @external
+        subgraph: String!
     }
 
     type League @key(fields: "id") {
@@ -14,16 +19,16 @@ export const LeagueSchema = gql`
         teams: [Team!]!
         name: String!
         seasons: [Season!]!
-        createdAt: Date!
-        updatedAt: Date!
+        # createdAt: Date!
+        # updatedAt: Date!
     }
 
     type Event @key(fields: "id name") {
         id: ID!
         name: String!
         isActive: Boolean!
-        createdAt: Date!
-        updatedAt: Date!
+        # createdAt: Date!
+        # updatedAt: Date!
         # games: [Game!]! @external
     }
 
@@ -33,16 +38,23 @@ export const LeagueSchema = gql`
         isActive: Boolean!
         storylines: [Storyline!]!
         awards: [Award!]!
-        createdAt: Date!
-        updatedAt: Date!
+        # createdAt: Date!
+        # updatedAt: Date!
         ## schedule
+    }
+
+    type SeasonsList {
+        data: [Season!]!
+        limit: Int!
+        offset: Int!
+        total: Int!
     }
 
     type Storyline @key(fields: "id") {
         id: ID!
         description: String!
-        createdAt: Date!
-        updatedAt: Date!
+        # createdAt: Date!
+        # updatedAt: Date!
     }
 
     type Award @key(fields: "id") {
@@ -50,8 +62,8 @@ export const LeagueSchema = gql`
         name: String!
         # winner: User!
         season: Season!
-        createdAt: Date!
-        updatedAt: Date!
+        # createdAt: Date!
+        # updatedAt: Date!
     }
 
     type Team @key(fields: "id name") {
@@ -59,8 +71,8 @@ export const LeagueSchema = gql`
         name: String! # Enum perhaps?
         wins: Int!
         losses: Int!
-        createdAt: Date!
-        updatedAt: Date!
+        # createdAt: Date!
+        # updatedAt: Date!
         captain: User! @external
         members: [User!]! @external
     }
@@ -72,4 +84,7 @@ export const LeagueSchema = gql`
         wins: Int!
         losses: Int!
     }
+
+    union SeasonResponse = ApiError | Season
+    union SeasonsResponse = ApiError | SeasonsList
 `

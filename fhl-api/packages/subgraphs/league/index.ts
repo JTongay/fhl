@@ -6,15 +6,23 @@ import { UserExtensionResolver } from "./resolvers/reference/UserExtension.resol
 import { LeagueApiErrorResolver } from "./resolvers/reference/LeagueApiError.resolver";
 import { LeagueResolver } from "./resolvers/League.resolver";
 import { LeagueResponseResolver } from "./resolvers/union/LeagueResponse.resolver";
+import { SeasonResolver } from "./resolvers/Season.resolver";
+import { SeasonsResolver } from "./resolvers/Seasons.resolver";
+import { SeasonResponseResolver } from "./resolvers/union/SeasonResponse.resolver";
+import { SeasonsResponseResolver } from "./resolvers/union/SeasonsResponse.resolver";
 
 const dataResolvers = resolverMap({
     Query: {
-        league: new LeagueResolver()
+        league: new LeagueResolver(),
+        season: new SeasonResolver(),
+        seasons: new SeasonsResolver()
     }
 });
 
 const unionResolvers = typeResolverMap({
-    LeagueResponse: new LeagueResponseResolver()
+    LeagueResponse: new LeagueResponseResolver(),
+    SeasonResponse: new SeasonResponseResolver(),
+    SeasonsResponse: new SeasonsResponseResolver()
 });
 
 const referenceResolvers = referenceResolverMap({
