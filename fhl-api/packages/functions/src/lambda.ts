@@ -3,7 +3,7 @@ import {
   startServerAndCreateLambdaHandler,
   handlers,
 } from '@as-integrations/aws-lambda';
-import {Query} from "@/graphql/schema/query"
+import { Query } from "@/graphql/schema/query"
 import { buildSubgraphSchema } from "@apollo/subgraph"
 
 // A map of functions which return data for the schema.

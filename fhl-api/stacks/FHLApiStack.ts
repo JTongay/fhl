@@ -1,8 +1,9 @@
-import { logRDSConfig } from "@/db";
+// import { logRDSConfig } from "@/src/lambda";
 import { ServiceEndpointDefinition } from "@apollo/gateway";
 // import { handler } from "@/src/gateway";
 import { Api, RDS, Stack, StackContext } from "sst/constructs";
 // import { FHLUserDB } from "../packages/subgraphs/user/db/userDb";
+// import { RDS as Booyah } from "sst/node/rds";
 
 
 interface ApolloFederationGatewayProps {
@@ -25,7 +26,7 @@ function createApiGateway(props: ApolloFederationGatewayProps, stack: Stack): Ap
             }
         },
         cors: {
-            allowMethods: ["OPTIONS", "GET", "POST"],
+            allowMethods: ["ANY"],
             allowHeaders: ["*"],
             allowOrigins: ["*"],
         },
@@ -55,6 +56,11 @@ export function FHLApiStack(context: StackContext) {
             allowHeaders: [""],
             allowOrigins: ["*"],
         },
+        defaults: {
+            function: {
+                bind: [fhlDb]
+            }
+        }
     });
 
     const userApi = new Api(context.stack, "FHLUserSubgraph", {
@@ -136,8 +142,6 @@ export function FHLApiStack(context: StackContext) {
     }
 
     const gateway = createApiGateway(gatewayServiceList, context.stack);
-
-    logRDSConfig();
 
     context.stack.addOutputs({
         ApiEndpont: gateway.url,

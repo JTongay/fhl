@@ -31,7 +31,6 @@ const server = new ApolloServer({
   introspection: true
 });
 
-console.log(process.env.SERVICE_LIST)
 
 const withCors = handler => (req, res, ...args) => {
   // console.log(req)
@@ -58,9 +57,9 @@ export const handler = withCors(startServerAndCreateLambdaHandler(
   {
     middleware: [
       async (event) => {
-        if (event.requestContext?.http.method === "OPTIONS") {
-          console.log("😽")
-        }
+        event.headers["access-control-allow-origin"] = "*"
+        event.headers["access-control-allow-headers"] = "*"
+        console.log(event.headers);
       }
     ]
   }
