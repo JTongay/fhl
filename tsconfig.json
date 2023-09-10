@@ -1,0 +1,26 @@
+{
+    "extends": "@tsconfig/node18/tsconfig.json",
+    "exclude": [
+        "packages"
+    ],
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "baseUrl": "./",
+        "paths": {
+            "$/*": [
+                "packages/core/*",
+                "packages/fhl-api/*"
+            ]
+        },
+    },
+    "compileOnSave": true,
+    "tsc-alias": {
+        "verbose": true,
+        "resolveFullPaths": true,
+        "replacers": {
+            "base-url": {
+                "enabled": true
+            }
+        }
+    }
+}

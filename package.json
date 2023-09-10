@@ -4,22 +4,35 @@
   "description": "The full stack repo for all FHL related applications",
   "type": "module",
   "workspaces": [
-    "fhl-web/*",
-    "fhl_mobile/*",
-    "fhl-api/*"
+    "packages/*"
   ],
   "engines": {
     "pnpm": "8"
   },
   "scripts": {
-    "web-local": "pnpm --filter fhl-web dev",
-    "api-local": "pnpm --filter fhl-api dev"
+    "web-local": "pnpm --filter packages dev",
+    "api-local": "pnpm --filter fhl-api dev",
+    "dev": "sst dev",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
+    "console": "sst console",
+    "typecheck": "tsc --noEmit",
+    "gen": "hygen"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.91.0",
+    "sst": "2.24.2"
   },
   "devDependencies": {
+    "@tsconfig/node18": "^18.2.0",
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.0",
+    "constructs": "10.2.69",
     "husky": "^8.0.3",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "tsc-alias": "^1.8.6",
+    "typescript": "^5.1.6"
   },
   "keywords": [],
   "author": "",
