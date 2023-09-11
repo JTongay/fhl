@@ -1,7 +1,7 @@
 import { RDS, StackContext } from "sst/constructs";
 
 export function FHLDB({ stack }: StackContext) {
-    const db = new RDS(stack, "fhldb", {
+    const rds = new RDS(stack, "fhldb", {
         engine: "postgresql11.16",
         defaultDatabaseName: "fhlDb",
         migrations: "packages/core/migrations",
@@ -10,5 +10,5 @@ export function FHLDB({ stack }: StackContext) {
             camelCase: true
         }
     })
-    return db;
+    return rds;
 }

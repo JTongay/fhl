@@ -7,20 +7,22 @@ interface Subgraph {
     id: string;
 }
 
-function createApiGateway(props: ApolloFederationGatewayProps, stack: Stack, db: RDS) {
+function createApiGateway(props: ApolloFederationGatewayProps, stack: Stack) {
     return new Api(stack, "FHLGateway", {
         defaults: {
             function: {
+                bind: [use(FHLDB)],
                 environment: {
                     SERVICE_LIST: JSON.stringify(props.serviceList)
                 },
-                bind: [use(FHLDB)]
             }
         },
         routes: {
             "POST /graphql": {
                 type: "graphql",
-                function: "packages/fhl-api/packages/gateway/src/gateway.handler"
+                function: {
+                    handler: "packages/fhl-api/packages/gateway/src/gateway.handler"
+                }
             }
         },
         cors: {
@@ -32,12 +34,14 @@ function createApiGateway(props: ApolloFederationGatewayProps, stack: Stack, db:
     })
 }
 
-function createSubgraph(stack: Stack, id: string, functionPath: string, db: RDS): Api {
+function createSubgraph(stack: Stack, id: string, functionPath: string): Api {
     return new Api(stack, id, {
         routes: {
             "POST /graphql": {
                 type: "graphql",
-                function: functionPath
+                function: {
+                    handler: functionPath
+                }
             }
         },
         cors: {
@@ -54,31 +58,26 @@ function createSubgraph(stack: Stack, id: string, functionPath: string, db: RDS)
 }
 
 export function FHLApi({ stack }: StackContext) {
-    const db = use(FHLDB);
     const baseApi = createSubgraph(
         stack,
         "FHLBaseApiSubgraph",
-        "packages/fhl-api/packages/functions/src/lambda.handler",
-        db
+        "packages/fhl-api/packages/functions/src/lambda.handler"
     );
     const userApi = createSubgraph(
         stack,
         "FHLUserSubgraph",
-        "packages/fhl-api/packages/functions/src/userSubgraph.handler",
-        db
+        "packages/fhl-api/packages/functions/src/userSubgraph.handler"
     );
-    const gameApi = createSubgraph(
-        stack,
-        "FHLGameSubgraph",
-        "packages/fhl-api/packages/functions/src/gameSubgraph.handler",
-        db
-    );
-    const leagueApi = createSubgraph(
-        stack,
-        "FHLLeagueSubgraph",
-        "packages/fhl-api/packages/functions/src/leagueSubgraph.handler",
-        db
-    )
+    // const gameApi = createSubgraph(
+    //     stack,
+    //     "FHLGameSubgraph",
+    //     "packages/fhl-api/packages/functions/src/gameSubgraph.handler"
+    // );
+    // const leagueApi = createSubgraph(
+    //     stack,
+    //     "FHLLeagueSubgraph",
+    //     "packages/fhl-api/packages/functions/src/leagueSubgraph.handler"
+    // )
 
     const gateway = createApiGateway({
         serviceList: [
@@ -90,16 +89,16 @@ export function FHLApi({ stack }: StackContext) {
                 name: "User",
                 url: `${userApi.url}/graphql`
             },
-            {
-                name: "Game",
-                url: `${gameApi.url}/graphql`
-            },
-            {
-                name: "League",
-                url: `${leagueApi.url}/graphql`
-            }
+            // {
+            //     name: "Game",
+            //     url: `${gameApi.url}/graphql`
+            // },
+            // {
+            //     name: "League",
+            //     url: `${leagueApi.url}/graphql`
+            // }
         ]
-    }, stack, db);
+    }, stack);
 
     stack.addOutputs({
         GatewayEndpoint: gateway.url,

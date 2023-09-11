@@ -2,10 +2,10 @@ import fs from "fs/promises";
 import path from "path";
 
 import { Migrator, FileMigrationProvider } from "kysely";
-import { fhlDb } from "./db";
+import { DB } from "./db";
 
 const migrator = new Migrator({
-    db: fhlDb,
+    db: DB.fhlDb,
     provider: new FileMigrationProvider({
         fs,
         path,

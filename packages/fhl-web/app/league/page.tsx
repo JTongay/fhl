@@ -1,6 +1,6 @@
 "use client"
 
-import { GET_BOOYAH } from "@/operations/queries/getBooyahQuery";
+import { GET_BOOYAH } from "../../operations/queries/getBooyahQuery";
 import { useQuery } from "@apollo/client";
 import { PropsWithChildren } from "react";
 

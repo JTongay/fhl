@@ -2,6 +2,7 @@ import { SSTConfig } from "sst";
 import { FHLDB } from "./stacks/FHLDb";
 import { FHLWeb } from "./stacks/FHLWeb";
 import { FHLApi } from "./stacks/FHLApi";
+import { NextWeb } from "stacks/FHLWeb2";
 
 export default {
     config(_input) {
@@ -11,9 +12,8 @@ export default {
         };
     },
     stacks(app) {
-        app
-            .stack(FHLDB)
+        app.stack(FHLDB)
             .stack(FHLApi)
-            .stack(FHLWeb);
+            .stack(NextWeb);
     }
 } satisfies SSTConfig;

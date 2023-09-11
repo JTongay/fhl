@@ -1,11 +1,12 @@
 import { RDSData } from "@aws-sdk/client-rds-data";
-import { Kysely } from "kysely";
+import { Kysely, Selectable } from "kysely";
 import { DataApiDialect } from "kysely-data-api";
 import { RDS } from "sst/node/rds";
+import type { Database } from "./sql.generated"
 
 console.log(RDS, "RDS ME DADDY")
 
-export const fhlDb = new Kysely<any>({
+export const fhlDb = new Kysely<Database>({
     dialect: new DataApiDialect({
         mode: "postgres",
         driver: {
@@ -17,8 +18,8 @@ export const fhlDb = new Kysely<any>({
     })
 });
 
-// export type Row = {
-//     [Key in keyof Database]: Selectable<Database[Key]>;
-// };
+export type Row = {
+    [Key in keyof Database]: Selectable<Database[Key]>;
+};
 
 export * as DB from "./db"

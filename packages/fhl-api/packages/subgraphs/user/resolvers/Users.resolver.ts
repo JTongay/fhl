@@ -8,7 +8,7 @@ import { fhlDb } from "../../../../../core/src/db";
 export class UsersResolver extends BaseResolver {
     protected async resolver(
         parent: never,
-        args: InputType<Pagination>,
+        args: Pagination,
         context: BaseContext
     ): Promise<UsersResponse> {
         try {
@@ -19,12 +19,12 @@ export class UsersResolver extends BaseResolver {
                 .execute()
             const response = await fhlDb.selectFrom("users")
                 .selectAll()
-                .limit(args.input.limit)
-                .offset(args.input.offset)
+                .limit(args.limit)
+                .offset(args.offset)
                 .execute()
 
             const users = response.map((user) => new User(user));
-            return new UsersList(args.input, total.length, users);
+            return new UsersList(args, total.length, users);
         } catch (e: unknown) {
             return new ApiError(1002, e.toString())
         }

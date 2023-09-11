@@ -1,4 +1,2 @@
 packages:
-  - fhl-web
-  - fhl-api
-  - fhl_mobile
+  - "packages/**/*"
