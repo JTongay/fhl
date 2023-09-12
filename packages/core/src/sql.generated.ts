@@ -11,48 +11,48 @@ export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 export interface Consoles {
   id: Generated<number>;
   name: Console;
-  createdAt: Generated<Timestamp>;
-  updatedAt: Generated<Timestamp>;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
 }
 
 export interface Events {
   id: Generated<number>;
   name: string;
-  isActive: Generated<boolean>;
-  leagueId: number;
-  createdAt: Generated<Timestamp>;
-  updatedAt: Generated<Timestamp>;
+  is_active: Generated<boolean>;
+  league_id: number;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
 }
 
 export interface Games {
   id: Generated<number>;
   trailer: string;
-  createdAt: Generated<Timestamp>;
-  updatedAt: Generated<Timestamp>;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
 }
 
 export interface Leagues {
   id: Generated<number>;
   name: string;
-  createdAt: Generated<Timestamp>;
-  updatedAt: Generated<Timestamp>;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
 }
 
 export interface Platforms {
   id: Generated<number>;
-  storeLink: string;
+  store_link: string;
   console: Console;
-  createdAt: Generated<Timestamp>;
-  updatedAt: Generated<Timestamp>;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
 }
 
 export interface Seasons {
   id: Generated<number>;
   year: number;
-  isActive: Generated<boolean>;
-  leagueId: number;
-  createdAt: Generated<Timestamp>;
-  updatedAt: Generated<Timestamp>;
+  is_active: Generated<boolean>;
+  league_id: number;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
 }
 
 export interface Teams {
@@ -60,18 +60,18 @@ export interface Teams {
   name: string;
   wins: Generated<number>;
   losses: Generated<number>;
-  createdAt: Generated<Timestamp>;
-  updatedAt: Generated<Timestamp>;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
 }
 
 export interface Users {
   id: Generated<number>;
   gamertag: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string | null;
-  createdAt: Generated<Timestamp>;
-  updatedAt: Generated<Timestamp>;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
 }
 
 export interface Database {

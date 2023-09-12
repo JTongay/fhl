@@ -16,7 +16,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@apollo/client": "^3.8.1",
+    "@apollo/client": "^3.8.3",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@types/node": "20.3.3",
     "@types/react": "18.2.14",

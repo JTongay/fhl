@@ -3,7 +3,7 @@ import { ApiError } from "@/domain";
 import { BaseContext } from "@/graphql/context";
 import { BaseResolver } from "@/graphql/resolvers/BaseResolver";
 import { League, LeagueApiErrorExtension, LeagueResponse } from "../domain/League";
-import { fhlDb } from "../../../../../core/src/db";
+import { fhlDb } from "@fhl/core/src/db";
 
 export class LeagueResolver extends BaseResolver {
     protected async resolver(parent: never, args: { id: string }, context: BaseContext): Promise<LeagueResponse> {
@@ -14,6 +14,7 @@ export class LeagueResolver extends BaseResolver {
                 .executeTakeFirstOrThrow()
             return new League(response)
         } catch (e: unknown) {
+            console.error(e);
             return new LeagueApiErrorExtension(300, e.toString());
         }
     }

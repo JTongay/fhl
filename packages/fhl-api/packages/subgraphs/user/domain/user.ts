@@ -1,4 +1,4 @@
-import { Users } from "@/db/types";
+import { Users } from "@fhl/core/src/sql.generated";
 import { ApiError } from "@/domain";
 import { Nullable, PaginatedResponse, Pagination } from "@/utils";
 import { ColumnType, Generated, Insertable, Selectable, Updateable } from 'kysely'
@@ -14,12 +14,12 @@ export class User {
 
     constructor(response: Selectable<Users>) {
         this.id = response.id.toString();
-        this.firstName = response.firstName;
-        this.lastName = response.lastName;
+        this.firstName = response.first_name;
+        this.lastName = response.last_name;
         this.gamertag = response.gamertag;
         this.email = response.email;
-        this.createdAt = response.createdAt;
-        this.updatedAt = response.updatedAt;
+        this.createdAt = response.created_at;
+        this.updatedAt = response.updated_at;
     }
 
     fullName() {

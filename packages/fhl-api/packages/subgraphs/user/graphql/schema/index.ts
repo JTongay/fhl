@@ -1,9 +1,6 @@
 import gql from "graphql-tag";
 
 export const UserSchema = gql`
-    schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@shareable", "@provides", "@external", "@tag", "@extends", "@override", "@inaccessible"]) {query: Query}
-    scalar Date
-    
     type User @key(fields: "id") {
         id: ID!
         gamertag: String!
@@ -12,12 +9,12 @@ export const UserSchema = gql`
         fullName: String!
         email: String! # TODO create an email scalar here
         avatar: String!
-        createdAt: Date!
-        updatedAt: Date!
+        # createdAt: Date!
+        # updatedAt: Date!
     }
 
     type Query @extends {
-        user(id: ID!): UserResponse!
+        user(id: String!): UserResponse!
         users(limit: Int, offset: Int): UsersResponse!
     }
 

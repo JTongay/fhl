@@ -1,4 +1,4 @@
-import { Leagues } from "@/db/types";
+import { Leagues } from "@fhl/core/src/sql.generated";
 import { ApiError } from "@/domain";
 import { Reference } from "@/graphql/resolvers/BaseReferenceResolver";
 import { Nullable } from "@/utils";
@@ -18,8 +18,15 @@ export interface LeagueApiErrorReference extends Reference {
 
 export class League {
     id: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+
     constructor(response: Selectable<Leagues>) {
         this.id = response.id.toString()
+        this.name = response.name;
+        this.createdAt = response.created_at;
+        this.updatedAt = response.updated_at;
     }
 }
 

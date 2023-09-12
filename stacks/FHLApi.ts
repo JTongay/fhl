@@ -1,6 +1,6 @@
 import { Api, RDS, Stack, StackContext, use } from "sst/constructs";
-import { ApolloFederationGatewayProps } from "../packages/fhl-api/stacks/FHLApiStack";
 import { FHLDB } from "./FHLDb.js";
+import { ApolloFederationGatewayProps } from "packages/fhl-api/packages/core/utils/index.js";
 
 interface Subgraph {
     functionPath: string;
@@ -68,16 +68,16 @@ export function FHLApi({ stack }: StackContext) {
         "FHLUserSubgraph",
         "packages/fhl-api/packages/functions/src/userSubgraph.handler"
     );
-    // const gameApi = createSubgraph(
-    //     stack,
-    //     "FHLGameSubgraph",
-    //     "packages/fhl-api/packages/functions/src/gameSubgraph.handler"
-    // );
-    // const leagueApi = createSubgraph(
-    //     stack,
-    //     "FHLLeagueSubgraph",
-    //     "packages/fhl-api/packages/functions/src/leagueSubgraph.handler"
-    // )
+    const gameApi = createSubgraph(
+        stack,
+        "FHLGameSubgraph",
+        "packages/fhl-api/packages/functions/src/gameSubgraph.handler"
+    );
+    const leagueApi = createSubgraph(
+        stack,
+        "FHLLeagueSubgraph",
+        "packages/fhl-api/packages/functions/src/leagueSubgraph.handler"
+    )
 
     const gateway = createApiGateway({
         serviceList: [
@@ -89,14 +89,14 @@ export function FHLApi({ stack }: StackContext) {
                 name: "User",
                 url: `${userApi.url}/graphql`
             },
-            // {
-            //     name: "Game",
-            //     url: `${gameApi.url}/graphql`
-            // },
-            // {
-            //     name: "League",
-            //     url: `${leagueApi.url}/graphql`
-            // }
+            {
+                name: "Game",
+                url: `${gameApi.url}/graphql`
+            },
+            {
+                name: "League",
+                url: `${leagueApi.url}/graphql`
+            }
         ]
     }, stack);
 

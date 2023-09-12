@@ -1,6 +1,6 @@
 "use client"
 
-import { GET_USERS } from "@/operations/queries/getUsers";
+import { GET_USERS } from "../../operations/queries/getUsers";
 import { useQuery } from "@apollo/client";
 
 export default function Users() {
@@ -19,6 +19,9 @@ export default function Users() {
         if (data.users.__typename === "UsersList") {
             const { data: usersList } = data.users
             console.log(data.users)
+            if (!usersList.length) {
+                return <h2>Lul no users</h2>
+            }
             return usersList.map((user) => {
                 <>
                     <h1>{user.gamertag}</h1>

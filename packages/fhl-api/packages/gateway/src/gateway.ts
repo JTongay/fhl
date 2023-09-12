@@ -1,10 +1,9 @@
 import {
   ApolloGateway,
-  ServiceEndpointDefinition,
   IntrospectAndCompose,
   RemoteGraphQLDataSource,
 } from '@apollo/gateway';
-import { ApolloServer, HeaderMap } from '@apollo/server';
+import { ApolloServer } from '@apollo/server';
 import { handlers, startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
 
 class AuthenticatedDataSource extends RemoteGraphQLDataSource {

@@ -4,8 +4,6 @@ import { DataApiDialect } from "kysely-data-api";
 import { RDS } from "sst/node/rds";
 import type { Database } from "./sql.generated"
 
-console.log(RDS, "RDS ME DADDY")
-
 export const fhlDb = new Kysely<Database>({
     dialect: new DataApiDialect({
         mode: "postgres",

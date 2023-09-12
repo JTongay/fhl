@@ -1,3 +1,5 @@
+import { ServiceEndpointDefinition } from "@apollo/gateway";
+
 export type Nullable<T> = T | null;
 
 export type InputType<T> = {
@@ -25,4 +27,8 @@ export class PaginatedResponse<T> {
         this.total = total
         this.data = data;
     }
+}
+
+export interface ApolloFederationGatewayProps {
+    serviceList: ServiceEndpointDefinition[]
 }

@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const LeagueSchema = gql`
     type Query @extends {
-        league: League!
+        league(id: ID!): LeagueResponse!
         season(id: ID!): SeasonResponse!
         seasons(limit: Int, offset: Int): SeasonsResponse!
         event(id: ID!): Event!
@@ -87,4 +87,5 @@ export const LeagueSchema = gql`
 
     union SeasonResponse = ApiError | Season
     union SeasonsResponse = ApiError | SeasonsList
+    union LeagueResponse = ApiError | League
 `

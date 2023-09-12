@@ -6,8 +6,7 @@ export function FHLDB({ stack }: StackContext) {
         defaultDatabaseName: "fhlDb",
         migrations: "packages/core/migrations",
         types: {
-            path: "packages/core/src/sql.generated.ts",
-            camelCase: true
+            path: "packages/core/src/sql.generated.ts"
         }
     })
     return rds;

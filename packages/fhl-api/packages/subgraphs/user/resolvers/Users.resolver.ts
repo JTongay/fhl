@@ -3,7 +3,7 @@ import { BaseResolver } from "@/graphql/resolvers/BaseResolver";
 import { User, UsersList, UsersResponse } from "../domain/user";
 import { InputType, Pagination } from "@/utils";
 import { ApiError } from "@/domain";
-import { fhlDb } from "../../../../../core/src/db";
+import { fhlDb } from "@fhl/core/src/db";
 
 export class UsersResolver extends BaseResolver {
     protected async resolver(
@@ -23,8 +23,11 @@ export class UsersResolver extends BaseResolver {
                 .offset(args.offset)
                 .execute()
 
+            console.log(total);
+
             const users = response.map((user) => new User(user));
-            return new UsersList(args, total.length, users);
+            console.log(users, "users")
+            return new UsersList(args, total[0].all_users as number, users);
         } catch (e: unknown) {
             return new ApiError(1002, e.toString())
         }
