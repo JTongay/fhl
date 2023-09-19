@@ -11,7 +11,7 @@
         "paths": {
             "$/*": [
                 "packages/core/*",
-                "packages/fhl-api/*"
+                "packages/fhl-api-2/*"
             ]
         },
     },

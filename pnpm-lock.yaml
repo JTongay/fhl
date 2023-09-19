@@ -75,6 +75,58 @@ importers:
 
   packages/fhl-api:
     dependencies:
+      '@apollo/server':
+        specifier: ^4.9.3
+        version: 4.9.3(graphql@16.8.0)
+      '@as-integrations/aws-lambda':
+        specifier: ^2.0.1
+        version: 2.0.1(@apollo/server@4.9.3)
+      '@aws-sdk/client-rds-data':
+        specifier: ^3.410.0
+        version: 3.410.0
+      '@fhl/core':
+        specifier: workspace:*
+        version: link:../core
+      aws-cdk-lib:
+        specifier: 2.91.0
+        version: 2.91.0(constructs@10.2.69)
+      graphql:
+        specifier: ^16.8.0
+        version: 16.8.0
+      graphql-tag:
+        specifier: ^2.12.6
+        version: 2.12.6(graphql@16.8.0)
+      kysely:
+        specifier: ^0.26.3
+        version: 0.26.3
+      kysely-data-api:
+        specifier: ^0.2.1
+        version: 0.2.1(@aws-sdk/client-rds-data@3.410.0)(kysely@0.26.3)
+    devDependencies:
+      '@tsconfig/node18':
+        specifier: ^18.2.1
+        version: 18.2.1
+      constructs:
+        specifier: 10.2.69
+        version: 10.2.69
+      hygen:
+        specifier: ^6.2.11
+        version: 6.2.11
+      pg:
+        specifier: ^8.11.3
+        version: 8.11.3
+      sst:
+        specifier: 2.24.2
+        version: 2.24.2(pg@8.11.3)
+      tsc-alias:
+        specifier: ^1.8.7
+        version: 1.8.7
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
+  packages/fhl-api-2:
+    dependencies:
       '@apollo/gateway':
         specifier: ^2.5.4
         version: 2.5.4(graphql@16.8.0)
@@ -134,7 +186,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  packages/fhl-api/packages/core:
+  packages/fhl-api-2/packages/core:
     devDependencies:
       '@types/aws-lambda':
         specifier: ^8.10.120
@@ -3330,7 +3382,7 @@ packages:
     dependencies:
       graphql: 16.8.0
       lodash.sortby: 4.7.0
-      tslib: 2.5.3
+      tslib: 2.6.2
     dev: true
 
   /@graphql-tools/executor-graphql-ws@1.1.0(graphql@16.8.0):
@@ -3584,7 +3636,7 @@ packages:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
       graphql: 16.8.0
-      tslib: 2.5.3
+      tslib: 2.6.2
     dev: true
 
   /@graphql-tools/prisma-loader@8.0.1(@types/node@20.3.3)(graphql@16.8.0):
@@ -3662,7 +3714,7 @@ packages:
       '@ardatan/relay-compiler': 12.0.0(graphql@16.8.0)
       '@graphql-tools/utils': 10.0.6(graphql@16.8.0)
       graphql: 16.8.0
-      tslib: 2.5.3
+      tslib: 2.6.2
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -5757,7 +5809,7 @@ packages:
     resolution: {integrity: sha512-xq+q3SRMOxGivLhBNaUdC64hDTQwejJ+H0T/NB1XMtTVEwNTrfFF3gAxiyW0Bu/xWEGhjVKgUcMhCrUy2+uCWg==}
     dependencies:
       base64-js: 1.5.1
-      ieee754: 1.1.13
+      ieee754: 1.2.1
       isarray: 1.0.0
 
   /buffer@5.7.1:
@@ -6124,7 +6176,7 @@ packages:
     resolution: {integrity: sha512-rraC8NXWOEjhADbZe9QBNzLAN5Q3fsTPQtBV+fEVj6xKIgDgNiEVE6ZNfHpZOqfQ21YUzfVNUXLOEZquYvQPPg==}
     dependencies:
       leven: 2.1.0
-      minimist: 1.2.6
+      minimist: 1.2.8
 
   /common-tags@1.8.2:
     resolution: {integrity: sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==}
@@ -6930,7 +6982,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.62.0(eslint@8.44.0)(typescript@5.1.6)
+      '@typescript-eslint/parser': 5.62.0(eslint@8.44.0)(typescript@5.2.2)
       debug: 3.2.7
       eslint: 8.44.0
       eslint-import-resolver-node: 0.3.9
@@ -6949,7 +7001,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.62.0(eslint@8.44.0)(typescript@5.1.6)
+      '@typescript-eslint/parser': 5.62.0(eslint@8.44.0)(typescript@5.2.2)
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.3
       array.prototype.flat: 1.3.2
@@ -9194,7 +9246,7 @@ packages:
       duplexify: 4.1.2
       help-me: 3.0.0
       inherits: 2.0.4
-      minimist: 1.2.6
+      minimist: 1.2.8
       mqtt-packet: 6.10.0
       pump: 3.0.0
       readable-stream: 3.6.2

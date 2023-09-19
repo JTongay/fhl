@@ -1,33 +1,34 @@
 {
-  // "extends": "@tsconfig/node18/tsconfig.json",
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
-    "moduleResolution": "node",
-    "outDir": "dist",
-    "paths": {
-      "@/*": [
-        "packages/core/*",
-        "packages/functions/*",
-        "packages/gateway/*"
-      ],
-      "test/*": [
-        "spec/*"
-      ]
+    // "extends": "@tsconfig/node18/tsconfig.json",
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./",
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ],
+            "test/*": [
+                "spec/*"
+            ]
+        },
     },
-  },
-  "compileOnSave": true,
-  "include": [
-    "packages",
-    "stacks",
-  ],
-  "tsc-alias": {
-    "verbose": true,
-    "resolveFullPaths": true,
-    "replacers": {
-      "base-url": {
-        "enabled": true
-      }
+    "compileOnSave": true,
+    "include": [
+        "src",
+        "spec"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "tsc-alias": {
+        "verbose": true,
+        "resolveFullPaths": true,
+        "replacers": {
+            "base-url": {
+                "enabled": true
+            }
+        }
     }
-  }
 }
