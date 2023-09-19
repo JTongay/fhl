@@ -23,8 +23,8 @@ export const League = gql`
     type EventsList implements PaginatedResponse {
         total: Int!
         data: [Event!]!
-        page: Int!
-        perPage: Int!
+        offset: Int!
+        limit: Int!
     }
 
     type Season  {

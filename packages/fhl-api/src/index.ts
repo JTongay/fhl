@@ -24,7 +24,7 @@ const server = new ApolloServer<any>(
             ...Unions
         },
         includeStacktraceInErrorResponses: true,
-        plugins: []
+        plugins: [],
     }
 )
 

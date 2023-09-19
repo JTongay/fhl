@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export const Query = gql`/* GraphQL */
+export const Query = gql`
     type Query {
         booyah: String!
         something: String!
