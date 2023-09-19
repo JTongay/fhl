@@ -2,7 +2,7 @@ import { Api, StackContext, use } from "sst/constructs";
 import { FHLDB } from "./FHLDb.js";
 
 export function FHLApi({ stack }: StackContext) {
-    const api = new Api(stack, "FHLApiMono", {
+    const api = new Api(stack, "FHLApi", {
         defaults: {
             function: {
                 bind: [use(FHLDB)]
