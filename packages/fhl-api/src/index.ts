@@ -30,5 +30,14 @@ const server = new ApolloServer<any>(
 
 export const handler = startServerAndCreateLambdaHandler(
     server,
-    handlers.createAPIGatewayProxyEventV2RequestHandler()
+    handlers.createAPIGatewayProxyEventV2RequestHandler(),
+    {
+        context: async (request) => {
+            const { cache } = server;
+            const token = request.event.headers["authorization"]
+            return {
+
+            }
+        }
+    }
 )
