@@ -1,4 +1,4 @@
-import { BaseContext } from "@/domain/Context";
+import { BaseContext, FHLContext } from "@/domain/Context";
 import { Event, EventResponse } from "@/domain/Event";
 import { ApiError } from "@/domain/errors/FHLApiError";
 import { BaseResolver } from "@/resolvers/base/BaseResolver";
@@ -8,7 +8,7 @@ export class EventResolver extends BaseResolver {
     protected async resolver(
         parent: never,
         args: { id: string },
-        context: BaseContext
+        context: FHLContext
     ): Promise<EventResponse> {
         try {
             const response = await fhlDb.selectFrom("events")

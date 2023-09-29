@@ -1,4 +1,4 @@
-import { ApolloServer } from "@apollo/server";
+import { ApolloServer, BaseContext } from "@apollo/server";
 import { Query } from "@/graphql/schema/Query";
 import { Mutation } from "@/graphql/schema/Mutation";
 import { QueryResolvers } from "@/graphql/resolvers/Query";
@@ -13,8 +13,12 @@ import { League } from "./graphql/schema/League";
 import { Enums } from "./graphql/schema/Enum";
 import { Interface } from "./graphql/schema/Interface";
 import { Unions } from "./graphql/resolvers/Union";
+import { UserDatasource } from "./datasources/UserDatasource";
+import { fhlDb } from "@fhl/core/src/db";
+import { Nullable } from "./util";
+import { FHLContext } from "./domain/Context";
 
-const server = new ApolloServer<any>(
+const server = new ApolloServer<FHLContext>(
     {
         introspection: true,
         typeDefs: [Query, Mutation, User, Game, League, Enums, Interface],
@@ -33,10 +37,11 @@ export const handler = startServerAndCreateLambdaHandler(
     handlers.createAPIGatewayProxyEventV2RequestHandler(),
     {
         context: async (request) => {
-            const { cache } = server;
-            const token = request.event.headers["authorization"]
             return {
-
+                authToken: request.event.headers["Authorization"] || null,
+                datasources: {
+                    userDatasource: new UserDatasource()
+                }
             }
         }
     }

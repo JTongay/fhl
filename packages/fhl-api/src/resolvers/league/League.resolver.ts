@@ -1,4 +1,4 @@
-import { BaseContext } from "@/domain/Context";
+import { FHLContext } from "@/domain/Context";
 import { BaseResolver } from "../base/BaseResolver";
 import { League, LeagueResponse } from "@/domain/League";
 import { ApiError } from "@/domain/errors/FHLApiError";
@@ -8,7 +8,7 @@ export class LeagueResolver extends BaseResolver {
     protected async resolver(
         parent: never,
         args: { id: string },
-        context: BaseContext
+        context: FHLContext
     ): Promise<LeagueResponse> {
         try {
             const response = await fhlDb.selectFrom("leagues")

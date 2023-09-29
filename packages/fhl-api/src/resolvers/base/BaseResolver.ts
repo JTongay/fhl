@@ -1,4 +1,4 @@
-import { BaseContext } from "@/domain/Context";
+import { FHLContext } from "@/domain/Context";
 import { FHLApiError } from "@/domain/errors/FHLApiError";
 import { NO_AUTH_HEADER } from "@/domain/errors/codes";
 
@@ -10,7 +10,7 @@ abstract class BaseResolver<
     public resolve = (
         parent: ParentType,
         args: ArgsType,
-        context: BaseContext
+        context: FHLContext
     ): ReturnType | Promise<ReturnType> => {
         return this.authCheck(parent, args, context);
     };
@@ -18,7 +18,7 @@ abstract class BaseResolver<
     private authCheck = (
         parent: ParentType,
         args: ArgsType,
-        context: BaseContext
+        context: FHLContext
     ): ReturnType | Promise<ReturnType> => {
         // if (!context.authToken) {
         //   throw new FHLApiError({
@@ -30,7 +30,7 @@ abstract class BaseResolver<
         return this.resolver(parent, args, context);
     };
 
-    protected getAuthToken = (context: BaseContext): string => {
+    protected getAuthToken = (context: FHLContext): string => {
         if (!context.authToken) {
             throw new FHLApiError({
                 code: NO_AUTH_HEADER,
@@ -44,7 +44,7 @@ abstract class BaseResolver<
     protected abstract resolver(
         parent: ParentType,
         args: ArgsType,
-        context: BaseContext
+        context: FHLContext
     ): ReturnType | Promise<ReturnType>
 }
 

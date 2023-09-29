@@ -1,10 +1,10 @@
 import { GraphQLResolveInfo } from "graphql/type";
 import { Nullable } from "@/util";
-import { BaseContext } from "@/domain/Context";
+import { FHLContext } from "@/domain/Context";
 
 export abstract class BaseUnionResolver<
     Value = unknown,
-    Context = BaseContext,
+    Context = FHLContext,
     Info = GraphQLResolveInfo
 > {
     public _resolveType = (

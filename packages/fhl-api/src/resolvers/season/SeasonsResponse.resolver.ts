@@ -1,4 +1,4 @@
-import { BaseContext } from "@/domain/Context";
+import { FHLContext } from "@/domain/Context";
 import { GraphQLResolveInfo } from "graphql";
 import { BaseUnionResolver } from "../base/BaseUnionResolver";
 import { SeasonsList, SeasonsResponse } from "@/domain/Season";
@@ -8,7 +8,7 @@ import { ApiError } from "@/domain/errors/FHLApiError";
 export class SeasonsResponseResolver extends BaseUnionResolver {
     protected resolveType(
         value: SeasonsResponse,
-        context: BaseContext,
+        context: FHLContext,
         info: GraphQLResolveInfo
     ): Nullable<string> {
         switch (value.constructor) {
