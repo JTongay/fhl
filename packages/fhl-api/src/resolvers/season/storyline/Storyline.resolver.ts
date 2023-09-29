@@ -1,4 +1,4 @@
-import { BaseContext } from "@/domain/Context";
+import { BaseContext, FHLContext } from "@/domain/Context";
 import { Season } from "@/domain/Season";
 import { Storyline, StorylineResponse } from "@/domain/Storyline";
 import { ApiError } from "@/domain/errors/FHLApiError";
@@ -9,7 +9,7 @@ export class StorylineResolver extends BaseResolver {
     protected async resolver(
         parent: Season,
         args: never,
-        context: BaseContext
+        context: FHLContext
     ): Promise<StorylineResponse> {
         try {
             const response = await fhlDb.selectFrom("user_storyline")

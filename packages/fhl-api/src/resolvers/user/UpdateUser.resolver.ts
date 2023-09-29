@@ -1,4 +1,4 @@
-import { BaseContext } from "@/domain/Context";
+import { FHLContext } from "@/domain/Context";
 import { BaseResolver } from "../base/BaseResolver";
 import { UpdateUserParams, User, UserResponse } from "@/domain/User";
 import { Input } from "@/util";
@@ -9,7 +9,7 @@ export class UpdateUserResolver extends BaseResolver {
     protected async resolver(
         parent: never,
         args: Input<UpdateUserParams>,
-        context: BaseContext
+        context: FHLContext
     ): Promise<UserResponse> {
         try {
             const response = await fhlDb.updateTable("users")

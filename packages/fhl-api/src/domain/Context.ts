@@ -1,3 +1,6 @@
+import { UserDatasource } from "@/datasources/UserDatasource";
+import { Nullable } from "@/util";
+
 const UNKNOWN_HEADER = "unknown";
 
 export enum Platform {
@@ -6,13 +9,19 @@ export enum Platform {
     WEB = "Web"
 }
 
+export type FHLContext = {
+    authToken: Nullable<string>;
+    datasources: {
+        userDatasource: UserDatasource;
+    }
+}
+
 export type BaseContext = {
     authToken?: string;
     appName: string;
     appVersion: string;
     platform: Platform;
     userAgent: string;
-    mobileApiVersion: string;
 }
 
 // Can't find the type for the args?
@@ -23,7 +32,6 @@ const contextBuilder = async ({ req }: any): Promise<BaseContext> => {
         appVersion: req.headers["app-version"] ?? UNKNOWN_HEADER,
         platform: req.headers["platform"] ?? UNKNOWN_HEADER,
         userAgent: req.headers["user-agent"] ?? UNKNOWN_HEADER,
-        mobileApiVersion: "1.0", // TODO get the version from package.json
     };
 
     if (authToken) {

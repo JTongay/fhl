@@ -1,4 +1,4 @@
-import { BaseContext } from "@/domain/Context";
+import { FHLContext } from "@/domain/Context";
 import { BaseResolver } from "../base/BaseResolver";
 import { Input } from "@/util";
 import { CreateUserParams, User, UserResponse } from "@/domain/User";
@@ -9,7 +9,7 @@ export class CreateUserResolver extends BaseResolver {
     protected async resolver(
         parent: never,
         args: Input<CreateUserParams>,
-        context: BaseContext
+        context: FHLContext
     ): Promise<UserResponse> {
         try {
             const response = await fhlDb
