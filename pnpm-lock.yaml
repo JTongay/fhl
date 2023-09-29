@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      dataloader:
-        specifier: ^2.2.2
-        version: 2.2.2
     devDependencies:
       '@changesets/changelog-github':
         specifier: ^0.4.8
@@ -97,6 +93,9 @@ importers:
       aws-cdk-lib:
         specifier: 2.91.0
         version: 2.91.0(constructs@10.2.69)
+      dataloader:
+        specifier: ^2.2.2
+        version: 2.2.2
       graphql:
         specifier: ^16.8.0
         version: 16.8.0

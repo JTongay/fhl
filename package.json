@@ -39,8 +39,5 @@
   "license": "ISC",
   "_moduleAliases": {
     "$": "dist"
-  },
-  "dependencies": {
-    "dataloader": "^2.2.2"
   }
 }
