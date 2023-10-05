@@ -1,3 +1,5 @@
+import { SeasonDatasource } from "@/datasources/SeasonDatasource";
+import { StorylineDatasource } from "@/datasources/StorylineDatasource";
 import { UserDatasource } from "@/datasources/UserDatasource";
 import { Nullable } from "@/util";
 
@@ -12,7 +14,9 @@ export enum Platform {
 export type FHLContext = {
     authToken: Nullable<string>;
     datasources: {
-        userDatasource: UserDatasource;
+        userDatasource: UserDatasource,
+        seasonDatasource: SeasonDatasource,
+        storylineDatasource: StorylineDatasource
     }
 }
 

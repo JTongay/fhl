@@ -14,17 +14,20 @@ import { Enums } from "./graphql/schema/Enum";
 import { Interface } from "./graphql/schema/Interface";
 import { Unions } from "./graphql/resolvers/Union";
 import { UserDatasource } from "./datasources/UserDatasource";
-import { fhlDb } from "@fhl/core/src/db";
-import { Nullable } from "./util";
 import { FHLContext } from "./domain/Context";
+import { Season } from "./graphql/schema/Season";
+import { SeasonDatasource } from "./datasources/SeasonDatasource";
+import { SeasonResolvers } from "./graphql/resolvers/Season";
+import { StorylineDatasource } from "./datasources/StorylineDatasource";
 
 const server = new ApolloServer<FHLContext>(
     {
         introspection: true,
-        typeDefs: [Query, Mutation, User, Game, League, Enums, Interface],
+        typeDefs: [Query, Mutation, User, Game, League, Season, Enums, Interface],
         resolvers: {
             ...QueryResolvers,
             ...MutationResolvers,
+            ...SeasonResolvers,
             ...Unions
         },
         includeStacktraceInErrorResponses: true,
@@ -40,7 +43,9 @@ export const handler = startServerAndCreateLambdaHandler(
             return {
                 authToken: request.event.headers["Authorization"] || null,
                 datasources: {
-                    userDatasource: new UserDatasource()
+                    userDatasource: new UserDatasource(),
+                    seasonDatasource: new SeasonDatasource(),
+                    storylineDatasource: new StorylineDatasource()
                 }
             }
         }

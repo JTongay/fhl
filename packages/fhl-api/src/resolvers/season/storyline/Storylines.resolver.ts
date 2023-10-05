@@ -15,15 +15,16 @@ export class StorylinesResolver extends BaseResolver {
         try {
             const response = await fhlDb.selectFrom("storylines")
                 .innerJoin("user_storyline", "user_storyline.storyline_id", "storylines.id")
-                .where("season_id", "=", +parent.id)
-                .select((col) => col.fn.sum<number>("id").as("season_storylines"))
+                .where("storylines.season_id", "=", +parent.id)
+                // TODO get Pagination to return proper total
+                // .select((col) => col.fn.sum<number>("storylines.id").as("season_storylines"))
                 .limit(args.limit)
                 .offset(args.offset)
                 .selectAll()
                 .execute()
-
-            const storylines = response.map((storyline) => new Storyline(storyline))
-            return new StorylinesList(args, response[0].season_storylines, storylines)
+            const userIds = response.map((value) => value.user_id)
+            const storylines = response.map((storyline) => new Storyline(storyline, userIds))
+            return new StorylinesList(args, 1, storylines)
         } catch (e: unknown) {
             return new ApiError(6002, e.toString())
         }

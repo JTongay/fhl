@@ -27,32 +27,6 @@ export const League = gql`
         limit: Int!
     }
 
-    type Season  {
-        id: ID!
-        year: Int!
-        isActive: Boolean!
-        storylines: [Storyline!]!
-        awards: [Award!]!
-        games(limit: Int, offset: Int): [Game!]!
-        # createdAt: Date!
-        # updatedAt: Date!
-        ## schedule
-    }
-
-    type SeasonsList implements PaginatedResponse {
-        data: [Season!]!
-        limit: Int!
-        offset: Int!
-        total: Int!
-    }
-
-    type Storyline  {
-        id: ID!
-        description: String!
-        # createdAt: Date!
-        # updatedAt: Date!
-    }
-
     type Award {
         id: ID!
         name: String!
@@ -73,9 +47,12 @@ export const League = gql`
         members: [User!]!
     }
 
-    union SeasonResponse = ApiError | Season
-    union SeasonsResponse = ApiError | SeasonsList
+    input CreateLeagueInput {
+        name: String!
+    }
+
     union LeagueResponse = ApiError | League
     union EventResponse = ApiError | Event
     union EventsResponse = ApiError | EventsList
+    union StorylinesResponse = ApiError | StorylinesList
 `

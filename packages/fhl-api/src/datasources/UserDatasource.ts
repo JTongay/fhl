@@ -1,5 +1,7 @@
 import DataLoader from 'dataloader';
 import { fhlDb } from "@fhl/core/src/db";
+import { Selectable } from 'kysely';
+import { Users } from '@fhl/core/src/sql.generated';
 
 export class UserDatasource {
     private batchUsers = new DataLoader(async (ids: number[]) => {
@@ -12,6 +14,10 @@ export class UserDatasource {
         }, {});
         return ids.map((id) => userIdsToUserMap[id]);
     });
+
+    async getUsers(ids: number[]): Promise<Selectable<Users[]>> {
+        return this.batchUsers.loadMany(ids)
+    }
 
     async getUser(id: number) {
         return this.batchUsers.load(id);

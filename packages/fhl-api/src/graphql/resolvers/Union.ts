@@ -6,6 +6,8 @@ import { EventResponseResolver } from "@/resolvers/league/event/EventResponse.re
 import { EventsResponseResolver } from "@/resolvers/league/event/EventsResponse.resolver";
 import { SeasonResponseResolver } from "@/resolvers/season/SeasonResponse.resolver";
 import { SeasonsResponseResolver } from "@/resolvers/season/SeasonsResponse.resolver";
+import { StorylineResponseResolver } from "@/resolvers/season/storyline/StorylineResponse.resolver";
+import { StorylinesResponseResolver } from "@/resolvers/season/storyline/StorylinesResponse.resolver";
 import { UserResponseResolver } from "@/resolvers/user/UserResponse.resolver";
 import { UsersResponseResolver } from "@/resolvers/user/UsersResponse.resolver";
 
@@ -18,5 +20,7 @@ export const Unions = typeResolverMap({
     SeasonResponse: new SeasonResponseResolver(),
     SeasonsResponse: new SeasonsResponseResolver(),
     EventResponse: new EventResponseResolver(),
-    EventsResponse: new EventsResponseResolver()
+    EventsResponse: new EventsResponseResolver(),
+    StorylinesResponse: new StorylinesResponseResolver(),
+    StorylineResponse: new StorylineResponseResolver()
 });
