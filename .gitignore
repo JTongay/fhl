@@ -1,5 +1,5 @@
 node_modules/
 generated/
-codegen.ts
 .env
 .sst/
+.idea/
