@@ -90,6 +90,12 @@ importers:
       '@fhl/core':
         specifier: workspace:*
         version: link:../core
+      '@graphql-tools/graphql-file-loader':
+        specifier: ^8.0.0
+        version: 8.0.0(graphql@16.8.0)
+      '@graphql-tools/load':
+        specifier: ^8.0.0
+        version: 8.0.0(graphql@16.8.0)
       aws-cdk-lib:
         specifier: 2.91.0
         version: 2.91.0(constructs@10.2.69)
@@ -115,12 +121,6 @@ importers:
       '@graphql-codegen/schema-ast':
         specifier: ^4.0.0
         version: 4.0.0(graphql@16.8.0)
-      '@graphql-tools/graphql-file-loader':
-        specifier: ^8.0.0
-        version: 8.0.0(graphql@16.8.0)
-      '@graphql-tools/load':
-        specifier: ^8.0.0
-        version: 8.0.0(graphql@16.8.0)
       '@tsconfig/node18':
         specifier: ^18.2.1
         version: 18.2.1
@@ -3486,7 +3486,6 @@ packages:
       graphql: 16.8.0
       tslib: 2.6.2
       unixify: 1.0.0
-    dev: true
 
   /@graphql-tools/graphql-tag-pluck@8.0.2(graphql@16.8.0):
     resolution: {integrity: sha512-U6fE4yEHxuk/nqmPixHpw1WhqdS6aYuaV60m1bEmUmGJNbpAhaMBy01JncpvpF15yZR5LZ0UjkHg+A3Lhoc8YQ==}
@@ -3516,7 +3515,6 @@ packages:
       graphql: 16.8.0
       resolve-from: 5.0.0
       tslib: 2.6.2
-    dev: true
 
   /@graphql-tools/json-file-loader@8.0.0(graphql@16.8.0):
     resolution: {integrity: sha512-ki6EF/mobBWJjAAC84xNrFMhNfnUFD6Y0rQMGXekrUgY0NdeYXHU0ZUgHzC9O5+55FslqUmAUHABePDHTyZsLg==}
@@ -3542,7 +3540,6 @@ packages:
       graphql: 16.8.0
       p-limit: 3.1.0
       tslib: 2.6.2
-    dev: true
 
   /@graphql-tools/merge@8.4.2(graphql@16.8.0):
     resolution: {integrity: sha512-XbrHAaj8yDuINph+sAfuq3QCZ/tKblrTLOpirK0+CAgNlZUCHs0Fa+xtMUURgwCVThLle1AF7svJCxFizygLsw==}
@@ -3562,7 +3559,6 @@ packages:
       '@graphql-tools/utils': 10.0.6(graphql@16.8.0)
       graphql: 16.8.0
       tslib: 2.6.2
-    dev: true
 
   /@graphql-tools/optimize@2.0.0(graphql@16.8.0):
     resolution: {integrity: sha512-nhdT+CRGDZ+bk68ic+Jw1OZ99YCDIKYA5AlVAnBHJvMawSx9YQqQAIj4refNc1/LRieGiuWvhbG3jvPVYho0Dg==}
@@ -3699,7 +3695,6 @@ packages:
       graphql: 16.8.0
       tslib: 2.6.2
       value-or-promise: 1.0.12
-    dev: true
 
   /@graphql-tools/schema@9.0.19(graphql@16.8.0):
     resolution: {integrity: sha512-oBRPoNBtCkk0zbUsyP4GaIzCt8C0aCI4ycIRUL67KK5pOHljKLBBtGT+Jr6hkzA74C8Gco8bpZPe7aWFjiaK2w==}
@@ -3803,7 +3798,6 @@ packages:
       dset: 3.1.2
       graphql: 16.8.0
       tslib: 2.6.2
-    dev: true
 
   /@graphql-tools/utils@9.2.1(graphql@16.8.0):
     resolution: {integrity: sha512-WUw506Ql6xzmOORlriNrD6Ugx+HjVgYxt9KCXD9mHAak+eaXSwuGGPyE60hy9xaDEoXKBsG7SkG69ybitaVl6A==}
@@ -9225,7 +9219,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       remove-trailing-separator: 1.1.0
-    dev: true
 
   /normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
@@ -10102,7 +10095,6 @@ packages:
 
   /remove-trailing-separator@1.1.0:
     resolution: {integrity: sha512-/hS+Y0u3aOfIETiaiirUFwDBDzmXPvO+jAfKTitUngIPzdKc6Z0LoFjM/CK5PL4C+eKwHohlHAb6H0VFfmmUsw==}
-    dev: true
 
   /remove-trailing-spaces@1.0.8:
     resolution: {integrity: sha512-O3vsMYfWighyFbTd8hk8VaSj9UAGENxAtX+//ugIst2RMk5e03h6RoIS+0ylsFxY1gvmPuAY/PO4It+gPEeySA==}
@@ -10127,7 +10119,6 @@ packages:
   /resolve-from@5.0.0:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
     engines: {node: '>=8'}
-    dev: true
 
   /resolve-pkg-maps@1.0.0:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
@@ -11378,7 +11369,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       normalize-path: 2.1.1
-    dev: true
 
   /unpipe@1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
