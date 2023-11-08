@@ -33,6 +33,6 @@ export async function up(db) {
  * @param db {Kysely<any>}
  */
 export async function down(db) {
-    await db.schema.dropTable("user_storyline").ifExists().dropTable();
-    await db.schema.dropTable("storylines").ifExists().dropTable();
+    await db.schema.dropTable("user_storyline").ifExists().execute();
+    await db.schema.dropTable("storylines").ifExists().execute();
 }

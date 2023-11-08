@@ -36,6 +36,6 @@ export async function up(db) {
  * @param db {Kysely<any>}
  */
 export async function down(db) {
-    await db.schema.dropTable("award_season").execute()
-    await db.schema.dropTable("awards").execute()
+    await db.schema.dropTable("award_season").ifExists().execute()
+    await db.schema.dropTable("awards").ifExists().execute()
 }

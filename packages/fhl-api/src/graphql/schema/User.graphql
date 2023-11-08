@@ -6,7 +6,7 @@ type User {
     fullName: String!
     email: String! # TODO create an email scalar here
     avatar: String!
-    awards(limit: Int, offset: Int): [Award!]!
+    awards(limit: Int!, offset: Int!): [Award!]!
     currentTeam: Team
     wins: Int!
     losses: Int!

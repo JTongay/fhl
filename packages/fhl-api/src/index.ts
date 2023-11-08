@@ -13,12 +13,16 @@ import {SeasonResolvers} from "./graphql/resolvers/Season";
 import {StorylineDatasource} from "./datasources/StorylineDatasource";
 import {loadSchemaSync} from "@graphql-tools/load";
 import {GraphQLFileLoader} from "@graphql-tools/graphql-file-loader";
+import path from "path";
 
 function loadFHLSchema() {
-  return loadSchemaSync("src/graphql/schema/**/*.graphql",
-      {
-        loaders: [new GraphQLFileLoader()],
-      });
+  // TODO: For some reason this is looking inside of the .sst directory in the root of the project
+  return loadSchemaSync(path.join(
+      __dirname, "../", "../", "../", "../", "../", "../", "packages/fhl-api/src/graphql/schema/**/*.graphql"
+  ),
+  {
+    loaders: [new GraphQLFileLoader()],
+  });
 }
 
 const server = new ApolloServer<FHLContext>(

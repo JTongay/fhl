@@ -10,8 +10,6 @@
     "pnpm": "8"
   },
   "scripts": {
-    "web-local": "pnpm --filter packages dev",
-    "api-local": "pnpm --filter fhl-api dev",
     "dev": "sst dev",
     "build": "sst build",
     "deploy": "sst deploy",
