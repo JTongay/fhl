@@ -17,7 +17,8 @@
     "compileOnSave": true,
     "include": [
         "src",
-        "spec"
+        "spec",
+        "codegen.ts"
     ],
     "exclude": [
         "node_modules"

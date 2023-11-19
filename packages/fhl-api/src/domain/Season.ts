@@ -27,3 +27,19 @@ export class SeasonsList extends PaginatedResponse<Season> {
         super(paginationParams, total, data)
     }
 }
+
+export interface CreateSeasonParams {
+    leagueId: string;
+    setActive: boolean;
+    year: number;
+}
+
+export interface UpdateSeasonParams {
+    id: string;
+    setActive: boolean;
+    year: number;
+}
+
+export interface DeleteSeasonParams {
+    id: string;
+}

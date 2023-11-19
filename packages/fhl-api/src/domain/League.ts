@@ -17,3 +17,7 @@ export class League {
 }
 
 export type LeagueResponse = League | ApiError
+
+export interface CreateLeagueParams {
+    name: string;
+}

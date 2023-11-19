@@ -10,19 +10,19 @@ export interface Pagination {
 }
 
 export class PaginatedResponse<T> {
-    limit: number;
-    offset: number;
-    total: number;
-    data: T[];
+  limit: number;
+  offset: number;
+  total: number;
+  data: T[];
 
-    constructor(
-        paginationParams: Pagination,
-        total: number,
-        data: T[]
-    ) {
-        this.limit = paginationParams.limit
-        this.offset = paginationParams.offset
-        this.total = total
-        this.data = data;
-    }
+  constructor(
+      paginationParams: Pagination,
+      total: number,
+      data: T[]
+  ) {
+    this.limit = paginationParams.limit;
+    this.offset = paginationParams.offset;
+    this.total = total;
+    this.data = data;
+  }
 }

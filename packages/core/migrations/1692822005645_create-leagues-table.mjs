@@ -61,14 +61,17 @@ export async function up(db) {
             col.notNull().defaultTo(sql`now()`)
         )
         .execute()
+
+    // Always make sure that FHL exists
+    await db.insertInto("leagues").values({ name: "FHL" }).execute();
 }
 
 /**
  * @param db {Kysely<any>}
  */
 export async function down(db) {
-    await db.schema.dropTable("leagues").ifExists().dropTable();
-    await db.schema.dropTable("seasons").ifExists().dropTable();
-    await db.schema.dropTable("events").ifExists().dropTable();
-    await db.schema.dropTable("teams").ifExists().dropTable();
+    await db.schema.dropTable("teams").ifExists().execute();
+    await db.schema.dropTable("events").ifExists().execute();
+    await db.schema.dropTable("seasons").ifExists().execute();
+    await db.schema.dropTable("leagues").ifExists().execute();
 }
