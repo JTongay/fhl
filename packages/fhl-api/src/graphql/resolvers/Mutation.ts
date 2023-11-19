@@ -7,6 +7,7 @@ import {CreateStorylineResolver} from "@/resolvers/season/storyline/CreateStoryl
 import {CreateUserResolver} from "@/resolvers/user/CreateUser.resolver";
 import {UpdateUserResolver} from "@/resolvers/user/UpdateUser.resolver";
 import {UpdateStorylineResolver} from "@/resolvers/season/storyline/UpdateStoryline.resolver";
+import {DeleteStorylineResolver} from "@/resolvers/season/storyline/DeleteStoryline.resolver";
 
 export const MutationResolvers = resolverMap({
   Mutation: {
@@ -18,5 +19,6 @@ export const MutationResolvers = resolverMap({
     createLeague: new CreateLeagueResolver(),
     createStoryline: new CreateStorylineResolver(),
     updateStoryline: new UpdateStorylineResolver(),
+    deleteStoryline: new DeleteStorylineResolver(),
   },
 });
