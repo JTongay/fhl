@@ -1,30 +1,31 @@
-import { PaginatedResponse, Pagination } from "@/util";
-import { Storylines } from "@fhl/core/src/sql.generated";
-import { Selectable } from "kysely";
-import { ApiError } from "./errors/FHLApiError";
+import {PaginatedResponse, Pagination} from "@/util";
+import {Storylines} from "@fhl/core/src/sql.generated";
+import {Selectable} from "kysely";
+import {ApiError} from "./errors/FHLApiError";
 
 export class Storyline {
-    id: string;
-    description: string;
-    createdAt: Date;
-    updatedAt: Date;
-    seasonId: string;
-    userIds: number[];
+  id: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+  seasonId: string;
+  userIds: number[];
 
-    constructor(response: Selectable<Storylines>, userIds?: number[]) {
-        this.id = response.id.toString();
-        this.description = response.description;
-        this.createdAt = response.created_at;
-        this.updatedAt = response.updated_at;
-        this.seasonId = response.season_id.toString();
-        this.userIds = userIds || [];
-    }
+
+  constructor(response: Selectable<Storylines>, userIds?: number[]) {
+    this.id = response.id.toString();
+    this.description = response.description;
+    this.createdAt = response.created_at;
+    this.updatedAt = response.updated_at;
+    this.seasonId = response.season_id.toString();
+    this.userIds = userIds || [];
+  }
 }
 
 export class StorylinesList extends PaginatedResponse<Storyline> {
-    constructor(paginationParams: Pagination, total: number, data: Storyline[]) {
-        super(paginationParams, total, data)
-    }
+  constructor(paginationParams: Pagination, total: number, data: Storyline[]) {
+    super(paginationParams, total, data);
+  }
 }
 
 export interface CreateStorylineParams {

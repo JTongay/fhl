@@ -61,6 +61,10 @@ input UpdateStorylineInput {
     users: [ID!]!
 }
 
+input DeleteStorylineInput {
+    id: ID!
+}
+
 union SeasonResponse = ApiError | Season
 union SeasonsResponse = ApiError | SeasonsList
 union StorylineResponse = ApiError | Storyline

@@ -6,4 +6,7 @@ type Mutation {
     updateSeason(input: UpdateSeasonInput!): SeasonResponse!
     deleteSeason(input: DeleteSeasonInput!): Boolean!
     createStoryline(input: CreateStorylineInput!): StorylineResponse!
+    "Updates the storyline"
+    updateStoryline(input: UpdateStorylineInput!): StorylineResponse!
+    deleteStoryline(input: DeleteStorylineInput!): Boolean!
 }

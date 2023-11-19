@@ -5,14 +5,14 @@ type User {
     lastName: String!
     fullName: String!
     email: String! # TODO create an email scalar here
+    createdAt: Date!
+    updatedAt: Date!
     avatar: String!
     awards(limit: Int!, offset: Int!): [Award!]!
     currentTeam: Team
     wins: Int!
     losses: Int!
     consolesOwned: [Console!]!
-    # createdAt: Date!
-    # updatedAt: Date!
 }
 
 input CreateUserInput {

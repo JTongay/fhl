@@ -26,9 +26,10 @@ export class UsersResolver extends BaseResolver {
       const {sum} = fhlDb.fn;
       const total = await fhlDb.selectFrom("users")
           .select(
-              sum<number | null>("id").as("all_users")
+              sum<number>("id").as("all_users")
           )
           .executeTakeFirst();
+      console.log(total, "total");
       const response = await fhlDb.selectFrom("users")
           .selectAll()
           .limit(args.limit)

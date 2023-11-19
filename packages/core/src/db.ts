@@ -12,8 +12,8 @@ export const fhlDb = new Kysely<Database>({
             resourceArn: RDS.fhldb.clusterArn,
             database: RDS.fhldb.defaultDatabaseName,
             client: new RDSData({})
-        }
-    })
+        },
+    }),
 });
 
 export type Row = {
