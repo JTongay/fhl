@@ -2,6 +2,7 @@ import {SeasonDatasource} from "@/datasources/SeasonDatasource";
 import {StorylineDatasource} from "@/datasources/StorylineDatasource";
 import {UserDatasource} from "@/datasources/UserDatasource";
 import {Nullable} from "@/util";
+import {AwardDatasource} from "@/datasources/AwardDatasource";
 
 const UNKNOWN_HEADER = "unknown";
 
@@ -16,7 +17,8 @@ export type FHLContext = {
     datasources: {
         userDatasource: UserDatasource,
         seasonDatasource: SeasonDatasource,
-        storylineDatasource: StorylineDatasource
+        storylineDatasource: StorylineDatasource,
+        awardDatasource: AwardDatasource,
     }
 }
 

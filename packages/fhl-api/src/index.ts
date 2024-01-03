@@ -14,6 +14,7 @@ import {StorylineDatasource} from "./datasources/StorylineDatasource";
 import {loadSchemaSync} from "@graphql-tools/load";
 import {GraphQLFileLoader} from "@graphql-tools/graphql-file-loader";
 import path from "path";
+import {AwardDatasource} from "@/datasources/AwardDatasource";
 
 function loadFHLSchema() {
   // TODO: For some reason this is looking inside of the .sst directory in the root of the project
@@ -51,6 +52,7 @@ export const handler = startServerAndCreateLambdaHandler(
             userDatasource: new UserDatasource(),
             seasonDatasource: new SeasonDatasource(),
             storylineDatasource: new StorylineDatasource(),
+            awardDatasource: new AwardDatasource(),
           },
         };
       },

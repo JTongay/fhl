@@ -4,7 +4,8 @@ type Season {
     isActive: Boolean!
     storyline(id: ID!): StorylineResponse!
     storylines(limit: Int, offset: Int): StorylinesResponse!
-    awards: [Award!]!
+    awards(limit: Int, offset: Int): AwardsResponse!
+    award(id: ID!): AwardResponse!
     games(limit: Int, offset: Int): [Game!]!
     createdAt: Date!
     updatedAt: Date!
