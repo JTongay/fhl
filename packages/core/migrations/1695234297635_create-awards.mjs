@@ -7,6 +7,7 @@ export async function up(db) {
     await db.schema.createTable("awards")
         .addColumn("id", "serial", (col) => col.primaryKey())
         .addColumn("name", "text", (col) => col.notNull().unique())
+        .addColumn("description", "text")
         .addColumn("created_at", "timestamp", (col) =>
             col.notNull().defaultTo(sql`now()`)
         )

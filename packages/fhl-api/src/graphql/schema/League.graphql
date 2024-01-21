@@ -26,10 +26,11 @@ type EventsList implements PaginatedResponse {
 type Award {
     id: ID!
     name: String!
+    description: String
     createdAt: Date!
     updatedAt: Date!
-    winner: User!
-    presenter: User!
+    winners: [User!]!
+    presenters: [User!]!
     season: Season!
 }
 
@@ -58,6 +59,7 @@ input CreateLeagueInput {
 input CreateAwardInput {
     name: String!
     seasonId: ID!
+    description: String
     winningUserIds: [ID!]
     presentingUserIds: [ID!]
 }

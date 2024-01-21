@@ -1,14 +1,15 @@
-import {Nullable, PaginatedResponse, Pagination} from "@/util";
-import {ApiError} from "@/domain/errors/FHLApiError";
+import { Nullable, PaginatedResponse, Pagination } from "@/util";
+import { ApiError } from "@/domain/errors/FHLApiError";
 
 export interface Award {
-    id: string;
-    name: string;
-    createdAt: Date;
-    updatedAt: Date;
-    seasonId: string;
-    winningUserIds: string[];
-    presentingUserIds: string[];
+  id: string;
+  name: string;
+  description: Nullable<string>;
+  createdAt: Date;
+  updatedAt: Date;
+  seasonId: string;
+  winningUserIds: string[];
+  presentingUserIds: string[];
 }
 
 export class AwardsList extends PaginatedResponse<Award> {
@@ -21,8 +22,9 @@ export type AwardsResponse = AwardsList | ApiError;
 export type AwardResponse = Award | ApiError;
 
 export interface CreateAwardParams {
-    name: string;
-    seasonId: string;
-    winningUserIds?: string[];
-    presentingUserIds?: string[];
+  name: string;
+  seasonId: string;
+  description: Nullable<string>;
+  winningUserIds?: string[];
+  presentingUserIds?: string[];
 }

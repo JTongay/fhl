@@ -11,6 +11,7 @@ export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 export interface Awards {
   id: Generated<number>;
   name: string;
+  description: string | null;
   created_at: Generated<Timestamp>;
   updated_at: Generated<Timestamp>;
 }
