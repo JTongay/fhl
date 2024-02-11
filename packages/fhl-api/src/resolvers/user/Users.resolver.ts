@@ -17,16 +17,6 @@ export class UsersResolver extends BaseResolver {
     args: Pagination,
     context: FHLContext
   ): Promise<UsersResponse> {
-    // if (parent) {
-    //     try {
-    //         const result = await fhlDb.selectFrom('users')
-    //             .where("id", "in", parent.userIds)
-    //             .selectAll()
-    //             .limit(args.limit)
-    //             .offset(args.offset)
-    //             .execute()
-    //     }
-    // }
     try {
       const { count } = fhlDb.fn;
       const total = await fhlDb.selectFrom("users")

@@ -11,6 +11,7 @@ import { FHLContext } from "./domain/Context";
 import { SeasonDatasource } from "./datasources/SeasonDatasource";
 import { SeasonResolvers } from "./graphql/resolvers/Season";
 import { AwardResolvers } from "./graphql/resolvers/Award";
+import { UserResolvers } from "./graphql/resolvers/User";
 import { StorylineDatasource } from "./datasources/StorylineDatasource";
 import { loadSchemaSync } from "@graphql-tools/load";
 import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
@@ -34,6 +35,7 @@ const server = new ApolloServer<FHLContext>(
     resolvers: {
       ...QueryResolvers,
       ...MutationResolvers,
+      ...UserResolvers,
       ...SeasonResolvers,
       ...AwardResolvers,
       ...Unions,

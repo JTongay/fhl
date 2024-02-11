@@ -1,11 +1,14 @@
 import DataLoader from "dataloader";
 import { fhlDb } from "@fhl/core/src/db";
-import { Award, CreateAwardParams } from "@/domain/Award";
-import { Transaction } from "kysely";
-import { Nullable } from "@/util";
-import { Database } from "@fhl/core/src/sql.generated";
+import { Award, AwardsList, CreateAwardParams } from "@/domain/Award";
+import { Pagination } from "@/util";
+import { AwardRepository } from "@/repositories/Award.repository";
 
 export class AwardDatasource {
+  private awardRepo: AwardRepository
+  constructor() {
+    this.awardRepo = new AwardRepository()
+  }
   private batchAwards = new DataLoader(async (ids: number[]) => {
     const awardsList = await fhlDb
       .selectFrom("award_season_winner")
@@ -18,7 +21,7 @@ export class AwardDatasource {
     const awardIdsToAwardMap = awardsList.reduce((mapping, award) => {
       mapping[award.id] = award;
       return mapping;
-    }, {} as any); // TODO fix the type here
+    }, {} as { [key: string]: any }); // TODO fix the type here
     return ids.map((id) => awardIdsToAwardMap[id]);
   });
 
@@ -32,83 +35,28 @@ export class AwardDatasource {
 
   async createAward(params: CreateAwardParams): Promise<Award> {
     try {
-      const { winningUserIds, presentingUserIds } = params;
-      return await fhlDb.transaction().execute(async (db) => {
-        const award = await db
-          .insertInto("awards")
-          .values({
-            name: params.name,
-            description: params.description
-          })
-          .returningAll()
-          .executeTakeFirstOrThrow();
-        const winningUsers = await this.createAwardWinners(db, +params.seasonId, award.id, winningUserIds)
-        const presentingUsers = await this.createAwardPresenters(db, +params.seasonId, award.id, presentingUserIds)
-        return {
-          id: award.id.toString(),
-          name: award.name,
-          description: award.description,
-          createdAt: award.created_at,
-          updatedAt: award.updated_at,
-          seasonId: params.seasonId,
-          winningUserIds: winningUsers,
-          presentingUserIds: presentingUsers
-        };
-      });
+      return await this.awardRepo.createAward(params);
     } catch (e) {
       console.log(e);
       throw e;
     }
   }
 
-  private async createAwardPresenters(
-    db: Transaction<Database>,
-    seasonId: number,
-    awardId: number,
-    presenters?: string[]
-  ): Promise<string[]> {
-    const result: string[] = []
-    if (presenters && presenters.length) {
-      for await (const presenter of presenters) {
-        const response = await db.insertInto("award_season_presenter")
-          .values({
-            season_id: seasonId,
-            award_id: awardId,
-            presenter_id: +presenter,
-          })
-          .returning("presenter_id")
-          .executeTakeFirstOrThrow();
-        if (response && response.presenter_id) {
-          result.push(response.presenter_id.toString())
-        }
-      }
-    }
-    return Promise.resolve(result);
+  async getAwardForSeason(
+    { seasonId, awardId }: { seasonId: number, awardId: number }
+  ): Promise<Award> {
+    return await this.awardRepo.getAwardForSeason({ seasonId, awardId })
   }
 
-  private async createAwardWinners(
-    db: Transaction<Database>,
-    seasonId: number,
-    awardId: number,
-    winners?: string[]
-  ): Promise<string[]> {
-    const result: string[] = [];
-    if (winners && winners.length) {
-      for await (const winner of winners) {
-        const response = await db.insertInto("award_season_winner")
-          .values({
-            season_id: seasonId,
-            award_id: awardId,
-            winning_user_id: +winner,
-          })
-          .returning("winning_user_id")
-          .executeTakeFirstOrThrow();
+  async getAwardsForSeason(seasonId: number, pagination: Pagination) {
+    const awards = await this.awardRepo.getAwardsForSeason(seasonId);
 
-        if (response && response.winning_user_id) {
-          result.push(response.winning_user_id.toString())
-        }
-      }
-    }
-    return Promise.resolve(result);
+    return new AwardsList(pagination, awards.length, awards);
+  }
+
+  async getAwardsForUser(userId: number, pagination: Pagination) {
+    const awards = await this.awardRepo.getAwardsForUser(userId);
+
+    return new AwardsList(pagination, awards.length, awards);
   }
 }
