@@ -54,11 +54,11 @@ importers:
         specifier: ^2.1456.0
         version: 2.1456.0
       kysely:
-        specifier: 0.25.0
-        version: 0.25.0
+        specifier: 0.26.3
+        version: 0.26.3
       kysely-data-api:
         specifier: ^0.2.1
-        version: 0.2.1(@aws-sdk/client-rds-data@3.410.0)(kysely@0.25.0)
+        version: 0.2.1(@aws-sdk/client-rds-data@3.410.0)(kysely@0.26.3)
       ulid:
         specifier: ^2.3.0
         version: 2.3.0

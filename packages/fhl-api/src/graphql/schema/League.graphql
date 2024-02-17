@@ -3,8 +3,8 @@ type League {
     teams: [Team!]!
     name: String!
     seasons: [Season!]!
-     createdAt: Date!
-     updatedAt: Date!
+    createdAt: Date!
+    updatedAt: Date!
 }
 
 type Event {
@@ -26,10 +26,19 @@ type EventsList implements PaginatedResponse {
 type Award {
     id: ID!
     name: String!
-    # winner: User!
+    description: String
+    createdAt: Date!
+    updatedAt: Date!
+    winners: [User!]!
+    presenters: [User!]!
     season: Season!
-    # createdAt: Date!
-    # updatedAt: Date!
+}
+
+type AwardsList implements PaginatedResponse {
+    total: Int!
+    data: [Award!]!
+    offset: Int!
+    limit: Int!
 }
 
 type Team {
@@ -37,8 +46,8 @@ type Team {
     name: String! # Enum perhaps?
     wins: Int!
     losses: Int!
-    # createdAt: Date!
-    # updatedAt: Date!
+    createdAt: Date!
+    updatedAt: Date!
     captain: User!
     members: [User!]!
 }
@@ -47,7 +56,16 @@ input CreateLeagueInput {
     name: String!
 }
 
+input CreateAwardInput {
+    name: String!
+    seasonId: ID!
+    description: String
+    winningUserIds: [ID!]
+    presentingUserIds: [ID!]
+}
+
 union LeagueResponse = ApiError | League
 union EventResponse = ApiError | Event
 union EventsResponse = ApiError | EventsList
-union StorylinesResponse = ApiError | StorylinesList
+union AwardResponse = ApiError | Award
+union AwardsResponse = ApiError | AwardsList

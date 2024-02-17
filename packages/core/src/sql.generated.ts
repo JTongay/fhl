@@ -11,15 +11,22 @@ export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 export interface Awards {
   id: Generated<number>;
   name: string;
+  description: string | null;
   created_at: Generated<Timestamp>;
   updated_at: Generated<Timestamp>;
 }
 
-export interface AwardSeason {
+export interface AwardSeasonPresenter {
+  id: Generated<number>;
+  award_id: number;
+  presenter_id: number | null;
+  season_id: number;
+}
+
+export interface AwardSeasonWinner {
   id: Generated<number>;
   award_id: number;
   winning_user_id: number | null;
-  presenter_id: number | null;
   season_id: number;
 }
 
@@ -104,7 +111,8 @@ export interface UserStoryline {
 }
 
 export interface Database {
-  award_season: AwardSeason;
+  award_season_presenter: AwardSeasonPresenter;
+  award_season_winner: AwardSeasonWinner;
   awards: Awards;
   consoles: Consoles;
   events: Events;
