@@ -1,22 +1,23 @@
-import { ApolloServer } from "@apollo/server";
-import { QueryResolvers } from "@/graphql/resolvers/Query";
+import { AwardDatasource } from "@/datasources/AwardDatasource";
 import { MutationResolvers } from "@/graphql/resolvers/Mutation";
+import { QueryResolvers } from "@/graphql/resolvers/Query";
+import { ApolloServer } from "@apollo/server";
 import {
-  startServerAndCreateLambdaHandler,
   handlers,
+  startServerAndCreateLambdaHandler,
 } from "@as-integrations/aws-lambda";
-import { Unions } from "./graphql/resolvers/Union";
+import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
+import { loadSchemaSync } from "@graphql-tools/load";
+import path from "path";
+import { SeasonDatasource } from "./datasources/SeasonDatasource";
+import { StorylineDatasource } from "./datasources/StorylineDatasource";
+import { TeamDatasource } from "./datasources/TeamDatasource";
 import { UserDatasource } from "./datasources/UserDatasource";
 import { FHLContext } from "./domain/Context";
-import { SeasonDatasource } from "./datasources/SeasonDatasource";
-import { SeasonResolvers } from "./graphql/resolvers/Season";
 import { AwardResolvers } from "./graphql/resolvers/Award";
+import { SeasonResolvers } from "./graphql/resolvers/Season";
+import { Unions } from "./graphql/resolvers/Union";
 import { UserResolvers } from "./graphql/resolvers/User";
-import { StorylineDatasource } from "./datasources/StorylineDatasource";
-import { loadSchemaSync } from "@graphql-tools/load";
-import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
-import path from "path";
-import { AwardDatasource } from "@/datasources/AwardDatasource";
 
 function loadFHLSchema() {
   // TODO: For some reason this is looking inside of the .sst directory in the root of the project
@@ -57,6 +58,7 @@ export const handler = startServerAndCreateLambdaHandler(
           seasonDatasource: new SeasonDatasource(),
           storylineDatasource: new StorylineDatasource(),
           awardDatasource: new AwardDatasource(),
+          teamDatasource: new TeamDatasource()
         },
       };
     },

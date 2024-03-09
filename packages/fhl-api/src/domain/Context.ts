@@ -1,37 +1,39 @@
-import {SeasonDatasource} from "@/datasources/SeasonDatasource";
-import {StorylineDatasource} from "@/datasources/StorylineDatasource";
-import {UserDatasource} from "@/datasources/UserDatasource";
-import {Nullable} from "@/util";
-import {AwardDatasource} from "@/datasources/AwardDatasource";
+import { AwardDatasource } from "@/datasources/AwardDatasource";
+import { SeasonDatasource } from "@/datasources/SeasonDatasource";
+import { StorylineDatasource } from "@/datasources/StorylineDatasource";
+import { TeamDatasource } from "@/datasources/TeamDatasource";
+import { UserDatasource } from "@/datasources/UserDatasource";
+import { Nullable } from "@/util";
 
 const UNKNOWN_HEADER = "unknown";
 
 export enum Platform {
-    ANDROID = "Android",
-    iOS = "iOS",
-    WEB = "Web"
+  ANDROID = "Android",
+  iOS = "iOS",
+  WEB = "Web"
 }
 
 export type FHLContext = {
-    authToken: Nullable<string>;
-    datasources: {
-        userDatasource: UserDatasource,
-        seasonDatasource: SeasonDatasource,
-        storylineDatasource: StorylineDatasource,
-        awardDatasource: AwardDatasource,
-    }
+  authToken: Nullable<string>;
+  datasources: {
+    userDatasource: UserDatasource,
+    seasonDatasource: SeasonDatasource,
+    storylineDatasource: StorylineDatasource,
+    awardDatasource: AwardDatasource,
+    teamDatasource: TeamDatasource
+  }
 }
 
 export type BaseContext = {
-    authToken?: string;
-    appName: string;
-    appVersion: string;
-    platform: Platform;
-    userAgent: string;
+  authToken?: string;
+  appName: string;
+  appVersion: string;
+  platform: Platform;
+  userAgent: string;
 }
 
 // Can't find the type for the args?
-const contextBuilder = async ({req}: any): Promise<BaseContext> => {
+const contextBuilder = async ({ req }: any): Promise<BaseContext> => {
   const authToken: string | null = req.headers["authorization"];
   const context: BaseContext = {
     appName: req.headers["app-name"] ?? "FHL",
@@ -46,4 +48,5 @@ const contextBuilder = async ({req}: any): Promise<BaseContext> => {
   return context;
 };
 
-export {contextBuilder};
+export { contextBuilder };
+

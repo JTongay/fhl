@@ -1,9 +1,17 @@
+import {Season} from "@/domain/Season";
+import {AddTeamToSeasonParams} from "@/domain/Team";
+import {TeamRepository} from "@/repositories/Team.repository";
 import {fhlDb} from "@fhl/core/src/db";
 import {Seasons} from "@fhl/core/src/sql.generated";
 import DataLoader from "dataloader";
 import {Selectable} from "kysely";
 
 export class SeasonDatasource {
+  private teamRepository: TeamRepository;
+  constructor() {
+    this.teamRepository = new TeamRepository();
+  }
+
   private batchSeasons = new DataLoader<number, Selectable<Seasons>>(async (ids: number[]) => {
     const seasonsList = await fhlDb.selectFrom("seasons")
         .where("id", "in", ids)
@@ -17,11 +25,25 @@ export class SeasonDatasource {
     const seasonIdsToSeasonMap = seasonsList.reduce((mapping, season) => {
       mapping[season.id] = season;
       return mapping;
-    }, {});
+    }, {} as Record<string, Selectable<Seasons>>);
     return ids.map((id) => seasonIdsToSeasonMap[id]);
   });
 
   async getSeason(id: number) {
-    return this.batchSeasons.load(id);
+    const season = await this.batchSeasons.load(id);
+    return new Season(season);
+  }
+
+  async getSeasons(ids: number[]) {
+    return this.batchSeasons.loadMany(ids);
+  }
+
+  async addTeamToSeason(params: AddTeamToSeasonParams): Promise<string> {
+    const teams = await this.teamRepository.countTeamsToSeason(+params.seasonId);
+    if (teams >= 2) {
+      throw new Error();
+    }
+
+    return await this.teamRepository.addTeamToSeason(params);
   }
 }
