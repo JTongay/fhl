@@ -27,19 +27,11 @@ export type FHLContext = {
 }
 
 export type BaseContext = {
-<<<<<<< HEAD
     authToken: string;
     appName: string;
     appVersion: string;
     platform: Platform;
     userAgent: string;
-=======
-  authToken?: string;
-  appName: string;
-  appVersion: string;
-  platform: Platform;
-  userAgent: string;
->>>>>>> main
 }
 
 // Can't find the type for the args?

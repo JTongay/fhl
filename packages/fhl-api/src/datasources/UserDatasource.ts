@@ -2,12 +2,18 @@ import DataLoader from "dataloader";
 import {fhlDb} from "@fhl/core/src/db";
 import {Selectable, sql} from "kysely";
 import {Users} from "@fhl/core/src/sql.generated";
-import {CreateUserParams, UpdateUserParams, User, UserResponse} from "@/domain/User";
+import {CreateUserParams, UpdateUserParams, User, UserResponse, UsersList, UsersResponse} from "@/domain/User";
 import {ApiError} from "@/domain/errors/FHLApiError";
 import {UserRepository} from "@/repositories/User.repository";
+import {Pagination} from "@/util";
+import {UNKNOWN_ERROR} from "@/domain/errors/codes";
 
 function isUser(user: Selectable<Users> | Error): user is Selectable<Users> {
   return !(user instanceof Error);
+}
+
+function isError(user: Selectable<Users> | Error): user is Error {
+  return user instanceof Error;
 }
 
 export class UserDatasource {
@@ -27,33 +33,40 @@ export class UserDatasource {
     return ids.map((id) => userIdsToUserMap[id]);
   });
 
-  async getUsers(ids: number[]): Promise<Selectable<Users>[]> {
+  async getUsersBatch(ids: number[]): Promise<User[] | ApiError> {
     const users = await this.batchUsers.loadMany(ids);
     // Filter out the errors for some reason?
     // TODO Maybe I want to get access to the Errors?
-    return users.filter(isUser);
+    const errors = users.filter(isError);
+    if (errors.length) {
+      console.error(errors);
+      return new ApiError(1000, errors[0].message);
+    }
+    return users
+        .filter(isUser)
+        .map((user) => new User(user));
   }
 
-  async getUser(id: number): Promise<Selectable<Users>> {
-    const user = await this.batchUsers.load(id);
-    if (!user) {
-      throw new Error("User not found!");
+  async getUsersPaginated(pagination: Pagination): Promise<UsersResponse> {
+    const users = await this.userRepo.getUsersPaginated(pagination);
+    return new UsersList(pagination, users.length, users.map((user) => new User(user)));
+  }
+
+  async getUser(id: number): Promise<UserResponse> {
+    try {
+      const user = await this.batchUsers.load(id);
+      if (!user) {
+        return new ApiError(1001, "User not found");
+      }
+      return new User(user);
+    } catch (e: unknown) {
+      return new ApiError(UNKNOWN_ERROR, e.toString());
     }
-    return user;
   }
 
   async createUser(params: CreateUserParams): Promise<UserResponse> {
     try {
-      const response = await fhlDb
-          .insertInto("users")
-          .values({
-            first_name: params.firstName,
-            last_name: params.lastName,
-            gamertag: params.gamertag,
-            email: params.email,
-          })
-          .returningAll()
-          .executeTakeFirstOrThrow();
+      const response = await this.userRepo.createUser(params);
       return new User(response);
     } catch (e) {
       return new ApiError(101, e.toString());
@@ -62,17 +75,7 @@ export class UserDatasource {
 
   async updateUser(params: UpdateUserParams): Promise<UserResponse> {
     try {
-      const response = await fhlDb.updateTable("users")
-          .set({
-            first_name: params.firstName,
-            last_name: params.lastName,
-            email: params.email,
-            gamertag: params.gamertag,
-            updated_at: sql`now()`,
-          })
-          .where("id", "=", +params.userId)
-          .returningAll()
-          .executeTakeFirstOrThrow();
+      const response = await this.userRepo.updateUser(params);
       return new User(response);
     } catch (e: unknown) {
       return new ApiError(1009, e.toString());
