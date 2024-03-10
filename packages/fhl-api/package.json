@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "engines": {
-        "pnpm": "8"
+        "pnpm": "8",
+        "node": "18"
     },
     "private": true,
     "scripts": {
@@ -49,7 +50,7 @@
         "eslint-plugin-import": "^2.28.1",
         "hygen": "^6.2.11",
         "pg": "^8.11.3",
-        "sst": "2.24.2",
+        "sst": "2.24.27",
         "tsc-alias": "^1.8.7",
         "typescript": "^5.2.2"
     }

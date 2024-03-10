@@ -1,6 +1,7 @@
 type League {
     id: ID!
     teams: [Team!]!
+    team(id: ID!): Team
     name: String!
     seasons: [Season!]!
     createdAt: Date!
@@ -64,8 +65,27 @@ input CreateAwardInput {
     presentingUserIds: [ID!]
 }
 
+input CreateTeamInput {
+    name: String!
+    leagueId: ID!
+}
+
+input AddTeamToSeasonInput {
+    captainId: ID!
+    seasonId: ID!
+    teamId: ID!
+}
+
+input UpdateTeamInput {
+    teamId: ID!
+    name: String!
+}
+
 union LeagueResponse = ApiError | League
 union EventResponse = ApiError | Event
 union EventsResponse = ApiError | EventsList
 union AwardResponse = ApiError | Award
 union AwardsResponse = ApiError | AwardsList
+union TeamResponse = ApiError | Team
+union CreateTeamResponse = ApiError | Team
+union UpdateTeamResponse = ApiError | Team

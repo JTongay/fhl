@@ -1,64 +1,70 @@
-import { ApolloServer } from "@apollo/server";
-import { QueryResolvers } from "@/graphql/resolvers/Query";
-import { MutationResolvers } from "@/graphql/resolvers/Mutation";
+import {AwardDatasource} from "@/datasources/AwardDatasource";
+import {MutationResolvers} from "@/graphql/resolvers/Mutation";
+import {QueryResolvers} from "@/graphql/resolvers/Query";
+import {ApolloServer} from "@apollo/server";
 import {
-  startServerAndCreateLambdaHandler,
   handlers,
+  startServerAndCreateLambdaHandler,
 } from "@as-integrations/aws-lambda";
-import { Unions } from "./graphql/resolvers/Union";
-import { UserDatasource } from "./datasources/UserDatasource";
-import { FHLContext } from "./domain/Context";
-import { SeasonDatasource } from "./datasources/SeasonDatasource";
-import { SeasonResolvers } from "./graphql/resolvers/Season";
-import { AwardResolvers } from "./graphql/resolvers/Award";
-import { UserResolvers } from "./graphql/resolvers/User";
-import { StorylineDatasource } from "./datasources/StorylineDatasource";
-import { loadSchemaSync } from "@graphql-tools/load";
-import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
+import {GraphQLFileLoader} from "@graphql-tools/graphql-file-loader";
+import {loadSchemaSync} from "@graphql-tools/load";
 import path from "path";
-import { AwardDatasource } from "@/datasources/AwardDatasource";
+import {SeasonDatasource} from "./datasources/SeasonDatasource";
+import {StorylineDatasource} from "./datasources/StorylineDatasource";
+import {TeamDatasource} from "./datasources/TeamDatasource";
+import {UserDatasource} from "./datasources/UserDatasource";
+import {FHLContext} from "./domain/Context";
+import {AwardResolvers} from "./graphql/resolvers/Award";
+import {SeasonResolvers} from "./graphql/resolvers/Season";
+import {Unions} from "./graphql/resolvers/Union";
+import {UserResolvers} from "./graphql/resolvers/User";
+import {LeagueResolvers} from "./graphql/resolvers/League";
+import {LeagueDatasource} from "./datasources/LeagueDatasource";
 
 function loadFHLSchema() {
   // TODO: For some reason this is looking inside of the .sst directory in the root of the project
   return loadSchemaSync(path.join(
-    __dirname, "../", "../", "../", "../", "../", "../", "packages/fhl-api/src/graphql/schema/**/*.graphql"
+      __dirname, "../", "../", "../", "../", "../", "../", "packages/fhl-api/src/graphql/schema/**/*.graphql"
   ),
-    {
-      loaders: [new GraphQLFileLoader()],
-    });
+  {
+    loaders: [new GraphQLFileLoader()],
+  });
 }
 
 const server = new ApolloServer<FHLContext>(
-  {
-    introspection: true,
-    typeDefs: loadFHLSchema(),
-    resolvers: {
-      ...QueryResolvers,
-      ...MutationResolvers,
-      ...UserResolvers,
-      ...SeasonResolvers,
-      ...AwardResolvers,
-      ...Unions,
-    },
-    includeStacktraceInErrorResponses: true,
-    plugins: [],
-  }
+    {
+      introspection: true,
+      typeDefs: loadFHLSchema(),
+      resolvers: {
+        ...QueryResolvers,
+        ...MutationResolvers,
+        ...UserResolvers,
+        ...SeasonResolvers,
+        ...AwardResolvers,
+        ...LeagueResolvers,
+        ...Unions,
+      },
+      includeStacktraceInErrorResponses: true,
+      plugins: [],
+    }
 );
 
 export const handler = startServerAndCreateLambdaHandler(
-  server,
-  handlers.createAPIGatewayProxyEventV2RequestHandler(),
-  {
-    context: async (request) => {
-      return {
-        authToken: request.event.headers["Authorization"] || null,
-        datasources: {
-          userDatasource: new UserDatasource(),
-          seasonDatasource: new SeasonDatasource(),
-          storylineDatasource: new StorylineDatasource(),
-          awardDatasource: new AwardDatasource(),
-        },
-      };
-    },
-  }
+    server,
+    handlers.createAPIGatewayProxyEventV2RequestHandler(),
+    {
+      context: async (request) => {
+        return {
+          authToken: request.event.headers["Authorization"] || null,
+          datasources: {
+            userDatasource: new UserDatasource(),
+            seasonDatasource: new SeasonDatasource(),
+            storylineDatasource: new StorylineDatasource(),
+            awardDatasource: new AwardDatasource(),
+            teamDatasource: new TeamDatasource(),
+            leagueDatasource: new LeagueDatasource(),
+          },
+        };
+      },
+    }
 );

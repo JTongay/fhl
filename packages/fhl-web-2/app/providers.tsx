@@ -4,9 +4,10 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { PropsWithChildren } from "react";
 
 export function Providers({ children }: PropsWithChildren) {
-    // console.log(process.env.NEXT_API_URL)
+    const uri = process.env.NEXT_API_URL;
+    console.log(uri, "uri")
     const client = new ApolloClient({
-        uri: process.env.NEXT_API_URL || "https://kxss46cxyk.execute-api.us-east-1.amazonaws.com/graphql", // TODO use .env
+        uri, // TODO use .env
         cache: new InMemoryCache(),
         connectToDevTools: true,
         // headers: {
