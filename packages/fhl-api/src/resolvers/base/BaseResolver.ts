@@ -1,51 +1,64 @@
-import { FHLContext } from "@/domain/Context";
-import { FHLApiError } from "@/domain/errors/FHLApiError";
-import { NO_AUTH_HEADER } from "@/domain/errors/codes";
+import {FHLContext} from "@/domain/Context";
+import {FHLApiError} from "@/domain/errors/FHLApiError";
+import {NO_AUTH_HEADER, SESSION_EXPIRED} from "@/domain/errors/codes";
+import {createClerkClient} from "@clerk/clerk-sdk-node";
 
 abstract class BaseResolver<
-    ParentType = any,
-    ArgsType = any,
-    ReturnType = any
+    ParentType = unknown,
+    ArgsType = unknown,
+    ReturnType = unknown
 > {
-    public resolve = (
-        parent: ParentType,
-        args: ArgsType,
-        context: FHLContext
-    ): ReturnType | Promise<ReturnType> => {
-        return this.authCheck(parent, args, context);
-    };
+  public resolve = async (
+      parent: ParentType,
+      args: ArgsType,
+      context: FHLContext
+  ): Promise<ReturnType> => {
+    return await this.authCheck(parent, args, context);
+  };
 
-    private authCheck = (
-        parent: ParentType,
-        args: ArgsType,
-        context: FHLContext
-    ): ReturnType | Promise<ReturnType> => {
-        // if (!context.authToken) {
-        //   throw new FHLApiError({
-        //     code: NO_AUTH_HEADER,
-        //     message: "Missing Authorization Header",
-        //   });
-        // }
-
-        return this.resolver(parent, args, context);
-    };
-
-    protected getAuthToken = (context: FHLContext): string => {
-        if (!context.authToken) {
-            throw new FHLApiError({
-                code: NO_AUTH_HEADER,
-                message: "Missing Authorization Header",
-            });
+  private authCheck = async (
+      parent: ParentType,
+      args: ArgsType,
+      context: FHLContext
+  ): Promise<ReturnType> => {
+    const clerk = createClerkClient({
+      secretKey: process.env.CLERK_SECRET_KEY,
+      publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
+    });
+    // console.log(result, "result");
+    const authenticate = await clerk.authenticateRequest(
+        {
+          headerToken: this.getAuthToken(context),
         }
+    );
+    console.log(authenticate, "auth check in base resolver");
+    if (!authenticate.isSignedIn) {
+      throw new FHLApiError({
+        code: SESSION_EXPIRED,
+        message: "Session Expired",
+      });
+    }
+    // TODO: Use this to get the user's information to store in the context
+    // const whoAmI = authenticate.toAuth();
+    return this.resolver(parent, args, context);
+  };
 
-        return context.authToken;
-    };
+  protected getAuthToken = (context: FHLContext): string => {
+    if (!context.authToken) {
+      throw new FHLApiError({
+        code: NO_AUTH_HEADER,
+        message: "Missing Authorization Header",
+      });
+    }
+
+    return context.authToken;
+  };
 
     protected abstract resolver(
         parent: ParentType,
         args: ArgsType,
         context: FHLContext
-    ): ReturnType | Promise<ReturnType>
+    ): Promise<ReturnType>
 }
 
-export { BaseResolver };
+export {BaseResolver};

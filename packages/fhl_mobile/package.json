@@ -10,7 +10,7 @@
   "devDependencies": {
     "aws-cdk-lib": "2.79.1",
     "constructs": "10.1.156",
-    "sst": "^2.24.27",
+    "sst": "2.39.2",
     "typescript": "^5.2.2"
   },
   "keywords": [],
