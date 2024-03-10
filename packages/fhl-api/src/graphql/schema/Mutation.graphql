@@ -9,4 +9,8 @@ type Mutation {
     "Updates the storyline"
     updateStoryline(input: UpdateStorylineInput!): StorylineResponse!
     deleteStoryline(input: DeleteStorylineInput!): Boolean!
+    createAward(input: CreateAwardInput!): AwardResponse!
+    createTeam(input: CreateTeamInput!): CreateTeamResponse!
+    addTeamToSeason(input: AddTeamToSeasonInput!): ID!
+    updateTeam(input: UpdateTeamInput!): UpdateTeamResponse!
 }

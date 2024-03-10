@@ -11,15 +11,22 @@ export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 export interface Awards {
   id: Generated<number>;
   name: string;
+  description: string | null;
   created_at: Generated<Timestamp>;
   updated_at: Generated<Timestamp>;
 }
 
-export interface AwardSeason {
+export interface AwardSeasonPresenter {
+  id: Generated<number>;
+  award_id: number;
+  presenter_id: number | null;
+  season_id: number;
+}
+
+export interface AwardSeasonWinner {
   id: Generated<number>;
   award_id: number;
   winning_user_id: number | null;
-  presenter_id: number | null;
   season_id: number;
 }
 
@@ -83,6 +90,18 @@ export interface Teams {
   name: string;
   wins: Generated<number>;
   losses: Generated<number>;
+  league_id: number;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
+}
+
+export interface TeamSeason {
+  id: Generated<number>;
+  team_id: number;
+  season_id: number;
+  captain_id: number;
+  wins: Generated<number>;
+  losses: Generated<number>;
   created_at: Generated<Timestamp>;
   updated_at: Generated<Timestamp>;
 }
@@ -98,6 +117,8 @@ export interface Users {
   idp_id: string | null;
   avatar_url: string | null;
   last_sign_in_at: Generated<Timestamp | null>;
+  wins: Generated<number>;
+  losses: Generated<number>;
 }
 
 export interface UserStoryline {
@@ -106,8 +127,18 @@ export interface UserStoryline {
   storyline_id: number;
 }
 
+export interface UserTeamSeason {
+  id: Generated<number>;
+  player_id: number;
+  team_id: number;
+  season_id: number;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
+}
+
 export interface Database {
-  award_season: AwardSeason;
+  award_season_presenter: AwardSeasonPresenter;
+  award_season_winner: AwardSeasonWinner;
   awards: Awards;
   consoles: Consoles;
   events: Events;
@@ -116,7 +147,9 @@ export interface Database {
   platforms: Platforms;
   seasons: Seasons;
   storylines: Storylines;
+  team_season: TeamSeason;
   teams: Teams;
   user_storyline: UserStoryline;
+  user_team_season: UserTeamSeason;
   users: Users;
 }

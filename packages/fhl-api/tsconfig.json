@@ -13,6 +13,8 @@
                 "spec/*"
             ]
         },
+        "strictNullChecks": true,
+        "noImplicitAny": true
     },
     "compileOnSave": true,
     "include": [

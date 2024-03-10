@@ -1,23 +1,28 @@
-import {ApolloServer} from "@apollo/server";
-import {QueryResolvers} from "@/graphql/resolvers/Query";
+import {AwardDatasource} from "@/datasources/AwardDatasource";
 import {MutationResolvers} from "@/graphql/resolvers/Mutation";
+import {QueryResolvers} from "@/graphql/resolvers/Query";
+import {ApolloServer} from "@apollo/server";
 import {
-  startServerAndCreateLambdaHandler,
   handlers,
+  startServerAndCreateLambdaHandler,
 } from "@as-integrations/aws-lambda";
-import {Unions} from "./graphql/resolvers/Union";
-import {UserDatasource} from "./datasources/UserDatasource";
-import {FHLContext} from "./domain/Context";
-import {SeasonDatasource} from "./datasources/SeasonDatasource";
-import {SeasonResolvers} from "./graphql/resolvers/Season";
-import {StorylineDatasource} from "./datasources/StorylineDatasource";
-import {loadSchemaSync} from "@graphql-tools/load";
 import {GraphQLFileLoader} from "@graphql-tools/graphql-file-loader";
+import {loadSchemaSync} from "@graphql-tools/load";
 import path from "path";
+import {SeasonDatasource} from "./datasources/SeasonDatasource";
+import {StorylineDatasource} from "./datasources/StorylineDatasource";
+import {TeamDatasource} from "./datasources/TeamDatasource";
+import {AwardResolvers} from "./graphql/resolvers/Award";
+import {SeasonResolvers} from "./graphql/resolvers/Season";
 import {config} from "dotenv";
 config();
 
 // config({path: path.join(__dirname, "../", "../", "../", "../", "../", "../", ".env")});
+import {Unions} from "./graphql/resolvers/Union";
+import {UserResolvers} from "./graphql/resolvers/User";
+import {LeagueResolvers} from "./graphql/resolvers/League";
+import {LeagueDatasource} from "./datasources/LeagueDatasource";
+import {FHLContext} from "./domain/Context";
 
 function loadFHLSchema() {
   console.log(__dirname, "dirname");
@@ -37,7 +42,10 @@ const server = new ApolloServer<FHLContext>(
       resolvers: {
         ...QueryResolvers,
         ...MutationResolvers,
+        ...UserResolvers,
         ...SeasonResolvers,
+        ...AwardResolvers,
+        ...LeagueResolvers,
         ...Unions,
       },
       includeStacktraceInErrorResponses: true,
@@ -58,6 +66,9 @@ export const handler = startServerAndCreateLambdaHandler(
             userDatasource: new UserDatasource(),
             seasonDatasource: new SeasonDatasource(),
             storylineDatasource: new StorylineDatasource(),
+            awardDatasource: new AwardDatasource(),
+            teamDatasource: new TeamDatasource(),
+            leagueDatasource: new LeagueDatasource(),
           },
         };
       },

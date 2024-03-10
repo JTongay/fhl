@@ -1,9 +1,9 @@
 "use client"
 
-import Image from 'next/image'
-import { useQuery } from "@apollo/client";
 import { GET_BOOYAH } from '@/operations/queries/getHowdy';
 import {useAuth} from "@clerk/nextjs";
+import { useQuery } from "@apollo/client";
+import Image from 'next/image';
 
 export default function Home() {
   const {isLoaded, getToken, userId} = useAuth();

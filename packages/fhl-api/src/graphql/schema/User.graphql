@@ -8,8 +8,9 @@ type User {
     createdAt: Date!
     updatedAt: Date!
     avatar: String!
-    awards(limit: Int!, offset: Int!): [Award!]!
+    awards(limit: Int!, offset: Int!): AwardsResponse!
     currentTeam: Team
+    teamHistory: [Team!]!
     wins: Int!
     losses: Int!
     consolesOwned: [Console!]!

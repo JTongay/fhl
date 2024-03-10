@@ -1,14 +1,26 @@
+<<<<<<< HEAD
 import {Selectable} from "kysely";
 import {Users} from "@fhl/core/src/sql.generated";
 import {Nullable, PaginatedResponse, Pagination} from "@/util";
 import {ApiError} from "./errors/FHLApiError";
+=======
+import { Selectable } from "kysely";
+import { Users } from "@fhl/core/src/sql.generated";
+import { Nullable, PaginatedResponse, Pagination } from "@/util";
+import { ApiError } from "./errors/FHLApiError";
+>>>>>>> main
+
 
 export class User {
   id: string;
   firstName: string;
   lastName: string;
   gamertag: string;
+<<<<<<< HEAD
   email: string;
+=======
+  email: Nullable<string>;
+>>>>>>> main
   createdAt: Date;
   updatedAt: Date;
 
@@ -17,7 +29,11 @@ export class User {
     this.firstName = response.first_name;
     this.lastName = response.last_name;
     this.gamertag = response.gamertag;
+<<<<<<< HEAD
     this.email = response.email;
+=======
+    this.email = response.email || null;
+>>>>>>> main
     this.createdAt = response.created_at;
     this.updatedAt = response.updated_at;
   }
@@ -38,6 +54,7 @@ export class UsersList extends PaginatedResponse<User> {
 export type UsersResponse = UsersList | ApiError
 
 export interface CreateUserParams {
+<<<<<<< HEAD
     firstName: string;
     lastName: string;
     gamertag: string;
@@ -45,9 +62,19 @@ export interface CreateUserParams {
     idpId: string;
     avatarUrl: Nullable<string>;
     lastSignInAt: Date;
+=======
+  firstName: string;
+  lastName: string;
+  gamertag: string;
+  email: string;
+>>>>>>> main
 }
 
 
 export interface UpdateUserParams extends CreateUserParams {
+<<<<<<< HEAD
     userId: string;
+=======
+  userId: string;
+>>>>>>> main
 }

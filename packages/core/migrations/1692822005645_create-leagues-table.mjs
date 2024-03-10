@@ -54,6 +54,9 @@ export async function up(db) {
         .addColumn("name", "varchar", (col) => col.notNull().unique())
         .addColumn("wins", "integer", (col) => col.notNull().defaultTo(0))
         .addColumn("losses", "integer", (col) => col.notNull().defaultTo(0))
+        .addColumn("league_id", 'integer', (col) =>
+            col.references("leagues.id").onDelete('cascade').notNull()
+        )
         .addColumn("created_at", "timestamp", (col) =>
             col.notNull().defaultTo(sql`now()`)
         )

@@ -10,8 +10,7 @@ export class SeasonResolver extends BaseResolver {
       context: FHLContext
   ): Promise<SeasonResponse> {
     try {
-      const response = await context.datasources.seasonDatasource.getSeason(+args.id);
-      return new Season(response);
+      return await context.datasources.seasonDatasource.getSeason(+args.id);
     } catch (e: unknown) {
       return new ApiError(4001, e.toString());
     }
