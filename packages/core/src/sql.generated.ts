@@ -114,6 +114,9 @@ export interface Users {
   email: string | null;
   created_at: Generated<Timestamp>;
   updated_at: Generated<Timestamp>;
+  idp_id: string | null;
+  avatar_url: string | null;
+  last_sign_in_at: Generated<Timestamp | null>;
   wins: Generated<number>;
   losses: Generated<number>;
 }

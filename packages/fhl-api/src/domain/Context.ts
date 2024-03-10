@@ -27,17 +27,18 @@ export type FHLContext = {
 }
 
 export type BaseContext = {
-  authToken?: string;
-  appName: string;
-  appVersion: string;
-  platform: Platform;
-  userAgent: string;
+    authToken: string;
+    appName: string;
+    appVersion: string;
+    platform: Platform;
+    userAgent: string;
 }
 
 // Can't find the type for the args?
 const contextBuilder = async ({req}: any): Promise<BaseContext> => {
-  const authToken: string | null = req.headers["authorization"];
+  const authToken: string = req.headers["authorization"] || "";
   const context: BaseContext = {
+    authToken,
     appName: req.headers["app-name"] ?? "FHL",
     appVersion: req.headers["app-version"] ?? UNKNOWN_HEADER,
     platform: req.headers["platform"] ?? UNKNOWN_HEADER,

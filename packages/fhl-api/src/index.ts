@@ -12,16 +12,20 @@ import path from "path";
 import {SeasonDatasource} from "./datasources/SeasonDatasource";
 import {StorylineDatasource} from "./datasources/StorylineDatasource";
 import {TeamDatasource} from "./datasources/TeamDatasource";
-import {UserDatasource} from "./datasources/UserDatasource";
-import {FHLContext} from "./domain/Context";
 import {AwardResolvers} from "./graphql/resolvers/Award";
 import {SeasonResolvers} from "./graphql/resolvers/Season";
+import {config} from "dotenv";
+config();
+
+// config({path: path.join(__dirname, "../", "../", "../", "../", "../", "../", ".env")});
 import {Unions} from "./graphql/resolvers/Union";
 import {UserResolvers} from "./graphql/resolvers/User";
 import {LeagueResolvers} from "./graphql/resolvers/League";
 import {LeagueDatasource} from "./datasources/LeagueDatasource";
+import {FHLContext} from "./domain/Context";
 
 function loadFHLSchema() {
+  console.log(__dirname, "dirname");
   // TODO: For some reason this is looking inside of the .sst directory in the root of the project
   return loadSchemaSync(path.join(
       __dirname, "../", "../", "../", "../", "../", "../", "packages/fhl-api/src/graphql/schema/**/*.graphql"
@@ -53,9 +57,11 @@ export const handler = startServerAndCreateLambdaHandler(
     server,
     handlers.createAPIGatewayProxyEventV2RequestHandler(),
     {
+      middleware: [],
       context: async (request) => {
+        console.log(request, "request");
         return {
-          authToken: request.event.headers["Authorization"] || null,
+          authToken: request.event.headers["authorization"] || "",
           datasources: {
             userDatasource: new UserDatasource(),
             seasonDatasource: new SeasonDatasource(),
