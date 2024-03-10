@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-import { CodegenConfig } from "@graphql-codegen/cli";
-import 'dotenv'
-
-const config: CodegenConfig = {
-    schema: process.env.NEXT_API_URL,
-    documents: ["operations/**/*.tsx"],
-    ignoreNoDocuments: true,
-    generates: {
-        "./generated/gql/": {
-            preset: "client"
-=======
 import { CodegenConfig } from '@graphql-codegen/cli'
 import 'dotenv/config'
 // import { Api } from 'sst/node/api'
@@ -29,13 +17,8 @@ const config: CodegenConfig = {
     generates: {
         './generated/gql/': {
             preset: 'client'
->>>>>>> main
         }
     }
 }
 
-<<<<<<< HEAD
 export default config;
-=======
-export default config
->>>>>>> main
