@@ -1,6 +1,7 @@
 import {Season} from "@/domain/Season";
 import {AddTeamToSeasonParams} from "@/domain/Team";
 import {TeamRepository} from "@/repositories/Team.repository";
+import {Nullable} from "@/util";
 import {fhlDb} from "@fhl/core/src/db";
 import {Seasons} from "@fhl/core/src/sql.generated";
 import DataLoader from "dataloader";
@@ -45,5 +46,19 @@ export class SeasonDatasource {
     }
 
     return await this.teamRepository.addTeamToSeason(params);
+  }
+
+  async getActiveSeason(leagueId: string): Promise<Nullable<Season>> {
+    const result = await fhlDb.selectFrom("seasons")
+        .where("is_active", "=", true)
+        .where("league_id", "=", +leagueId)
+        .selectAll()
+        .executeTakeFirst();
+
+    if (!result) {
+      return null;
+    }
+
+    return new Season(result);
   }
 }

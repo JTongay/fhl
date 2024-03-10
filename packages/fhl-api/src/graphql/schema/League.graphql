@@ -1,6 +1,7 @@
 type League {
     id: ID!
     teams: [Team!]!
+    team(id: ID!): Team
     name: String!
     seasons: [Season!]!
     createdAt: Date!

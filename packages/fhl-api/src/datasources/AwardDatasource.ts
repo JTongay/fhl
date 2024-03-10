@@ -21,7 +21,7 @@ export class AwardDatasource {
     const awardIdsToAwardMap = awardsList.reduce((mapping, award) => {
       mapping[award.id] = award;
       return mapping;
-    }, {} as { [key: string]: Record<string, unknown> }); // TODO fix the type here
+    }, {} as { [key: string]: Record<string, any> }); // TODO fix the type here
     return ids.map((id) => awardIdsToAwardMap[id]);
   });
 

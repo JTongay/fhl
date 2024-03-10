@@ -10,6 +10,7 @@ type User {
     avatar: String!
     awards(limit: Int!, offset: Int!): AwardsResponse!
     currentTeam: Team
+    teamHistory: [Team!]!
     wins: Int!
     losses: Int!
     consolesOwned: [Console!]!

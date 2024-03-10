@@ -46,6 +46,26 @@ export class SeasonTeam extends Team {
   }
 }
 
+export class LeagueTeam extends Team {
+  captainId: string;
+  memberIds: string[];
+  leagueId: string;
+
+  constructor(table: TeamTable) {
+    super({
+      id: table.id,
+      name: table.name,
+      wins: table.wins,
+      losses: table.losses,
+      created_at: table.created_at,
+      updated_at: table.updated_at,
+    });
+    this.captainId = table.captain_id.toString();
+    this.memberIds = table.player_ids.map(String);
+    this.leagueId = table.league_id.toString();
+  }
+}
+
 export type CreateTeamParams = {
     name: string;
     leagueId: string;

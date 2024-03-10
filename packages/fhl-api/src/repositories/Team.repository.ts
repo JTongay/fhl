@@ -1,4 +1,13 @@
-import {AddPlayerToTeamParams, AddTeamToSeasonParams, CreateTeamParams, RemovePlayerFromTeamParams, SeasonTeam, Team, UpdateTeamParams} from "@/domain/Team";
+import {
+  AddPlayerToTeamParams,
+  AddTeamToSeasonParams,
+  CreateTeamParams,
+  LeagueTeam,
+  RemovePlayerFromTeamParams,
+  SeasonTeam,
+  Team,
+  UpdateTeamParams,
+} from "@/domain/Team";
 import {fhlDb} from "@fhl/core/src/db";
 import {sql} from "kysely";
 
@@ -12,6 +21,7 @@ export interface TeamTable {
     name: string;
     wins: number;
     losses: number;
+    league_id: number;
 }
 
 export class TeamRepository {
@@ -24,6 +34,7 @@ export class TeamRepository {
           "season_id",
           "teams.id",
           "teams.name",
+          "teams.league_id",
           "teams.created_at", // TODO Figure out if we want the teams date or the team_season date
           "teams.updated_at", // TODO Figure out if we want the teams date or the team_season date
           "team_season.wins",
@@ -51,6 +62,7 @@ export class TeamRepository {
           "season_id",
           "teams.id",
           "teams.name",
+          "teams.league_id",
           "teams.created_at", // TODO Figure out if we want the teams date or the team_season date
           "teams.updated_at", // TODO Figure out if we want the teams date or the team_season date
           "team_season.wins",
@@ -64,6 +76,86 @@ export class TeamRepository {
     const playerIds = result.map((team) => team.player_id);
     const teamData = {...result[0], player_ids: playerIds};
     return new SeasonTeam(teamData);
+  }
+
+  public async getTeamsForLeague(leagueId: string): Promise<LeagueTeam[]> {
+    const result = await fhlDb.selectFrom("user_team_season")
+        .innerJoin("teams", "teams.id", "user_team_season.team_id")
+        .innerJoin("team_season", "team_season.season_id", "user_team_season.season_id")
+        .select([
+          "player_id",
+          "season_id",
+          "teams.id",
+          "teams.name",
+          "teams.league_id",
+          "teams.created_at", // TODO Figure out if we want the teams date or the team_season date
+          "teams.updated_at", // TODO Figure out if we want the teams date or the team_season date
+          "team_season.wins",
+          "team_season.losses",
+          "team_season.captain_id",
+        ])
+        .where("teams.league_id", "=", +leagueId)
+        .execute();
+
+    const playerIds = result.map((team) => team.player_id);
+    return result.map((team) => {
+      const teamData = {...team, player_ids: playerIds};
+      return new LeagueTeam(teamData);
+    });
+  }
+
+  public async getTeamForLeague({leagueId, teamId}: {leagueId: string, teamId: string}): Promise<LeagueTeam> {
+    const result = await fhlDb.selectFrom("user_team_season")
+        .innerJoin("teams", "teams.id", "user_team_season.team_id")
+        .innerJoin("team_season", "team_season.season_id", "user_team_season.season_id")
+        .select([
+          "player_id",
+          "season_id",
+          "teams.id",
+          "teams.name",
+          "teams.league_id",
+          "teams.created_at", // TODO Figure out if we want the teams date or the team_season date
+          "teams.updated_at", // TODO Figure out if we want the teams date or the team_season date
+          "team_season.wins",
+          "team_season.losses",
+          "team_season.captain_id",
+        ])
+        .where("teams.league_id", "=", +leagueId)
+        .where("teams.id", "=", +teamId)
+        .execute();
+
+    const playerIds = result.map((team) => team.player_id);
+    const teamData = {...result[0], player_ids: playerIds};
+
+    return new LeagueTeam(teamData);
+  }
+
+  public async getUserTeamHistory(userId: string): Promise<LeagueTeam[]> {
+    const result = await fhlDb.selectFrom("user_team_season")
+        .innerJoin("teams", "teams.id", "user_team_season.team_id")
+        .innerJoin("team_season", "team_season.season_id", "user_team_season.season_id")
+        .select([
+          "player_id",
+          "season_id",
+          "teams.id",
+          "teams.name",
+          "teams.league_id",
+          "teams.created_at", // TODO Figure out if we want the teams date or the team_season date
+          "teams.updated_at", // TODO Figure out if we want the teams date or the team_season date
+          "team_season.wins",
+          "team_season.losses",
+          "team_season.captain_id",
+        ])
+        .where("player_id", "=", +userId)
+        .where("captain_id", "=", +userId)
+        .execute();
+
+    const playerIds = result.map((team) => team.player_id);
+
+    return result.map((team) => {
+      const teamData = {...team, player_ids: playerIds};
+      return new LeagueTeam(teamData);
+    });
   }
 
   public async createTeam(params: CreateTeamParams): Promise<Team> {

@@ -1,6 +1,7 @@
 import {
   CreateTeamParams,
   CreateTeamResponse,
+  LeagueTeam,
   SeasonTeam,
   SeasonTeamResponse,
   UpdateTeamParams,
@@ -42,6 +43,18 @@ export class TeamDatasource {
     } catch (e) {
       return new ApiError(69, e.toString());
     }
+  }
+
+  public async getTeamsForLeague({leagueId}: {leagueId: string}): Promise<LeagueTeam[]> {
+    return await this.repo.getTeamsForLeague(leagueId);
+  }
+
+  public async getTeamForLeague(params: {leagueId: string, teamId: string}): Promise<LeagueTeam> {
+    return await this.repo.getTeamForLeague(params);
+  }
+
+  public async getUserTeamHistory(userId: string): Promise<LeagueTeam[]> {
+    return await this.repo.getUserTeamHistory(userId);
   }
 
   public async createTeam(params: CreateTeamParams): Promise<CreateTeamResponse> {
