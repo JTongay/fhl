@@ -1,4 +1,4 @@
-import { use, StackContext, StaticSite, NextjsSite } from "sst/constructs";
+import { use, StackContext, NextjsSite } from "sst/constructs";
 import { FHLApi } from "./FHLApi.js";
 
 export function NextWeb({ stack }: StackContext) {

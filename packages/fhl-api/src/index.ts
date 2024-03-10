@@ -14,8 +14,13 @@ import {StorylineDatasource} from "./datasources/StorylineDatasource";
 import {loadSchemaSync} from "@graphql-tools/load";
 import {GraphQLFileLoader} from "@graphql-tools/graphql-file-loader";
 import path from "path";
+import {config} from "dotenv";
+config();
+
+// config({path: path.join(__dirname, "../", "../", "../", "../", "../", "../", ".env")});
 
 function loadFHLSchema() {
+  console.log(__dirname, "dirname");
   // TODO: For some reason this is looking inside of the .sst directory in the root of the project
   return loadSchemaSync(path.join(
       __dirname, "../", "../", "../", "../", "../", "../", "packages/fhl-api/src/graphql/schema/**/*.graphql"
@@ -44,9 +49,11 @@ export const handler = startServerAndCreateLambdaHandler(
     server,
     handlers.createAPIGatewayProxyEventV2RequestHandler(),
     {
+      middleware: [],
       context: async (request) => {
+        console.log(request, "request");
         return {
-          authToken: request.event.headers["Authorization"] || null,
+          authToken: request.event.headers["authorization"] || "",
           datasources: {
             userDatasource: new UserDatasource(),
             seasonDatasource: new SeasonDatasource(),

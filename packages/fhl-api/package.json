@@ -24,15 +24,20 @@
         "@apollo/server": "^4.9.3",
         "@as-integrations/aws-lambda": "^2.0.1",
         "@aws-sdk/client-rds-data": "^3.410.0",
+        "@clerk/backend": "^0.37.0",
+        "@clerk/clerk-js": "^4.68.1",
+        "@clerk/clerk-sdk-node": "^4.13.4",
         "@fhl/core": "workspace:*",
         "@graphql-tools/graphql-file-loader": "^8.0.0",
         "@graphql-tools/load": "^8.0.0",
         "aws-cdk-lib": "2.91.0",
         "dataloader": "^2.2.2",
+        "dotenv": "^16.3.1",
         "graphql": "^16.8.0",
         "graphql-tag": "^2.12.6",
-        "kysely": "^0.26.3",
-        "kysely-data-api": "^0.2.1"
+        "kysely": "0.26.3",
+        "kysely-data-api": "^0.2.1",
+        "svix": "^1.15.0"
     },
     "_moduleAliases": {
         "@": "dist"
@@ -44,12 +49,13 @@
         "@typescript-eslint/eslint-plugin": "^6.8.0",
         "@typescript-eslint/parser": "^6.8.0",
         "constructs": "10.2.69",
+        "dotenv": "^16.3.1",
         "eslint": "8.44.0",
         "eslint-config-google": "^0.14.0",
         "eslint-plugin-import": "^2.28.1",
         "hygen": "^6.2.11",
         "pg": "^8.11.3",
-        "sst": "2.24.2",
+        "sst": "2.39.2",
         "tsc-alias": "^1.8.7",
         "typescript": "^5.2.2"
     }
