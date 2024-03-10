@@ -114,6 +114,8 @@ export interface Users {
   email: string | null;
   created_at: Generated<Timestamp>;
   updated_at: Generated<Timestamp>;
+  wins: Generated<number>;
+  losses: Generated<number>;
 }
 
 export interface UserStoryline {
