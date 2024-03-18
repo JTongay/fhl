@@ -13,6 +13,7 @@ abstract class BaseResolver<
       args: ArgsType,
       context: FHLContext
   ): Promise<ReturnType> => {
+    console.log("boyaho");
     return await this.authCheck(parent, args, context);
   };
 
@@ -21,23 +22,23 @@ abstract class BaseResolver<
       args: ArgsType,
       context: FHLContext
   ): Promise<ReturnType> => {
-    const clerk = createClerkClient({
-      secretKey: process.env.CLERK_SECRET_KEY,
-      publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
-    });
-    // console.log(result, "result");
-    const authenticate = await clerk.authenticateRequest(
-        {
-          headerToken: this.getAuthToken(context),
-        }
-    );
-    console.log(authenticate, "auth check in base resolver");
-    if (!authenticate.isSignedIn) {
-      throw new FHLApiError({
-        code: SESSION_EXPIRED,
-        message: "Session Expired",
-      });
-    }
+    // const clerk = createClerkClient({
+    //   secretKey: process.env.CLERK_SECRET_KEY,
+    //   publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
+    // });
+    // // console.log(result, "result");
+    // const authenticate = await clerk.authenticateRequest(
+    //     {
+    //       headerToken: this.getAuthToken(context),
+    //     }
+    // );
+    // console.log(authenticate, "auth check in base resolver");
+    // if (!authenticate.isSignedIn) {
+    //   throw new FHLApiError({
+    //     code: SESSION_EXPIRED,
+    //     message: "Session Expired",
+    //   });
+    // }
     // TODO: Use this to get the user's information to store in the context
     // const whoAmI = authenticate.toAuth();
     return this.resolver(parent, args, context);

@@ -20,8 +20,8 @@ type Query {
 type FHL {
     league: League!
     activeSeason: Season
-    currentChampion: User!
+    currentChampion: User
     upcomingSeason: Season
     topFiveRecords: [User!]!
-    bottomFiveRecords: [User!]!
+    bottomFiveRecords: [User!]
 }

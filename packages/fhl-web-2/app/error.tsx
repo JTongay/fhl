@@ -2,9 +2,9 @@
 
 import {PropsWithChildren} from 'react';
 
-export default function UsersError(props: PropsWithChildren) {
+export default function AppError(props: PropsWithChildren) {
   console.error(props);
   return (
-    <h1>Error fetching users</h1>
+    <h1>Error loading dashboard</h1>
   );
 }

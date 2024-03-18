@@ -106,6 +106,15 @@ export interface TeamSeason {
   updated_at: Generated<Timestamp>;
 }
 
+export interface Titles {
+  id: Generated<number>;
+  name: string;
+  description: string;
+  league_id: number;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
+}
+
 export interface Users {
   id: Generated<number>;
   gamertag: string;
@@ -119,6 +128,7 @@ export interface Users {
   last_sign_in_at: Generated<Timestamp | null>;
   wins: Generated<number>;
   losses: Generated<number>;
+  league_id: number;
 }
 
 export interface UserStoryline {
@@ -136,6 +146,17 @@ export interface UserTeamSeason {
   updated_at: Generated<Timestamp>;
 }
 
+export interface UserTitle {
+  id: Generated<number>;
+  current: Generated<boolean>;
+  user_id: number;
+  defeated_user_id: number | null;
+  title_id: number;
+  event_id: number;
+  created_at: Generated<Timestamp>;
+  updated_at: Generated<Timestamp>;
+}
+
 export interface Database {
   award_season_presenter: AwardSeasonPresenter;
   award_season_winner: AwardSeasonWinner;
@@ -149,7 +170,9 @@ export interface Database {
   storylines: Storylines;
   team_season: TeamSeason;
   teams: Teams;
+  titles: Titles;
   user_storyline: UserStoryline;
   user_team_season: UserTeamSeason;
+  user_title: UserTitle;
   users: Users;
 }

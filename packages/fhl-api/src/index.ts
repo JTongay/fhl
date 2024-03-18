@@ -23,6 +23,8 @@ import {UserResolvers} from "./graphql/resolvers/User";
 import {LeagueResolvers} from "./graphql/resolvers/League";
 import {LeagueDatasource} from "./datasources/LeagueDatasource";
 import {FHLContext} from "./domain/Context";
+import {UserDatasource} from "./datasources/UserDatasource";
+import {FHLResolvers} from "./graphql/resolvers/FHL";
 
 function loadFHLSchema() {
   console.log(__dirname, "dirname");
@@ -46,6 +48,7 @@ const server = new ApolloServer<FHLContext>(
         ...SeasonResolvers,
         ...AwardResolvers,
         ...LeagueResolvers,
+        ...FHLResolvers,
         ...Unions,
       },
       includeStacktraceInErrorResponses: true,
