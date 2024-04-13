@@ -9,6 +9,8 @@ export class Season {
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
+    startDate: Date;
+    endDate: Date;
 
     constructor(response: Selectable<Seasons>) {
         this.id = response.id.toString();
@@ -16,6 +18,8 @@ export class Season {
         this.isActive = response.is_active;
         this.createdAt = response.created_at;
         this.updatedAt = response.updated_at;
+        this.startDate = response.start_date;
+        this.endDate = response.end_date;
     }
 }
 
@@ -32,12 +36,16 @@ export interface CreateSeasonParams {
     leagueId: string;
     setActive: boolean;
     year: number;
+    startDate: Date;
+    endDate: Date;
 }
 
 export interface UpdateSeasonParams {
     id: string;
     setActive: boolean;
     year: number;
+    startDate: Date;
+    endDate: Date;
 }
 
 export interface DeleteSeasonParams {

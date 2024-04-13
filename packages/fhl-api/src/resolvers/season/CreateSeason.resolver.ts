@@ -22,6 +22,8 @@ export class CreateSeasonResolver extends BaseResolver {
             is_active: args.input.setActive,
             year: args.input.year,
             league_id: league.id,
+            start_date: args.input.startDate,
+            end_date: args.input.endDate
           })
           .returningAll()
           .executeTakeFirstOrThrow();

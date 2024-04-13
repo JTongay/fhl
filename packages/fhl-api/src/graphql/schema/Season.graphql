@@ -2,6 +2,8 @@ type Season {
     id: ID!
     year: Int!
     isActive: Boolean!
+    startDate: Date!
+    endDate: Date!
     storyline(id: ID!): StorylineResponse!
     storylines(limit: Int, offset: Int): StorylinesResponse!
     awards(limit: Int, offset: Int): AwardsResponse!
@@ -40,12 +42,16 @@ input CreateSeasonInput {
     year: Int!
     setActive: Boolean!
     leagueId: ID!
+    startDate: Date!
+    endDate: Date!
 }
 
 input UpdateSeasonInput {
     id: ID!
     year: Int!
     setActive: Boolean!
+    startDate: Date!
+    endDate: Date!
 }
 
 input DeleteSeasonInput {

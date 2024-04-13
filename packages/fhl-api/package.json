@@ -46,6 +46,7 @@
     "devDependencies": {
         "@graphql-codegen/cli": "^5.0.0",
         "@graphql-codegen/schema-ast": "^4.0.0",
+        "@stylistic/eslint-plugin-ts": "^1.7.0",
         "@tsconfig/node18": "^18.2.1",
         "@typescript-eslint/eslint-plugin": "^6.8.0",
         "@typescript-eslint/parser": "^6.8.0",

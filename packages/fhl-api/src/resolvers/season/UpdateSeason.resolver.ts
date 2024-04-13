@@ -18,7 +18,8 @@ export class UpdateSeasonResolver extends BaseResolver {
                     is_active: args.input.setActive,
                     year: args.input.year,
                     updated_at: new Date(),
-
+                    start_date: args.input.startDate,
+                    end_date: args.input.endDate
                 })
                 .returningAll()
                 .executeTakeFirstOrThrow()

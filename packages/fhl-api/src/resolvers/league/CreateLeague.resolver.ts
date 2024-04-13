@@ -9,19 +9,20 @@ export class CreateLeagueResolver extends BaseResolver {
     protected async resolver(
         parent: any,
         args: Input<CreateLeagueParams>,
-        context: FHLContext
+        context: FHLContext,
     ): Promise<LeagueResponse> {
         try {
-            const response = await fhlDb.insertInto("leagues")
+            const response = await fhlDb
+                .insertInto("leagues")
                 .values({
-                    name: args.input.name
+                    name: args.input.name,
                 })
                 .returningAll()
-                .executeTakeFirstOrThrow()
+                .executeTakeFirstOrThrow();
 
-            return new League(response)
+            return new League(response);
         } catch (e: unknown) {
-            return new ApiError(123, e.toString())
+            return new ApiError(123, e.toString());
         }
     }
 }

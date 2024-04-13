@@ -15,22 +15,28 @@ export interface Award {
   presentingUserIds: string[];
 }
 
-export const awardSeasonWinnerQB = expressionBuilder<Database, "awards" | "award_season_winner">()
+export const awardSeasonWinnerQB = expressionBuilder<
+  Database,
+  "awards" | "award_season_winner"
+>();
 
 export function hasSeasonId(id: number) {
-  return (eb: ExpressionBuilder<Database, "awards" | "award_season_winner">) => {
+  return (
+    eb: ExpressionBuilder<Database, "awards" | "award_season_winner">,
+  ) => {
     return eb.exists(
-      eb.selectFrom("award_season_winner")
+      eb
+        .selectFrom("award_season_winner")
         .select("award_season_winner.season_id")
-        .where("award_season_winner.season_id", "=", id)
-    )
-  }
+        .where("award_season_winner.season_id", "=", id),
+    );
+  };
 }
 
 export type AwardResult = {
   id: number;
-  season_id: Nullable<number>
-}
+  season_id: Nullable<number>;
+};
 
 export class AwardsList extends PaginatedResponse<Award> {
   constructor(paginationParams: Pagination, total: number, data: Award[]) {
@@ -58,7 +64,7 @@ export class AwardMapper {
     private updated_at: Date,
     private season_id: number,
     private winning_user_ids: number[],
-    private presenting_user_ids: number[]
+    private presenting_user_ids: number[],
   ) { }
 
   toAward(): Award {
@@ -70,7 +76,7 @@ export class AwardMapper {
       updatedAt: this.updated_at,
       seasonId: this.season_id.toString(),
       winningUserIds: this.winning_user_ids.map(String),
-      presentingUserIds: this.presenting_user_ids.map(String)
-    }
+      presentingUserIds: this.presenting_user_ids.map(String),
+    };
   }
 }
