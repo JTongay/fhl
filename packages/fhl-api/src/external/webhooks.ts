@@ -1,9 +1,9 @@
-import {ApiHandler as apiHandler} from "sst/node/api";
-import {WebhookEvent} from "@clerk/backend";
-import {Webhook} from "svix";
-import {config} from "dotenv";
-import {fhlDb} from "@fhl/core/src/db";
-import {UserRepository} from "@/repositories/User.repository";
+import { ApiHandler as apiHandler } from "sst/node/api";
+import { WebhookEvent } from "@clerk/backend";
+import { Webhook } from "svix";
+import { config } from "dotenv";
+import { fhlDb } from "@fhl/core/src/db";
+import { UserRepository } from "@/repositories/User.repository";
 
 config();
 
@@ -19,7 +19,7 @@ export const handler = apiHandler(async (event) => {
   if (!WEBHOOK_SECRET) {
     return {
       statusCode: 500,
-      body: JSON.stringify({message: "Missing webhook secret"}),
+      body: JSON.stringify({ message: "Missing webhook secret" }),
     };
   }
 
@@ -44,7 +44,7 @@ export const handler = apiHandler(async (event) => {
   } catch (e) {
     return {
       statusCode: 500,
-      body: JSON.stringify({message: "Invalid webhook payload"}),
+      body: JSON.stringify({ message: "Invalid webhook payload" }),
     };
   }
 

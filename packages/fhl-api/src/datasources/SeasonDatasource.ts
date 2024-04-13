@@ -5,7 +5,7 @@ import {Nullable} from "@/util";
 import {fhlDb} from "@fhl/core/src/db";
 import {Seasons} from "@fhl/core/src/sql.generated";
 import DataLoader from "dataloader";
-import {Selectable} from "kysely";
+import {Selectable, sql} from "kysely";
 
 export class SeasonDatasource {
   private teamRepository: TeamRepository;
@@ -52,6 +52,22 @@ export class SeasonDatasource {
     const result = await fhlDb.selectFrom("seasons")
         .where("is_active", "=", true)
         .where("league_id", "=", +leagueId)
+        .selectAll()
+        .executeTakeFirst();
+
+    if (!result) {
+      return null;
+    }
+
+    return new Season(result);
+  }
+
+  async getUpcomingSeason(leagueId: string): Promise<Nullable<Season>> {
+    const result = await fhlDb.selectFrom("seasons")
+        .where("is_active", "=", false)
+        .where("league_id", "=", +leagueId)
+        .where("start_date", ">=", sql`now()`)
+        .orderBy("start_date", "asc")
         .selectAll()
         .executeTakeFirst();
 

@@ -1,24 +1,40 @@
-import { graphql } from "@/generated/gql";
+import {graphql} from '@/generated/gql';
 
 export const GET_DASHBOARD = graphql(/* GraphQL */`
-    query GetDashboard($limit: Int!, $offset: Int!) {
-        seasons(limit: $limit, offset: $offset) {
-            __typename
-            ... on SeasonsList {
-                total
-                limit
-                offset
-                data {
+    query Dashboard {
+            fhl {
+                __typename
+                league {
                     id
-                    year
+                    name
+                    createdAt
+                    updatedAt
+                }
+                activeSeason {
+                    id
                     isActive
+                    year
+                }
+                currentChampion {
+                    id
+                    fullName
+                    gamertag
+                }
+                # upcomingSeason {
+                
+                # }
+                topFiveRecords {
+                    id
+                    gamertag
+                    wins
+                    losses
+                }
+                bottomFiveRecords {
+                    id
+                    gamertag
+                    wins
+                    losses
                 }
             }
-
-            ... on ApiError {
-                stacktrace
-                code
-            }
         }
-    }
-`)
+`);

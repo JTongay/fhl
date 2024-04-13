@@ -1,10 +1,10 @@
-import {AwardDatasource} from "@/datasources/AwardDatasource";
-import {LeagueDatasource} from "@/datasources/LeagueDatasource";
-import {SeasonDatasource} from "@/datasources/SeasonDatasource";
-import {StorylineDatasource} from "@/datasources/StorylineDatasource";
-import {TeamDatasource} from "@/datasources/TeamDatasource";
-import {UserDatasource} from "@/datasources/UserDatasource";
-import {Nullable} from "@/util";
+import { AwardDatasource } from "@/datasources/AwardDatasource";
+import { LeagueDatasource } from "@/datasources/LeagueDatasource";
+import { SeasonDatasource } from "@/datasources/SeasonDatasource";
+import { StorylineDatasource } from "@/datasources/StorylineDatasource";
+import { TeamDatasource } from "@/datasources/TeamDatasource";
+import { UserDatasource } from "@/datasources/UserDatasource";
+import { Nullable } from "@/util";
 
 const UNKNOWN_HEADER = "unknown";
 
@@ -27,15 +27,15 @@ export type FHLContext = {
 }
 
 export type BaseContext = {
-    authToken: string;
-    appName: string;
-    appVersion: string;
-    platform: Platform;
-    userAgent: string;
+  authToken: string;
+  appName: string;
+  appVersion: string;
+  platform: Platform;
+  userAgent: string;
 }
 
 // Can't find the type for the args?
-const contextBuilder = async ({req}: any): Promise<BaseContext> => {
+const contextBuilder = async ({ req }: any): Promise<BaseContext> => {
   const authToken: string = req.headers["authorization"] || "";
   const context: BaseContext = {
     authToken,
@@ -51,5 +51,5 @@ const contextBuilder = async ({req}: any): Promise<BaseContext> => {
   return context;
 };
 
-export {contextBuilder};
+export { contextBuilder };
 

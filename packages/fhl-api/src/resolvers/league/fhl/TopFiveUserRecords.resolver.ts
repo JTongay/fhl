@@ -9,6 +9,6 @@ export class TopFiveUserRecordsResolver extends BaseResolver {
       args: never,
       context: FHLContext
   ): Promise<User[]> {
-    throw new Error("Method not implemented.");
+    return await context.datasources.leagueDatasource.getTopFiveUserRecords(parent.league.id);
   }
 }
