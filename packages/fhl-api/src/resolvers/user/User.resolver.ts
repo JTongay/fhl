@@ -4,7 +4,7 @@ import {UserResponse} from "@/domain/User";
 
 export class UserResolver extends BaseResolver {
   protected async resolver(
-      parent: never,
+      parent: unknown,
       args: { id: string },
       context: FHLContext
   ): Promise<UserResponse> {

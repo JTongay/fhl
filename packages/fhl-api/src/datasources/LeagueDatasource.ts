@@ -1,4 +1,5 @@
-import { League } from "@/domain/League";
+import { CreateEventInput, Event, UpdateEventInput } from "@/domain/Event";
+import { TitleChangeQuery, ChampionLineageParams as TitleLineageParams, TitleChange, League } from "@/domain/League";
 import { User } from "@/domain/User";
 import { Nullable } from "@/util";
 import { fhlDb } from "@fhl/core/src/db";
@@ -112,5 +113,57 @@ export class LeagueDatasource {
       .executeTakeFirstOrThrow();
 
     return new User(user);
+  }
+
+  public async getTitleLineage(
+    leagueId: string,
+    params: TitleLineageParams
+    ): Promise<TitleChange[]> {
+      const result: TitleChangeQuery[] = await fhlDb.selectFrom("user_title")
+        .innerJoin("titles", "titles.id", "user_title.title_id")
+        .innerJoin("users as winner", "winner.id", "user_title.user_id")
+        .innerJoin("users as loser", "loser.id", "user_title.defeated_user_id")
+        .where("titles.league_id", "=", +leagueId)
+        .orderBy("user_title.created_at", params.order)
+        .limit(params.limit)
+        .offset(params.offset)
+        .select([
+          "winner.id",
+          "loser.id",
+          "titles.id",
+          "titles.name",
+          "titles.description",
+          "titles.created_at",
+          "titles.updated_at",
+          "titles.league_id",
+          "user_title.event_id",
+        ])
+        .execute();
+      return result.map((champ) => new TitleChange(champ));
+  }
+
+  public async createEvent(input: CreateEventInput): Promise<Event> {
+    const response = await fhlDb.insertInto("events")
+      .values({
+        league_id: +input.leagueId,
+        is_active: input.isActive,
+        name: input.name,
+      })
+      .returningAll()
+      .executeTakeFirstOrThrow();
+    return new Event(response);
+  }
+
+  public async updateEvent(input: UpdateEventInput): Promise<Event> {
+    const response = await fhlDb.updateTable("events")
+      .set({
+        is_active: input.isActive,
+        name: input.name,
+        league_id: +input.leagueId,
+      })
+      .where("id", "=", +input.id)
+      .returningAll()
+      .executeTakeFirstOrThrow();
+    return new Event(response);
   }
 }

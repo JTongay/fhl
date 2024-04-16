@@ -29,4 +29,18 @@ export class EventsList extends PaginatedResponse<Event> {
     }
 }
 
-export type EventsResponse = EventsList | ApiError
+export type EventsResponse = EventsList | ApiError;
+
+export type CreateEventInput = {
+    leagueId: string;
+    isActive: boolean;
+    name: string;
+    // TODO: Add sections for Event matches?
+}
+
+export type UpdateEventInput = {
+    id: string;
+    isActive: boolean;
+    name: string;
+    leagueId: string;
+}

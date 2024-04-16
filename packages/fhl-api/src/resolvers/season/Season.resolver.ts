@@ -1,6 +1,6 @@
 import {FHLContext} from "@/domain/Context";
 import {BaseResolver} from "../base/BaseResolver";
-import {Season, SeasonResponse} from "@/domain/Season";
+import {SeasonResponse} from "@/domain/Season";
 import {ApiError} from "@/domain/errors/FHLApiError";
 
 export class SeasonResolver extends BaseResolver {
