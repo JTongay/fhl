@@ -26,3 +26,8 @@ export class PaginatedResponse<T> {
     this.data = data;
   }
 }
+
+export enum Order {
+  ASC = "asc",
+  DESC = "desc",
+}

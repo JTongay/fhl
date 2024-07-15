@@ -13,4 +13,6 @@ type Mutation {
     createTeam(input: CreateTeamInput!): CreateTeamResponse!
     addTeamToSeason(input: AddTeamToSeasonInput!): ID!
     updateTeam(input: UpdateTeamInput!): UpdateTeamResponse!
+    createEvent(input: CreateEventInput!): EventResponse!
+    updateEvent(input: UpdateEventInput!): EventResponse!
 }

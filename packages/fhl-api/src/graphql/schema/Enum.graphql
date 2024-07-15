@@ -5,3 +5,8 @@ enum Console {
     PS4,
     SWITCH
 }
+
+enum Order {
+    ASC,
+    DESC
+}

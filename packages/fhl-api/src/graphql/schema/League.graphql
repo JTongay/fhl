@@ -3,7 +3,30 @@ type League {
     teams: [Team!]!
     team(id: ID!): Team
     name: String!
+    currentChampion: User
+    titleLineage(
+        limit: Int,
+        offset: Int,
+        order: Order
+    ): [TitleChange!]!
     seasons: [Season!]!
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+type TitleChange {
+    id: ID!
+    title: Title!
+
+    winner: UserResponse!
+    loser: UserResponse!
+    event: Event!
+}
+
+type Title {
+    id: ID!
+    name: String!
+    description: String!
     createdAt: Date!
     updatedAt: Date!
 }

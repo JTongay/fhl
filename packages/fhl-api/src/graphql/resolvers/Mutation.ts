@@ -9,6 +9,8 @@ import {UpdateUserResolver} from "@/resolvers/user/UpdateUser.resolver";
 import {UpdateStorylineResolver} from "@/resolvers/season/storyline/UpdateStoryline.resolver";
 import {DeleteStorylineResolver} from "@/resolvers/season/storyline/DeleteStoryline.resolver";
 import {CreateAwardResolver} from "@/resolvers/season/award/CreateAward.resolver";
+import { CreateEventResolver } from "@/resolvers/league/event/CreateEvent.resolver";
+import { UpdateEventResolver } from "@/resolvers/league/event/UpdateEvent.resolver";
 
 export const MutationResolvers = resolverMap({
   Mutation: {
@@ -22,5 +24,7 @@ export const MutationResolvers = resolverMap({
     updateStoryline: new UpdateStorylineResolver(),
     deleteStoryline: new DeleteStorylineResolver(),
     createAward: new CreateAwardResolver(),
+    createEvent: new CreateEventResolver(),
+    updateEvent: new UpdateEventResolver(),
   },
 });

@@ -10,6 +10,8 @@ export class User {
   lastName: string;
   gamertag: string;
   email: Nullable<string>;
+  wins: number;
+  losses: number;
   createdAt: Date;
   updatedAt: Date;
 
@@ -19,6 +21,8 @@ export class User {
     this.lastName = response.last_name;
     this.gamertag = response.gamertag;
     this.email = response.email || null;
+    this.wins = response.wins;
+    this.losses = response.losses;
     this.createdAt = response.created_at;
     this.updatedAt = response.updated_at;
   }

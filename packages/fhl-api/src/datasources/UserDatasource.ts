@@ -1,12 +1,13 @@
 import DataLoader from "dataloader";
 import {fhlDb} from "@fhl/core/src/db";
-import {Selectable, sql} from "kysely";
+import {Selectable} from "kysely";
 import {Users} from "@fhl/core/src/sql.generated";
 import {CreateUserParams, UpdateUserParams, User, UserResponse, UsersList, UsersResponse} from "@/domain/User";
 import {ApiError} from "@/domain/errors/FHLApiError";
 import {UserRepository} from "@/repositories/User.repository";
 import {Pagination} from "@/util";
 import {UNKNOWN_ERROR} from "@/domain/errors/codes";
+import { TitleChange } from "@/domain/League";
 
 function isUser(user: Selectable<Users> | Error): user is Selectable<Users> {
   return !(user instanceof Error);
@@ -80,5 +81,9 @@ export class UserDatasource {
     } catch (e: unknown) {
       return new ApiError(1009, e.toString());
     }
+  }
+
+  async getTitleHistory(userId: number): Promise<TitleChange[]> {
+    return await this.userRepo.getTitleHistory(userId);
   }
 }
