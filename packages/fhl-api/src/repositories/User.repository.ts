@@ -9,7 +9,7 @@ export class UserRepository {
   async createUser(user: CreateUserParams): Promise<Selectable<Users>> {
     return this.db
         .insertInto("users")
-        .values({
+        .values(({selectFrom}) => ({
           first_name: user.firstName,
           last_name: user.lastName,
           gamertag: user.gamertag,
@@ -17,7 +17,8 @@ export class UserRepository {
           idp_id: user.idpId,
           avatar_url: user.avatarUrl,
           last_sign_in_at: user.lastSignInAt,
-        })
+          league_id: selectFrom("leagues").where("name", "=", "FHL").select("id")
+        }))
         .returningAll()
         .executeTakeFirstOrThrow();
   }

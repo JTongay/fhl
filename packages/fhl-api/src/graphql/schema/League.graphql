@@ -4,7 +4,7 @@ type League {
     team(id: ID!): Team
     name: String!
     currentChampion: User
-    championLineage(
+    titleLineage(
         limit: Int,
         offset: Int,
         order: Order
