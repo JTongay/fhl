@@ -1,12 +1,12 @@
 export type Nullable<T> = T | null;
 
 export interface Input<T> {
-    input: T;
+  input: T;
 }
 
 export interface Pagination {
-    limit: number;
-    offset: number;
+  limit: number;
+  offset: number;
 }
 
 export class PaginatedResponse<T> {
@@ -15,11 +15,7 @@ export class PaginatedResponse<T> {
   total: number;
   data: T[];
 
-  constructor(
-      paginationParams: Pagination,
-      total: number,
-      data: T[]
-  ) {
+  constructor(paginationParams: Pagination, total: number, data: T[]) {
     this.limit = paginationParams.limit;
     this.offset = paginationParams.offset;
     this.total = total;

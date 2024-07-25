@@ -1,26 +1,26 @@
-import {FHLContext} from "@/domain/Context";
-import {FHLApiError} from "@/domain/errors/FHLApiError";
-import {NO_AUTH_HEADER, SESSION_EXPIRED} from "@/domain/errors/codes";
-import {createClerkClient} from "@clerk/clerk-sdk-node";
+import { FHLContext } from "@/domain/Context";
+import { FHLApiError } from "@/domain/errors/FHLApiError";
+import { NO_AUTH_HEADER, SESSION_EXPIRED } from "@/domain/errors/codes";
+import { createClerkClient } from "@clerk/clerk-sdk-node";
 
 abstract class BaseResolver<
-    ParentType = unknown,
-    ArgsType = unknown,
-    ReturnType = unknown
+  ParentType = unknown,
+  ArgsType = unknown,
+  ReturnType = unknown,
 > {
   public resolve = async (
-      parent: ParentType,
-      args: ArgsType,
-      context: FHLContext
+    parent: ParentType,
+    args: ArgsType,
+    context: FHLContext,
   ): Promise<ReturnType> => {
     console.log("boyaho");
     return await this.authCheck(parent, args, context);
   };
 
   private authCheck = async (
-      parent: ParentType,
-      args: ArgsType,
-      context: FHLContext
+    parent: ParentType,
+    args: ArgsType,
+    context: FHLContext,
   ): Promise<ReturnType> => {
     // const clerk = createClerkClient({
     //   secretKey: process.env.CLERK_SECRET_KEY,
@@ -55,11 +55,11 @@ abstract class BaseResolver<
     return context.authToken;
   };
 
-    protected abstract resolver(
-        parent: ParentType,
-        args: ArgsType,
-        context: FHLContext
-    ): Promise<ReturnType>
+  protected abstract resolver(
+    parent: ParentType,
+    args: ArgsType,
+    context: FHLContext,
+  ): Promise<ReturnType>;
 }
 
-export {BaseResolver};
+export { BaseResolver };
