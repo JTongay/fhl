@@ -1,13 +1,13 @@
 "use client";
 
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { GET_DASHBOARD } from "@/operations/queries/getDashboard";
-import { useQuery } from "@apollo/client";
+import { DashboardRanking } from "@/components/fhl/Card/DashboardRanking";
+import { CurrentChampion } from "@/components/fhl/Card/CurrentChampion";
+import { useDashboard } from "@/hooks/useDashboard";
 // import {useAuth} from '@clerk/nextjs';
 
 export default function Home() {
   // throw new Error('Not implemented');
-  const { data, loading, error } = useQuery(GET_DASHBOARD);
+  const { dashboard, loading, error } = useDashboard();
   // const {isLoaded} = useAuth();
 
   if (loading) {
@@ -18,45 +18,27 @@ export default function Home() {
     throw error;
   }
 
-  if (data) {
+  if (dashboard) {
     return (
       <>
-        <div className="flex flex-col justify-center">
+        <h1 className="text-2xl text-center pb-10">
+          Welcome to {dashboard.league.name}
+        </h1>
+        <div className="flex flex-row justify-center pb-8">
           <img className="w-1/2" src="/mlg-logo.png" alt="FHL Logo" />
         </div>
-        <h1 className="text-lg">Welcome to {data.fhl.league.name}</h1>
-        <h2>
-          Current Champion: {data.fhl.currentChampion?.gamertag && "not found"}
-        </h2>
-        <div className="flex flex-row justify-center items-center">
-          <Card>
-            <CardTitle>Top 5</CardTitle>
-            <CardContent>
-              <section>
-                {data.fhl.topFiveRecords.map((user) => (
-                  <div key={user.id}>
-                    <h2>{user.gamertag}</h2>
-                    <p>Wins: {user.wins}</p>
-                    <p>Losses: {user.losses}</p>
-                  </div>
-                ))}
-              </section>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardTitle>Bottom 5</CardTitle>
-            <CardContent>
-              <section>
-                {data.fhl.bottomFiveRecords?.map((user) => (
-                  <div key={user.id}>
-                    <h2>{user.gamertag}</h2>
-                    <p>Wins: {user.wins}</p>
-                    <p>Losses: {user.losses}</p>
-                  </div>
-                ))}
-              </section>
-            </CardContent>
-          </Card>
+        <div className="pb-8">
+          <CurrentChampion />
+        </div>
+        <div className="justify-content-center grid grid-cols-1 gap-3 lg:grid-cols-2">
+          <DashboardRanking
+            type="top"
+            userRankings={dashboard.topFiveRecords}
+          />
+          <DashboardRanking
+            type="bottom"
+            userRankings={dashboard.bottomFiveRecords}
+          />
         </div>
       </>
     );
