@@ -6,9 +6,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "engines": {
-    "pnpm": "9"
-  },
   "scripts": {
     "dev": "sst dev --stage local",
     "local": "sst dev --stage local",
