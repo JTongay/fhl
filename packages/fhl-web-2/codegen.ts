@@ -11,11 +11,19 @@ import "dotenv/config";
 
 const config: CodegenConfig = {
   schema: process.env.API_URL,
-  documents: ["operations/**/*.tsx"],
+  documents: ["operations/**/*.graphql"],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
     "./generated/gql/": {
       preset: "client",
+      plugins: [
+        "typescript",
+        "typescript-operations",
+        "typescript-react-apollo",
+      ],
+      config: {
+        withHooks: true,
+      },
     },
   },
 };

@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "graphql-codegen",
+    "fetch-schema": "dotenv -- bash -c './download-schema.sh -e $API_URL'",
     "predev": "pnpm run generate",
     "prestart": "pnpm run generate"
   },
@@ -39,6 +40,11 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
-    "@graphql-codegen/client-preset": "^4.1.0"
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-codegen/typescript": "^4.0.9",
+    "@graphql-codegen/typescript-operations": "^4.2.3",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.0",
+    "apollo": "^2.34.0",
+    "dotenv-cli": "^7.4.2"
   }
 }

@@ -1,6 +1,7 @@
 import { graphql } from "@/generated/gql";
+import { gql } from "@apollo/client";
 
-export const GET_DASHBOARD = graphql(/* GraphQL */ `
+export const GET_DASHBOARD = gql`
   query Dashboard {
     fhl {
       __typename
@@ -17,8 +18,12 @@ export const GET_DASHBOARD = graphql(/* GraphQL */ `
       }
       currentChampion {
         id
+        firstName
+        lastName
         fullName
         gamertag
+        wins
+        losses
       }
       # upcomingSeason {
 
@@ -37,4 +42,4 @@ export const GET_DASHBOARD = graphql(/* GraphQL */ `
       }
     }
   }
-`);
+`;

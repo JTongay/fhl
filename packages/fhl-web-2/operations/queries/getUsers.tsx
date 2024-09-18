@@ -1,4 +1,4 @@
-// import { graphql } from "@/generated/gql";
+import { graphql } from "@/generated/gql";
 import { gql } from "@apollo/client";
 import { CORE_USER_FRAGMENT } from "../fragments/user";
 
@@ -12,7 +12,6 @@ export const GET_USERS = gql`
         limit
         offset
         data {
-          #   ...CoreUserFields
           __typename
           id
           firstName
@@ -20,12 +19,11 @@ export const GET_USERS = gql`
           gamertag
         }
       }
-    }
 
-    ... on ApiError {
-      stacktrace
-      code
+      ... on ApiError {
+        stacktrace
+        code
+      }
     }
-  }
   }
 `;

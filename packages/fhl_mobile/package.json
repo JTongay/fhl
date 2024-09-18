@@ -3,7 +3,6 @@
   "private": "true",
   "version": "1.0.0",
   "description": "Mobile Repo for fhl_mobile",
-  "packageManager": "^pnpm@8.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

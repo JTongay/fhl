@@ -1,0 +1,21 @@
+query GetUser($id: ID!) {
+  user(id: $id) {
+    __typename
+    ... on User {
+      id
+      firstName
+      lastName
+      email
+      fullName
+      wins
+      losses
+      createdAt
+      updatedAt
+    }
+
+    ... on ApiError {
+      code
+      stacktrace
+    }
+  }
+}

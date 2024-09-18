@@ -2,9 +2,6 @@
   "name": "fhl-web",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "pnpm": "9"
-  },
   "scripts": {
     "dev": "sst bind next dev",
     "build": "next build",
