@@ -26,9 +26,14 @@ export interface TeamTable {
 
 export class TeamRepository {
   public async getTeamsForSeason(seasonId: string): Promise<SeasonTeam[]> {
-    const result = await fhlDb.selectFrom("user_team_season")
+    const result = await fhlDb
+      .selectFrom("user_team_season")
       .innerJoin("teams", "teams.id", "user_team_season.season_id")
-      .innerJoin("team_season", "team_season.season_id", "user_team_season.season_id")
+      .innerJoin(
+        "team_season",
+        "team_season.season_id",
+        "user_team_season.season_id",
+      )
       .select([
         "player_id",
         "season_id",
@@ -51,12 +56,21 @@ export class TeamRepository {
     });
   }
 
-  public async getTeamForSeason(
-    { seasonId, teamId }: { seasonId: string, teamId: string }
-  ): Promise<SeasonTeam> {
-    const result = await fhlDb.selectFrom("user_team_season")
+  public async getTeamForSeason({
+    seasonId,
+    teamId,
+  }: {
+    seasonId: string;
+    teamId: string;
+  }): Promise<SeasonTeam> {
+    const result = await fhlDb
+      .selectFrom("user_team_season")
       .innerJoin("teams", "teams.id", "user_team_season.season_id")
-      .innerJoin("team_season", "team_season.season_id", "user_team_season.season_id")
+      .innerJoin(
+        "team_season",
+        "team_season.season_id",
+        "user_team_season.season_id",
+      )
       .select([
         "player_id",
         "season_id",
@@ -79,12 +93,17 @@ export class TeamRepository {
   }
 
   public async getTeamsForLeague(leagueId: string): Promise<LeagueTeam[]> {
-    const result = await fhlDb.selectFrom("user_team_season")
+    const result = await fhlDb
+      .selectFrom("user_team_season")
       .innerJoin("teams", "teams.id", "user_team_season.team_id")
-      .innerJoin("team_season", "team_season.season_id", "user_team_season.season_id")
+      .innerJoin(
+        "team_season",
+        "team_season.season_id",
+        "user_team_season.season_id",
+      )
       .select([
         "player_id",
-        "season_id",
+        "team_season.season_id",
         "teams.id",
         "teams.name",
         "teams.league_id",
@@ -104,10 +123,21 @@ export class TeamRepository {
     });
   }
 
-  public async getTeamForLeague({ leagueId, teamId }: { leagueId: string, teamId: string }): Promise<LeagueTeam> {
-    const result = await fhlDb.selectFrom("user_team_season")
+  public async getTeamForLeague({
+    leagueId,
+    teamId,
+  }: {
+    leagueId: string;
+    teamId: string;
+  }): Promise<LeagueTeam> {
+    const result = await fhlDb
+      .selectFrom("user_team_season")
       .innerJoin("teams", "teams.id", "user_team_season.team_id")
-      .innerJoin("team_season", "team_season.season_id", "user_team_season.season_id")
+      .innerJoin(
+        "team_season",
+        "team_season.season_id",
+        "user_team_season.season_id",
+      )
       .select([
         "player_id",
         "season_id",
@@ -131,9 +161,14 @@ export class TeamRepository {
   }
 
   public async getUserTeamHistory(userId: string): Promise<LeagueTeam[]> {
-    const result = await fhlDb.selectFrom("user_team_season")
+    const result = await fhlDb
+      .selectFrom("user_team_season")
       .innerJoin("teams", "teams.id", "user_team_season.team_id")
-      .innerJoin("team_season", "team_season.season_id", "user_team_season.season_id")
+      .innerJoin(
+        "team_season",
+        "team_season.season_id",
+        "user_team_season.season_id",
+      )
       .select([
         "player_id",
         "season_id",
@@ -159,7 +194,8 @@ export class TeamRepository {
   }
 
   public async createTeam(params: CreateTeamParams): Promise<Team> {
-    const result = await fhlDb.insertInto("teams")
+    const result = await fhlDb
+      .insertInto("teams")
       .values({
         name: params.name,
         league_id: +params.leagueId,
@@ -171,7 +207,8 @@ export class TeamRepository {
   }
 
   public async addTeamToSeason(params: AddTeamToSeasonParams): Promise<string> {
-    const result = await fhlDb.insertInto("team_season")
+    const result = await fhlDb
+      .insertInto("team_season")
       .values({
         captain_id: +params.captainId,
         season_id: +params.seasonId,
@@ -185,17 +222,17 @@ export class TeamRepository {
 
   public async countTeamsToSeason(seasonId: number): Promise<number> {
     const { count } = fhlDb.fn;
-    const result = await fhlDb.selectFrom("team_season")
+    const result = await fhlDb
+      .selectFrom("team_season")
       .where("season_id", "=", seasonId)
-      .select(
-        count<number>("id").as("teams")
-      )
+      .select(count<number>("id").as("teams"))
       .executeTakeFirst();
     return result?.teams || 0;
   }
 
   public async updateTeam(params: UpdateTeamParams): Promise<Team> {
-    const result = await fhlDb.updateTable("teams")
+    const result = await fhlDb
+      .updateTable("teams")
       .where("id", "=", +params.teamId)
       .set({
         name: params.name,
@@ -208,7 +245,8 @@ export class TeamRepository {
   }
 
   public async addPlayerToTeam(params: AddPlayerToTeamParams): Promise<string> {
-    const result = await fhlDb.insertInto("user_team_season")
+    const result = await fhlDb
+      .insertInto("user_team_season")
       .values({
         season_id: +params.seasonId,
         team_id: +params.teamId,
@@ -220,8 +258,11 @@ export class TeamRepository {
     return result.id.toString();
   }
 
-  public async removePlayerFromTeam(params: RemovePlayerFromTeamParams): Promise<boolean> {
-    await fhlDb.deleteFrom("user_team_season")
+  public async removePlayerFromTeam(
+    params: RemovePlayerFromTeamParams,
+  ): Promise<boolean> {
+    await fhlDb
+      .deleteFrom("user_team_season")
       .where("player_id", "=", +params.playerId)
       .where("season_id", "=", +params.seasonId)
       .where("team_id", "=", +params.teamId)

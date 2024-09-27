@@ -14,8 +14,7 @@ const config: CodegenConfig = {
   documents: ["operations/**/*.graphql"],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
-    "./generated/gql/": {
-      preset: "client",
+    "./generated/gql/graphql.tsx": {
       plugins: [
         "typescript",
         "typescript-operations",
