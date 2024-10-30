@@ -17,7 +17,6 @@ export async function up(db) {
   console.log(users, "users");
   console.log(teams, "teams");
   console.log(awards, "awards");
-  console.log("");
   console.log(storylines, "storylines");
 
   // await createAwardSeason(db, awards.mvpResult.id, pastSeason.id, [users[0].id, users[1].id], [users[0].id]);

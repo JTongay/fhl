@@ -36,7 +36,7 @@ export class TeamRepository {
       )
       .select([
         "player_id",
-        "season_id",
+        "user_team_season.season_id",
         "teams.id",
         "teams.name",
         "teams.league_id",
@@ -46,7 +46,7 @@ export class TeamRepository {
         "team_season.losses",
         "team_season.captain_id",
       ])
-      .where("season_id", "=", +seasonId)
+      .where("user_team_season.season_id", "=", +seasonId)
       .execute();
 
     const playerIds = result.map((team) => team.player_id);

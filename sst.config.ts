@@ -11,8 +11,6 @@ export default {
         };
     },
     stacks(app) {
-        app.stack(FHLDB)
-            .stack(FHLApi)
-            .stack(NextWeb);
-    }
+        app.stack(FHLDB).stack(FHLApi).stack(NextWeb);
+    },
 } satisfies SSTConfig;

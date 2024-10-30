@@ -1,18 +1,20 @@
 import {
+  AddPlayerToTeamParams,
   CreateTeamParams,
   CreateTeamResponse,
   LeagueTeam,
+  RemovePlayerFromTeamParams,
   SeasonTeam,
   SeasonTeamResponse,
   UpdateTeamParams,
   UpdateTeamResponse,
 } from "@/domain/Team";
-import {ApiError} from "@/domain/errors/FHLApiError";
-import {TeamRepository} from "@/repositories/Team.repository";
-import {fhlDb} from "@fhl/core/src/db";
-import {Teams} from "@fhl/core/src/sql.generated";
+import { ApiError } from "@/domain/errors/FHLApiError";
+import { TeamRepository } from "@/repositories/Team.repository";
+import { fhlDb } from "@fhl/core/src/db";
+import { Teams } from "@fhl/core/src/sql.generated";
 import DataLoader from "dataloader";
-import {Selectable} from "kysely";
+import { Selectable } from "kysely";
 
 export class TeamDatasource {
   private repo: TeamRepository;
@@ -22,34 +24,53 @@ export class TeamDatasource {
   }
 
   private batchTeams = new DataLoader(async (ids: number[]) => {
-    const teamsList = await fhlDb.selectFrom("teams").where("id", "in", ids).selectAll().execute();
+    const teamsList = await fhlDb
+      .selectFrom("teams")
+      .where("id", "in", ids)
+      .selectAll()
+      .execute();
     // Dataloader expects you to return a list with the results ordered just like the list in the arguments were
     // Since the database might return the results in a different order the following code sorts the results accordingly
-    const teamIdsToUserMap = teamsList.reduce((mapping, team) => {
-      mapping[team.id] = team;
-      return mapping;
-    }, {} as { [key: string]: Selectable<Teams> });
+    const teamIdsToUserMap = teamsList.reduce(
+      (mapping, team) => {
+        mapping[team.id] = team;
+        return mapping;
+      },
+      {} as { [key: string]: Selectable<Teams> },
+    );
     return ids.map((id) => teamIdsToUserMap[id]);
   });
-
 
   public async getTeamsForSeason(id: string): Promise<SeasonTeam[]> {
     return await this.repo.getTeamsForSeason(id);
   }
 
-  public async getTeamForSeason({teamId, seasonId}: { teamId: string, seasonId: string }): Promise<SeasonTeamResponse> {
+  public async getTeamForSeason({
+    teamId,
+    seasonId,
+  }: {
+    teamId: string;
+    seasonId: string;
+  }): Promise<SeasonTeamResponse> {
     try {
-      return await this.repo.getTeamForSeason({teamId, seasonId});
+      return await this.repo.getTeamForSeason({ teamId, seasonId });
     } catch (e) {
       return new ApiError(69, e.toString());
     }
   }
 
-  public async getTeamsForLeague({leagueId}: {leagueId: string}): Promise<LeagueTeam[]> {
+  public async getTeamsForLeague({
+    leagueId,
+  }: {
+    leagueId: string;
+  }): Promise<LeagueTeam[]> {
     return await this.repo.getTeamsForLeague(leagueId);
   }
 
-  public async getTeamForLeague(params: {leagueId: string, teamId: string}): Promise<LeagueTeam> {
+  public async getTeamForLeague(params: {
+    leagueId: string;
+    teamId: string;
+  }): Promise<LeagueTeam> {
     return await this.repo.getTeamForLeague(params);
   }
 
@@ -57,7 +78,9 @@ export class TeamDatasource {
     return await this.repo.getUserTeamHistory(userId);
   }
 
-  public async createTeam(params: CreateTeamParams): Promise<CreateTeamResponse> {
+  public async createTeam(
+    params: CreateTeamParams,
+  ): Promise<CreateTeamResponse> {
     try {
       return await this.repo.createTeam(params);
     } catch (e) {
@@ -65,11 +88,29 @@ export class TeamDatasource {
     }
   }
 
-  public async updateTeam(params: UpdateTeamParams): Promise<UpdateTeamResponse> {
+  public async updateTeam(
+    params: UpdateTeamParams,
+  ): Promise<UpdateTeamResponse> {
     try {
       return await this.repo.updateTeam(params);
     } catch (e) {
       return new ApiError(61, e.toString());
     }
+  }
+
+  public async draftPlayerToTeam(
+    params: AddPlayerToTeamParams,
+  ): Promise<string> {
+    try {
+      return await this.repo.addPlayerToTeam(params);
+    } catch (e) {
+      return new ApiError(123, e.toString());
+    }
+  }
+
+  public async removePlayerFromTeam(
+    params: RemovePlayerFromTeamParams,
+  ): Promise<boolean> {
+    return this.repo.removePlayerFromTeam(params);
   }
 }
