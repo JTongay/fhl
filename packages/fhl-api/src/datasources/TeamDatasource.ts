@@ -100,7 +100,7 @@ export class TeamDatasource {
 
   public async draftPlayerToTeam(
     params: AddPlayerToTeamParams,
-  ): Promise<string> {
+  ): Promise<string | ApiError> {
     try {
       return await this.repo.addPlayerToTeam(params);
     } catch (e) {
@@ -110,7 +110,11 @@ export class TeamDatasource {
 
   public async removePlayerFromTeam(
     params: RemovePlayerFromTeamParams,
-  ): Promise<boolean> {
-    return this.repo.removePlayerFromTeam(params);
+  ): Promise<boolean | ApiError> {
+    try {
+      return await this.repo.removePlayerFromTeam(params);
+    } catch (e) {
+      return new ApiError(321, e.toString());
+    }
   }
 }

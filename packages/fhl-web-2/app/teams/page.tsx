@@ -27,6 +27,7 @@ export default function Teams() {
               <p>{team.name}</p>
               <p>Wins: {team.wins}</p>
               <p>Losses: {team.losses}</p>
+              <span>Yessss</span>
             </div>
           ))}
         </div>

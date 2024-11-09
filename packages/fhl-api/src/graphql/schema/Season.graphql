@@ -9,7 +9,9 @@ type Season {
   awards(limit: Int, offset: Int): AwardsResponse!
   award(id: ID!): AwardResponse!
   games(limit: Int, offset: Int): [Game!]!
+  "Gets a list of teams that played during the seasonn"
   teams: [Team!]!
+  "Gets specific team data for the season"
   team(id: ID!): TeamResponse!
   createdAt: Date!
   updatedAt: Date!
