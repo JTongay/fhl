@@ -1,8 +1,6 @@
 "use client";
 
-import { GET_USERS } from "../../operations/queries/getUsers";
-import { useQuery } from "@apollo/client";
-import { GetUsersQuery } from "@/generated/gql/graphql";
+import { GetUsersQuery, useGetUsersQuery } from "@/generated/gql/graphql";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type UsersList = Extract<GetUsersQuery["users"], { __typename: "UsersList" }>;
@@ -13,7 +11,7 @@ function isUsersList(users: UsersList | UsersError): users is UsersList {
 }
 
 export default function Users() {
-  const { data, loading, error } = useQuery(GET_USERS);
+  const { data, loading, error } = useGetUsersQuery();
 
   if (loading) {
     return <h1>loading</h1>;
