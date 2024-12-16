@@ -10,7 +10,7 @@
     "dev": "sst dev --stage local",
     "local": "sst dev --stage local",
     "build": "sst build",
-    "deploy": "sst deploy",
+    "deploy": "sst deploy --stage prod",
     "remove": "sst remove",
     "console": "sst console",
     "typecheck": "tsc --noEmit && tsc-alias -p tsconfig.json",

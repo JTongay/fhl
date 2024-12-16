@@ -1,13 +1,13 @@
-import {TeamTable} from "@/repositories/Team.repository";
-import {ApiError} from "./errors/FHLApiError";
+import { TeamTable } from "@/repositories/Team.repository";
+import { ApiError } from "./errors/FHLApiError";
 
 export interface BaseTeamTable {
-    id: number;
-    name: string;
-    wins: number;
-    losses: number;
-    created_at: Date;
-    updated_at: Date;
+  id: number;
+  name: string;
+  wins: number;
+  losses: number;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export class Team {
@@ -67,32 +67,32 @@ export class LeagueTeam extends Team {
 }
 
 export type CreateTeamParams = {
-    name: string;
-    leagueId: string;
-}
+  name: string;
+  leagueId: string;
+};
 
 export type AddTeamToSeasonParams = {
-    seasonId: string;
-    teamId: string;
-    captainId: string;
-}
+  seasonId: string;
+  teamId: string;
+  captainId: string;
+};
 
 export type UpdateTeamParams = {
-    teamId: string;
-    name: string;
-}
+  teamId: string;
+  name: string;
+};
 
 export type AddPlayerToTeamParams = {
-    seasonId: string;
-    teamId: string;
-    playerId: string;
-}
+  seasonId: string;
+  teamId: string;
+  playerId: string;
+};
 
 export type RemovePlayerFromTeamParams = {
-    seasonId: string;
-    teamId: string;
-    playerId: string;
-}
+  seasonId: string;
+  teamId: string;
+  playerId: string;
+};
 
 export type SeasonTeamResponse = ApiError | SeasonTeam;
 export type CreateTeamResponse = ApiError | Team;

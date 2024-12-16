@@ -17,12 +17,4 @@ export const CurrentChampion = () => {
       </Avatar>
     </div>
   );
-
-  // return (
-  //   <Card>
-  //     <CardTitle>
-  //       Current Champion: {dashboard?.currentChampion?.gamertag || "Vacant"}
-  //     </CardTitle>
-  //   </Card>
-  // );
 };

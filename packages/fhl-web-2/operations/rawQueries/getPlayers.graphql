@@ -1,0 +1,16 @@
+query Players($limit: Int!, $offset: Int!) {
+  users(limit: $limit, offset: $offset) {
+    ... on UsersList {
+      data {
+        id
+        fullName
+        gamertag
+      }
+    }
+
+    ... on ApiError {
+      code
+      stacktrace
+    }
+  }
+}

@@ -2,7 +2,7 @@
 
 import { GET_USERS } from "../../operations/queries/getUsers";
 import { useQuery } from "@apollo/client";
-import { type GetUsersQuery } from "@/generated/gql/graphql";
+import { GetUsersQuery } from "@/generated/gql/graphql";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type UsersList = Extract<GetUsersQuery["users"], { __typename: "UsersList" }>;

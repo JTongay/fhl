@@ -1,5 +1,7 @@
 import { DashboardQuery } from "@/generated/gql/graphql";
 
+export type Dashboard = DashboardQuery["fhl"];
+
 export type DashboardUserRanks =
-  | DashboardQuery["fhl"]["topFiveRecords"]
-  | DashboardQuery["fhl"]["bottomFiveRecords"];
+  | Dashboard["topFiveRecords"]
+  | Dashboard["bottomFiveRecords"];

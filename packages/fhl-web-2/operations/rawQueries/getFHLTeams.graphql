@@ -1,0 +1,17 @@
+query GetFHLTeams {
+  fhl {
+    __typename
+    league {
+      id
+      name
+      teams {
+        id
+        name
+        wins
+        losses
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}

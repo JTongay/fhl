@@ -1,0 +1,11 @@
+mutation CreateTeam($input: CreateTeamInput!) {
+  createTeam(input: $input) {
+    ... on ApiError {
+      code
+    }
+    ... on Team {
+      id
+      name
+    }
+  }
+}

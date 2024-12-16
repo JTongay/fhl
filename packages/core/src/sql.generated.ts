@@ -75,6 +75,8 @@ export interface Seasons {
   league_id: number;
   created_at: Generated<Timestamp>;
   updated_at: Generated<Timestamp>;
+  start_date: Generated<Timestamp>;
+  end_date: Generated<Timestamp>;
 }
 
 export interface Storylines {
