@@ -1,0 +1,26 @@
+query NewSeasonForm($limit: Int!, $offset: Int!) {
+  fhl {
+    league {
+      teams {
+        id
+        name
+      }
+    }
+  }
+  users(limit: $limit, offset: $offset) {
+    ... on UsersList {
+      offset
+      limit
+      total
+      data {
+        id
+        fullName
+        gamertag
+      }
+    }
+    ... on ApiError {
+      code
+      stacktrace
+    }
+  }
+}

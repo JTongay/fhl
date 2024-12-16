@@ -83,6 +83,19 @@ input DraftPlayerInput {
   playerId: ID!
 }
 
+"Input type to create a season for a given league with the teams and team captains"
+input CreateFullSeasonInput {
+  leagueId: ID!
+  teams: [CreateSeasonTeamInput!]!
+  startDate: Date
+  endDate: Date
+}
+
+input CreateSeasonTeamInput {
+  id: ID!
+  captain: ID!
+}
+
 union SeasonResponse = ApiError | Season
 union SeasonsResponse = ApiError | SeasonsList
 union StorylineResponse = ApiError | Storyline

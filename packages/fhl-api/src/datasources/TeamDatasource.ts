@@ -6,6 +6,7 @@ import {
   RemovePlayerFromTeamParams,
   SeasonTeam,
   SeasonTeamResponse,
+  Team,
   UpdateTeamParams,
   UpdateTeamResponse,
 } from "@/domain/Team";
@@ -63,8 +64,9 @@ export class TeamDatasource {
     leagueId,
   }: {
     leagueId: string;
-  }): Promise<LeagueTeam[]> {
-    return await this.repo.getTeamsForLeague(leagueId);
+  }): Promise<Team[]> {
+    return await this.repo.getLeagueTeams(leagueId);
+    // return await this.repo.getTeamsForLeague(leagueId);
   }
 
   public async getTeamForLeague(params: {

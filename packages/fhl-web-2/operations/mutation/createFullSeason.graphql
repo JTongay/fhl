@@ -1,0 +1,3 @@
+mutation CreateFullSeason($input: CreateFullSeasonInput!) {
+  createFullSeason(input: $input)
+}

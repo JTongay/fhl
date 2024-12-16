@@ -92,6 +92,21 @@ export class TeamRepository {
     return new SeasonTeam(teamData);
   }
 
+  public async getLeagueTeams(leagueId: string): Promise<Team[]> {
+    const result = await fhlDb
+      .selectFrom("teams")
+      .where("league_id", "=", +leagueId)
+      .selectAll()
+      .execute();
+
+    return result.map((team) => new Team(team));
+  }
+
+  /**
+   * @deprecated - I don't know what I was thinking with this??
+   * @param leagueId
+   * @returns
+   */
   public async getTeamsForLeague(leagueId: string): Promise<LeagueTeam[]> {
     const result = await fhlDb
       .selectFrom("user_team_season")

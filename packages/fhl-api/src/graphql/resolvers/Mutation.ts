@@ -13,6 +13,7 @@ import { CreateEventResolver } from "@/resolvers/league/event/CreateEvent.resolv
 import { UpdateEventResolver } from "@/resolvers/league/event/UpdateEvent.resolver";
 import { DraftPlayerToTeamResolver } from "@/resolvers/season/team/DraftPlayerToTeam.resolver";
 import { RemovePlayerFromTeamResolver } from "@/resolvers/season/team/RemovePlayerFromTeam.resolver";
+import { CreateFullSeason } from "@/resolvers/season/CreateFullSeason.resolver";
 
 export const MutationResolvers = resolverMap({
   Mutation: {
@@ -30,5 +31,6 @@ export const MutationResolvers = resolverMap({
     updateEvent: new UpdateEventResolver(),
     draftPlayerToTeam: new DraftPlayerToTeamResolver(),
     removePlayerFromTeam: new RemovePlayerFromTeamResolver(),
+    createFullSeason: new CreateFullSeason(),
   },
 });

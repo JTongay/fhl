@@ -19,4 +19,6 @@ type Mutation {
   draftPlayerToTeam(input: DraftPlayerInput!): ID!
   "Removes a player from a team during a season"
   removePlayerFromTeam(input: DraftPlayerInput!): Boolean!
+  "Creates a season with the selected teams along with the selected captains"
+  createFullSeason(input: CreateFullSeasonInput!): ID!
 }
