@@ -7,12 +7,11 @@
 //   publicRoutes: ['/', '/users', '/auth/login', '/auth/signup'],
 //   debug: true,
 // });
-export function middleware(request) {
-  console.log(request, 'request');
-  console.log('middleware');
+export function middleware(request: unknown) {
+  console.log(request, "request");
+  console.log("middleware");
 }
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
-

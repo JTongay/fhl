@@ -1,15 +1,15 @@
-import {useUser} from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 
 export const useLoggedInUser = () => {
-    const user = useUser();
-    if (!user.isSignedIn) {
-        return {
-            signedIn: false,
-            user: null
-        };
-    }
+  const user = useUser();
+  if (!user.isSignedIn) {
     return {
-        signedIn: true,
-        user
+      signedIn: false,
+      user: null,
     };
-}
+  }
+  return {
+    signedIn: true,
+    user,
+  };
+};
