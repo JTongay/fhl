@@ -1,8 +1,8 @@
-import { useDashboard } from "@/hooks/useDashboard";
 import { Avatar, AvatarImage } from "../../ui/avatar";
+import { useDashboardQuery } from "@/generated/gql/graphql";
 
 export const CurrentChampion = () => {
-  const { dashboard } = useDashboard();
+  const { data } = useDashboardQuery();
 
   return (
     <div className="flex row justify-center items-center">
@@ -10,7 +10,7 @@ export const CurrentChampion = () => {
         <AvatarImage src="/title-belt.png" />
       </Avatar>
       <h2 className="text-lg text-center">
-        Current Champion: {dashboard?.currentChampion?.gamertag || "Vacant"}
+        Current Champion: {data?.fhl.currentChampion?.gamertag || "Vacant"}
       </h2>
       <Avatar className="mx-2">
         <AvatarImage src="/title-belt.png" />

@@ -4,21 +4,20 @@ import { Kysely } from "kysely";
  * @param db {Kysely<Database>}
  */
 export async function up(db) {
+  console.log(db, "Skipping this stupid seed");
   // Create an active season
-  const activeSeason = await createActiveSeason(db);
-  const pastSeason = await createPastSeason(db);
-  const users = await createUsers(db);
-  const teams = await createTeams(db);
-  const awards = await createAwards(db);
-  const storylines = await createStorylines(db, pastSeason.id);
-
-  console.log(activeSeason, "activeSeason");
-  console.log(pastSeason, "pastSeason");
-  console.log(users, "users");
-  console.log(teams, "teams");
-  console.log(awards, "awards");
-  console.log(storylines, "storylines");
-
+  // const activeSeason = await createActiveSeason(db);
+  // const pastSeason = await createPastSeason(db);
+  // const users = await createUsers(db);
+  // const teams = await createTeams(db);
+  // const awards = await createAwards(db);
+  // const storylines = await createStorylines(db, pastSeason.id);
+  // console.log(activeSeason, "activeSeason");
+  // console.log(pastSeason, "pastSeason");
+  // console.log(users, "users");
+  // console.log(teams, "teams");
+  // console.log(awards, "awards");
+  // console.log(storylines, "storylines");
   // await createAwardSeason(db, awards.mvpResult.id, pastSeason.id, [users[0].id, users[1].id], [users[0].id]);
   // await createAwardSeason(db, awards.pogResult.id, pastSeason.id, [users[0].id, users[1].id], [users[1].id]);
   // await createAwardSeason(db, awards.mikeGerudoResult.id, pastSeason.id, [users[0].id, users[1].id], [users[2].id]);
@@ -31,12 +30,12 @@ export async function up(db) {
  * @param db {Kysely<any>}
  */
 export async function down(db) {
-  await db.deleteFrom("seasons").execute();
-  await db.deleteFrom("users").execute();
-  await db.deleteFrom("teams").execute();
-  await db.deleteFrom("awards").execute();
-  await db.deleteFrom("storylines").execute();
-
+  console.log("haha you idiot", db);
+  // await db.deleteFrom("seasons").execute();
+  // await db.deleteFrom("users").execute();
+  // await db.deleteFrom("teams").execute();
+  // await db.deleteFrom("awards").execute();
+  // await db.deleteFrom("storylines").execute();
   // await sql`ALTER SEQUENCE seasons_id_seq RESTART WITH 1`.execute();
   // await sql`ALTER SEQUENCE users_id_seq RESTART WITH 1`.execute();
   // await sql`ALTER SEQUENCE teams_id_seq RESTART WITH 1`.execute();
