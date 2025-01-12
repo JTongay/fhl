@@ -59,20 +59,40 @@ export async function seedAwards(
   const winners = await fhlDb.transaction().execute(async (trx) => {
     const response = [];
     for (const award of awards) {
-      const result = await trx
-        .insertInto("award_season_winner")
-        .values({
-          award_id: award.id,
-          // TODO Use a real user or a small list of them!
-          winning_user_id: 1,
-          season_id: seasonId,
-        })
-        .returningAll()
-        .execute();
+      const randomUser = users[Math.floor(Math.random() * users.length)];
+      const multipleUsers = Math.round(Math.random());
+      if (multipleUsers) {
+        console.log("Inserting a multi user award win");
+        const awardWinners: number[] = [randomUser, generateRandomUser(users)];
+        for (const awardWinner of awardWinners) {
+          const result = await trx
+            .insertInto("award_season_winner")
+            .values({
+              award_id: award.id,
+              winning_user_id: awardWinner,
+              season_id: seasonId,
+            })
+            .returningAll()
+            .execute();
 
-      response.push(result);
+          response.push(result);
+        }
+      } else {
+        console.log("Inserting a single user award win");
+        const result = await trx
+          .insertInto("award_season_winner")
+          .values({
+            award_id: award.id,
+            winning_user_id: randomUser,
+            season_id: seasonId,
+          })
+          .returningAll()
+          .execute();
+
+        response.push(result);
+      }
     }
-    return response;
+    return [...response];
   });
 
   return {
@@ -80,4 +100,8 @@ export async function seedAwards(
     presenters,
     winners,
   };
+}
+
+function generateRandomUser(users: number[]) {
+  return users[Math.floor(Math.random() * users.length)];
 }
