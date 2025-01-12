@@ -102,6 +102,19 @@ export async function seedAwards(
   };
 }
 
+export async function rollbackAwards() {
+  await fhlDb.transaction().execute(async (trx) => {
+    const response = await trx.deleteFrom("award_season_winner").execute();
+    console.log("Deleted award season winners", response);
+
+    const response2 = await trx.deleteFrom("award_season_presenter").execute();
+    console.log("Deleted award season presenters", response2);
+
+    const response3 = await trx.deleteFrom("awards").execute();
+    console.log("Deleted awards", response3);
+  });
+}
+
 function generateRandomUser(users: number[]) {
   return users[Math.floor(Math.random() * users.length)];
 }

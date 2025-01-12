@@ -66,8 +66,13 @@ export async function seedSeasons(
       const secondHalf = users.slice(half);
       let teamCount = 0;
 
+      console.log("first half", firstHalf);
+      console.log("second half", secondHalf);
+
       do {
+        console.log("teamCount is", teamCount);
         if (teamCount % 2) {
+          console.log("team count is even");
           for (const user of firstHalf) {
             const result = await trx
               .insertInto("user_team_season")
@@ -82,6 +87,7 @@ export async function seedSeasons(
             response.push(result);
           }
         } else {
+          console.log("team count is odd");
           for (const user of secondHalf) {
             const result = await trx
               .insertInto("user_team_season")

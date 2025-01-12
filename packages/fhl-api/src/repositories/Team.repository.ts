@@ -26,6 +26,8 @@ export interface TeamTable {
 
 export class TeamRepository {
   public async getTeamsForSeason(seasonId: string): Promise<SeasonTeam[]> {
+    // TODO: Fix this query! It's returning way too much data.
+    // The seed data is fine!
     const result = await fhlDb
       .selectFrom("user_team_season")
       .innerJoin("teams", "teams.id", "user_team_season.season_id")

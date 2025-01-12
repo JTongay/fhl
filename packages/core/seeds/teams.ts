@@ -33,3 +33,9 @@ export async function seedTeams(fhlId: number) {
     return response;
   });
 }
+
+export async function rollbackTeams() {
+  return await fhlDb.transaction().execute(async (trx) => {
+    await trx.deleteFrom("teams").execute();
+  });
+}
